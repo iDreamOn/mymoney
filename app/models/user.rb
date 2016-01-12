@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, 
+         :validatable, :confirmable, :lockable
+
   has_many :categories
   has_many :budgets, through: :categories
   has_many :payment_methods
@@ -25,7 +29,7 @@ class User < ActiveRecord::Base
     self.email = nil if !email.nil? && email.empty?
   end
 
-  before_create :create_activation_digest
+  #before_create :create_activation_digest
 
   validates :first_name, presence: true, length: { maximum: 20 }
   validates :last_name, presence: true, length: { maximum: 20 }
@@ -37,8 +41,8 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false },
                     allow_blank: false
 
-  has_secure_password
-  validates :password, length: { minimum: 6 }, allow_blank: true
+  #has_secure_password
+  #validates :password, length: { minimum: 6 }, allow_blank: true
 
   # Returns the hash digest of the given string.
   def self.digest(string)
@@ -61,12 +65,12 @@ class User < ActiveRecord::Base
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
-  # Returns true if the given token matches the digest.
-  def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-    BCrypt::Password.new(digest).is_password?(token)
-  end
+  ## Returns true if the given token matches the digest.
+  #def authenticated?(attribute, token)
+  #  digest = send("#{attribute}_digest")
+  #  return false if digest.nil?
+  #  BCrypt::Password.new(digest).is_password?(token)
+  #end
 
   # Forgets a user.
   def forget

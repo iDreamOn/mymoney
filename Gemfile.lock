@@ -79,7 +79,7 @@ GEM
     concurrent-ruby (1.0.0)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
-    devise (3.5.3)
+    devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -263,14 +263,14 @@ DEPENDENCIES
   codecov
   coffee-rails (= 4.1.0)
   database_cleaner
-  devise
+  devise (= 3.4.1)
   factory_girl_rails (~> 4.0)
   faker
   groupdate (= 2.4.0)
   jbuilder (= 2.3.1)
   jquery-rails (= 4.0.5)
   mysql2 (= 0.3.20)
-  passenger
+  passenger (= 5.0.23)
   pry-byebug
   rack-mini-profiler
   rails (= 4.2.3)
