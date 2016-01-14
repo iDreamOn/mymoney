@@ -8,7 +8,7 @@
     <%= render "users/partials/header" %>
   </thead>
   <tbody>
-    <%= render partial: "users/partials/user", collection: current_user.contributors %>
+    <%= render partial: "users/partials/user", collection: @contributors %>
   </tbody>
 </table>
 
@@ -21,6 +21,6 @@
     <%= render "users/partials/header" %>
   </thead>
   <tbody>
-    <%= render partial: "users/partials/user", collection: User.all - current_user.contributors - [current_user] %>
+    <%= render partial: "users/partials/user", collection: @non_contributors %>
   </tbody>
 </table>
