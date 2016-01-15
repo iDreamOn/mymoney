@@ -100,10 +100,16 @@ class DebtBalance < ActiveRecord::Base
   private
 
   def start_pay_date
-    if self.debt_id == nil
-    errors.add(:debt, "debt must not be null")
-    return
+    if debt_id.nil?
+      errors.add(:debt, 'debt must not be null')
+      return
     end
+
+    if due_date.nil?
+      errors.add(:due_date, 'Due_Date must not be null')
+      return
+    end
+
     if DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' <= due_date AND '#{due_date}' > due_date").exists?
       previous = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' <= due_date AND '#{due_date}' > due_date").order(due_date:  'desc').first
       errors.add(:payment_start_date, "must be after #{previous.due_date}.")
