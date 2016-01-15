@@ -86,3 +86,7 @@ group :development do
   # needed for database diagrams
   gem 'rails-erd'
 end
+
+group :test do
+  gem 'pry-byebug'
+end
