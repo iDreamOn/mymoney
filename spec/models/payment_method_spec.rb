@@ -18,11 +18,8 @@ RSpec.describe PaymentMethod, type: :model do
   end
 
   it 'is unique per user' do
-    random_id = 323
-    user1 = FactoryGirl.build(:user, id: random_id)
-    description1 = FactoryGirl.build(:description, user: user1)
-    pay1 = FactoryGirl.create(:payment_method, description: description1)
-    pay2 = FactoryGirl.build(:payment_method, description: description1, name: pay1.name)
+    pay1 = FactoryGirl.create(:payment_method)
+    pay2 = FactoryGirl.build(:payment_method, name: pay1.name, user: pay1.user)
     expect(pay2).to_not be_valid
   end
 
@@ -32,8 +29,8 @@ RSpec.describe PaymentMethod, type: :model do
   end
 
   it 'must belong to user' do
-    payment_method = FactoryGirl.build(:payment_method, name: nil)
+    payment_method = FactoryGirl.build(:payment_method, user: nil)
     expect(payment_method).to_not be_valid
-    expect(payment_method.errors).to have_key(:name)
+    expect(payment_method.errors).to have_key(:user)
   end
 end
