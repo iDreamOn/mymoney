@@ -2,7 +2,7 @@ class Debt < ActiveRecord::Base
   belongs_to :category
   belongs_to :account
 
-  has_many :debt_balances
+  has_many :debt_balances, inverse_of: :debt, dependent: :destroy
 
   validates_presence_of :name, :category, :account
   validate :debt_exists
