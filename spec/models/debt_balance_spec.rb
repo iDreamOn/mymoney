@@ -25,9 +25,7 @@ RSpec.describe DebtBalance, type: :model do
 
   it 'has target_balance by default to be 0.0' do
     debt_balance = FactoryGirl.build(:debt_balance)
-    target_balance = false
-    target_balance = true unless debt_balance.target_balance != 0
-    expect(target_balance).to be true
+    expect(debt_balance.target_balance).to eq(0)
   end
 
   it 'has many spendings' do

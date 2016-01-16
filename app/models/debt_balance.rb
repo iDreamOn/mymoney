@@ -10,7 +10,8 @@ class DebtBalance < ActiveRecord::Base
   validates :balance, numericality: true
 
   validates_uniqueness_of :debt_id, scope: :due_date, message: 'balance already due on this date'
-  validate :start_pay_date
+
+  validate :start_pay_date, if: proc { |k| k.debt && k.due_date }
 
   before_validation do
     self.payment_start_date = due_date - 1.months + 1.days if !due_date.blank? && payment_start_date.blank?
@@ -100,16 +101,6 @@ class DebtBalance < ActiveRecord::Base
   private
 
   def start_pay_date
-    if debt_id.nil?
-      errors.add(:debt, 'must not be emtpy')
-      return
-    end
-
-    if due_date.nil?
-      errors.add(:due_date, 'must not be empty')
-      return
-    end
-
     if DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' <= due_date AND '#{due_date}' > due_date").exists?
 
       previous = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' <= due_date AND '#{due_date}' > due_date").order(due_date:  'desc').first
