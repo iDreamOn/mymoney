@@ -17,7 +17,7 @@ Metrics/AbcSize:
 
 # Offense count: 5
 Metrics/CyclomaticComplexity:
-  Max: 13
+  Max: 1000
 
 # Offense count: 781
 # Configuration parameters: AllowURI, URISchemes.
@@ -31,7 +31,7 @@ Metrics/MethodLength:
 
 # Offense count: 3
 Metrics/PerceivedComplexity:
-  Max: 13
+  Max: 100
 
 # Offense count: 63
 # Configuration parameters: Exclude.
@@ -46,3 +46,7 @@ Style/GuardClause:
     - 'app/models/debt_balance.rb'
     - 'db/migrate/20150904153448_create_debts.rb'
     - 'lib/date_module.rb'
+
+#Allow classes longer than 100 lines of code
+ClassLength:
+  Max: 250
