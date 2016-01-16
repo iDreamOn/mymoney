@@ -73,6 +73,7 @@ class AccountBalance < ActiveRecord::Base
             max_amount = [d.max_payment(balance.balance_date), 0].max
             recommendation = [d.payment_due(balance.balance_date), 0].max
             actual = [max_amount, recommendation].min
+            actual = max_amount if max_amount <= 25
             result[d.debt.name] = [recommendation, actual, max_amount]
             left_over_total -= actual unless d.debt.name == left_over
           end
