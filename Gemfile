@@ -77,6 +77,8 @@ group :development, :test do
   gem 'simplecov-rcov'
   gem 'codecov'
   gem 'rubocop'
+
+  gem 'mailcatcher'
 end
 
 group :development do

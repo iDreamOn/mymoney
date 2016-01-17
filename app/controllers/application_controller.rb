@@ -18,12 +18,6 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :username, :password, :password_confirmation) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :password, :remember_me) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:first_name, :last_name, :email, :username, :password, :password_confirmation) }
-  end
-
-  def authorize(object = nil)
-    return if object.authorize(current_user)
-    flash[:error] = 'You dont have permission to access this section'
-    redirect_to root_url
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:first_name, :last_name, :email, :username, :password, :password_confirmation, :current_password) }
   end
 end

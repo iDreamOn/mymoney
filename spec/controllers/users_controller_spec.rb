@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-
   describe 'GET #index' do
     it 'assigns all contributors as @contributors' do
       login_user
@@ -19,7 +18,7 @@ RSpec.describe UsersController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested user as @user' do
       login_user
-      get :show, { id: current_user.to_param }
+      get :show, id: current_user.to_param
       expect(assigns(:user)).to eq(current_user)
     end
   end

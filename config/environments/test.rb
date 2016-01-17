@@ -32,7 +32,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-  #config.action_mailer.perform_deliveries = true
+  # config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: '127.0.0.1', port: 3000 }
 
   # Randomize the order test cases are executed.

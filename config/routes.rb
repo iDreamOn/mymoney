@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :categories
 
   devise_for :users
-  resources :users, :only => [:show, :index] do
+  resources :users, only: [:show, :index] do
     member do
       get :add_contributor
       get :remove_contributor
