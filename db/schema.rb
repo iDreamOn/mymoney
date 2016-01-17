@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151225123843) do
+ActiveRecord::Schema.define(version: 20160112124221) do
 
   create_table "account_balance_distributions", force: :cascade do |t|
     t.integer  "account_balance_id", limit: 4
@@ -106,6 +106,19 @@ ActiveRecord::Schema.define(version: 20151225123843) do
   add_index "debts", ["deleted_at"], name: "index_debts_on_deleted_at", using: :btree
   add_index "debts", ["name", "deleted_at"], name: "by_category_name", unique: true, using: :btree
 
+  create_table "income_distributions", force: :cascade do |t|
+    t.date     "distribution_date"
+    t.decimal  "boa_chk",                       precision: 8, scale: 2,                 null: false
+    t.decimal  "chase_chk",                     precision: 8, scale: 2,                 null: false
+    t.boolean  "paid",                                                  default: false
+    t.datetime "created_at",                                                            null: false
+    t.datetime "updated_at",                                                            null: false
+    t.string   "chase_focus",       limit: 255
+    t.string   "boa_focus",         limit: 255
+  end
+
+  add_index "income_distributions", ["distribution_date"], name: "index_income_distributions_on_distribution_date", unique: true, using: :btree
+
   create_table "income_sources", force: :cascade do |t|
     t.string   "name",         limit: 255,                         null: false
     t.string   "pay_schedule", limit: 255,                         null: false
@@ -156,19 +169,34 @@ ActiveRecord::Schema.define(version: 20151225123843) do
   add_index "user_contributors", ["user_id", "contributor_user_id"], name: "index_user_contributors_on_user_id_and_contributor_user_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",        limit: 255
-    t.string   "last_name",         limit: 255
-    t.string   "email",             limit: 255
-    t.string   "username",          limit: 255
-    t.string   "password_digest",   limit: 255
-    t.string   "remember_digest",   limit: 255
-    t.string   "activation_digest", limit: 255
-    t.boolean  "activated"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "username",               limit: 255
+    t.string   "encrypted_password",     limit: 255
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "reset_password_token",   limit: 255
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          limit: 4,   default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "confirmation_token",     limit: 255
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email",      limit: 255
+    t.integer  "failed_attempts",        limit: 4,   default: 0, null: false
+    t.string   "unlock_token",           limit: 255
+    t.datetime "locked_at"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "account_balance_distributions", "account_balances"

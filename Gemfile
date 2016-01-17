@@ -14,16 +14,13 @@ end
 gem 'bootstrap-sass', '3.2.0.0'
 gem 'bootstrap-datepicker-rails', '1.4.0'
 
-gem 'passenger'
+gem 'passenger', '5.0.23'
 
 # Help with login etc...
-gem 'devise'
+gem 'devise', '3.4.1'
 
 # Add bcrypt for password encription
 gem 'bcrypt', '3.1.7'
-
-# Create sample users
-gem 'faker'
 
 # Display long lists on multiple pages
 gem 'will_paginate', '3.0.7'
@@ -80,6 +77,8 @@ group :development, :test do
   gem 'simplecov-rcov'
   gem 'codecov'
   gem 'rubocop'
+
+  gem 'mailcatcher'
 end
 
 group :development do
@@ -89,4 +88,5 @@ end
 
 group :test do
   gem 'pry-byebug'
+  gem 'faker'
 end

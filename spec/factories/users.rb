@@ -7,8 +7,8 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email(first_name) }
     username { Faker::Internet.user_name(first_name) }
-    password 'abcabc'
-    password_confirmation 'abcabc'
+    password 'abcabcabc'
+    password_confirmation 'abcabcabc'
 
     factory :user_with_accounts do
       transient do

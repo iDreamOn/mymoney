@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable,
+         :rememberable, :trackable, :validatable,
+         :recoverable, :confirmable, :lockable
+
   has_many :categories
   has_many :budgets, through: :categories
   has_many :payment_methods
@@ -17,15 +21,14 @@ class User < ActiveRecord::Base
                           foreign_key: :user_id,
                           association_foreign_key: :contributor_user_id
 
-  attr_accessor :remember_token
-  attr_accessor :activation_token
-
   before_save do
     self.email = email.downcase unless email.nil?
     self.email = nil if !email.nil? && email.empty?
+    # #TODO: Remove when email is fixed
+    skip_confirmation!
+    skip_confirmation_notification!
+    skip_reconfirmation!
   end
-
-  before_create :create_activation_digest
 
   validates :first_name, presence: true, length: { maximum: 20 }
   validates :last_name, presence: true, length: { maximum: 20 }
@@ -36,42 +39,6 @@ class User < ActiveRecord::Base
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false },
                     allow_blank: false
-
-  has_secure_password
-  validates :password, length: { minimum: 6 }, allow_blank: true
-
-  # Returns the hash digest of the given string.
-  def self.digest(string)
-    if ActiveModel::SecurePassword.min_cost
-      cost = BCrypt::Engine::MIN_COST
-    else
-      cost = BCrypt::Engine.cost
-    end
-    BCrypt::Password.create(string, cost: cost)
-  end
-
-  # Returns a random token.
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
-
-  # Remembers a user in the database for use in persistent sessions.
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
-  end
-
-  # Returns true if the given token matches the digest.
-  def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-    BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  # Forgets a user.
-  def forget
-    update_attribute(:remember_digest, nil)
-  end
 
   def real_spendings
     get_all('spendings').joins(budget: :category).where("categories.name <> 'Credit Cards'")
@@ -102,11 +69,11 @@ class User < ActiveRecord::Base
     model.where("#{plural}.id IN (?)", ids)
   end
 
-  private
+  # private
 
-  # Creates and assigns the activation token and digest.
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
+  ## Creates and assigns the activation token and digest.
+  # def create_activation_digest
+  #  self.activation_token  = User.new_token
+  #  self.activation_digest = User.digest(activation_token)
+  # end
 end

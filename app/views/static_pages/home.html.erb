@@ -1,5 +1,5 @@
 <% provide(:title, "Home") %>
 <h1>Home Page</h1>
 
-<p><%= "Hi #{current_user.first_name}," unless current_user.nil? %><br>
+<p><%= "Hi #{current_user.first_name}," if user_signed_in? %><br>
 Welcome to the My Money app. Use it to manage all your financial needs.</p>
