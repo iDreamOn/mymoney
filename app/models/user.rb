@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
     singular = ActiveModel::Naming.singular(model)
     plural = ActiveModel::Naming.plural(model)
     ids = send("#{singular}_ids")
-    contributors.map { |c| ids += c.send("#{singular}_ids") if c.contributors.include?(self) && self.contributors.include?(c) }
+    contributors.map { |c| ids += c.send("#{singular}_ids") if c.contributors.include?(self) && contributors.include?(c) }
     model.where("#{plural}.id IN (?)", ids)
   end
 

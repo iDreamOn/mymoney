@@ -108,7 +108,7 @@ RSpec.describe SpendingsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        build(:spending, description: "new spending").attributes
+        build(:spending, description: 'new spending').attributes
       end
 
       it 'updates the requested spending' do
@@ -116,7 +116,7 @@ RSpec.describe SpendingsController, type: :controller do
         login(spending.owner)
         put :update, { id: spending.to_param, spending: new_attributes }, valid_session
         spending.reload
-        expect(spending.description).to eq("New Spending")
+        expect(spending.description).to eq('New Spending')
       end
 
       it 'assigns the requested spending as @spending' do
