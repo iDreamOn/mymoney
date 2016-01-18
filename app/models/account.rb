@@ -9,8 +9,7 @@ class Account < ActiveRecord::Base
     name
   end
 
-  def authorize(user = nil)
-    owner = self.user
-    owner.id == user.id || owner.contributors.where(id: user.id).exists?
+  def owner
+    user
   end
 end

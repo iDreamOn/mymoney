@@ -65,15 +65,11 @@ class User < ActiveRecord::Base
     singular = ActiveModel::Naming.singular(model)
     plural = ActiveModel::Naming.plural(model)
     ids = send("#{singular}_ids")
-    contributors.map { |c| ids += c.send("#{singular}_ids") if c.contributors.where(id: id).exists? }
+    contributors.map { |c| ids += c.send("#{singular}_ids") if c.contributors.include?(self) && self.contributors.include?(c) }
     model.where("#{plural}.id IN (?)", ids)
   end
 
-  # private
-
-  ## Creates and assigns the activation token and digest.
-  # def create_activation_digest
-  #  self.activation_token  = User.new_token
-  #  self.activation_digest = User.digest(activation_token)
-  # end
+  def owner
+    self
+  end
 end

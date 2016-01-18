@@ -4,8 +4,7 @@ class AccountBalanceDistribution < ActiveRecord::Base
 
   belongs_to :debt
 
-  def authorize(user = nil)
-    owner = account_balance.account.user
-    owner.id == user.id || owner.contributors.where(id: user.id).exists?
+  def owner
+    account_balance.owner
   end
 end

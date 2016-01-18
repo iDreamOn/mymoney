@@ -5,8 +5,6 @@ class Category < ActiveRecord::Base
 
   belongs_to :user
 
-  attr_readonly :user
-
   validates_presence_of :description, :name, :user_id
   validates_uniqueness_of :name, case_sensitive: false, scope: :user_id
 
@@ -14,8 +12,7 @@ class Category < ActiveRecord::Base
     name
   end
 
-  def authorize(user = nil)
-    owner = self.user
-    owner.id == user.id || owner.contributors.where(id: user.id).exists?
+  def owner
+    user
   end
 end
