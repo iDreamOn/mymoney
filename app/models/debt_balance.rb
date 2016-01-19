@@ -35,19 +35,19 @@ class DebtBalance < ActiveRecord::Base
     (target_balance - balance).abs
   end
 
-  def payment_due(payment_date = nil, _live = true)
+  def payment_due(payment_date = nil)
     result = 0
     if debt.fix_amount
       if debt.schedule == 'Bi-Weekly'
         result = bi_weekly_due(debt.payment_start_date, payment_date) ? debt.fix_amount : 0
       elsif debt.schedule == 'Monthly'
         debt_account = debt.account
-        paychecks_todate = debt.account.user.get_all('income_sources').total_paychecks(debt_account, payment_date.at_beginning_of_month, payment_date)
-        paychecks_all = debt.account.user.get_all('income_sources').total_paychecks(debt_account, payment_date.at_beginning_of_month, payment_date.at_end_of_month)
+        paychecks_todate = debt.owner.get_all('income_sources').total_paychecks(debt_account, payment_date.at_beginning_of_month, payment_date)
+        paychecks_all = debt.owner.get_all('income_sources').total_paychecks(debt_account, payment_date.at_beginning_of_month, payment_date.at_end_of_month)
         result = (debt.fix_amount * paychecks_todate) / paychecks_all unless paychecks_all == 0
       end
     else
-      paychecks_all = debt.account.user.get_all('income_sources').total_paychecks(debt.account, payment_start_date, due_date)
+      paychecks_all = debt.owner.get_all('income_sources').total_paychecks(debt.account, payment_start_date, due_date)
       result = balance_of_interest / paychecks_all unless paychecks_all == 0
     end
     result
@@ -85,7 +85,7 @@ class DebtBalance < ActiveRecord::Base
   end
 
   def self.search_by_date(date)
-    date = Time.now.to_date if date.nil?
+    date ||= Time.now.to_date
     where("payment_start_date <= '#{date}' && '#{date}' <= due_date")
   end
 

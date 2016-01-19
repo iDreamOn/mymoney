@@ -1,47 +1,58 @@
-<header class="navbar navbar-fixed-top navbar-inverse navbar-default nav-down">
-  <div class="container">
-    <%= link_to "Where Did My Money Go?", '#', id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right navbar-default">
-      <li><%= link_to "Home", root_path %></li>
-      <% if user_signed_in? %>
+<!-- Navigation -->
+<a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+<nav id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    <li class="sidebar-brand"><%= link_to "Home", root_path, :onclick => '$("#menu-close").click()' %></li>
+    <% if user_signed_in? %>
+      <li><%= link_to "Profile", current_user, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Settings", edit_user_registration_path, :onclick => '$("#menu-close").click()' %></li>
+      <li class="divider">---------------------</li>
+      <li><%= link_to "Log out", destroy_user_session_path, method: "delete", :onclick => '$("#menu-close").click()' %></li>
+      <li class="divider">---------------------</li>
+      <li><%= link_to "Contributors", users_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Spendings", spendings_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Categories", categories_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Budgets", budgets_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Debts/Assets", debts_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Debt/Asset Balances", debt_balances_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Payment Methods", payment_methods_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Income Sources", income_sources_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Accounts", accounts_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Account Balances", account_balances_path, :onclick => '$("#menu-close").click()' %></li>
+      <li><%= link_to "Account Balance Distributions", account_balance_distributions_path, :onclick => '$("#menu-close").click()' %></li>
+    <% else %>
+      <li><%= link_to "Log in", new_user_session_path, :onclick => '$("#menu-close").click()' %></li>
+    <% end %>
+  </ul>
+</nav>
 
-        <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-         <%= current_user.first_name %>
-        </a>
-          <ul class="dropdown-menu">
-              <li><%= link_to "Profile", current_user %></li>
-              <li><%= link_to "Settings", edit_user_registration_path %></li>
-              <li class="divider"></li>
-              <li>
-               <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
-              </li>
-            </ul>
-          </li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-           <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Contributors", users_path %></li>
-            <li><%= link_to "Spendings", spendings_path %></li>
-            <li><%= link_to "Categories", categories_path %></li>
-            <li><%= link_to "Budgets", budgets_path %></li>
-            <li><%= link_to "Debts/Assets", debts_path %></li>
-            <li><%= link_to "Debt/Asset Balances", debt_balances_path %></li>
-            <li><%= link_to "Payment Methods", payment_methods_path %></li>
-            <li><%= link_to "Income Sources", income_sources_path %></li>
-            <li><%= link_to "Accounts", accounts_path %></li>
-            <li><%= link_to "Account Balances", account_balances_path %></li>
-            <li><%= link_to "Account Balance Distributions", account_balance_distributions_path %></li>
-          </ul>
-        </li>
-        <% else %>
-          <li><%= link_to "Log in", new_user_session_path %></li>
-        <% end %>
-      </ul>
-    </nav>
-  </div>
-</header>
+<!-- Custom Theme JavaScript -->
+<script>
+// Closes the sidebar menu
+$("#menu-close").click(function(e) {
+  e.preventDefault();
+  $("#sidebar-wrapper").toggleClass("active");
+});
+// Opens the sidebar menu
+$("#menu-toggle").click(function(e) {
+  e.preventDefault();
+  $("#sidebar-wrapper").toggleClass("active");
+});
+// Scrolls to the selected menu item on the page
+$(function() {
+  $('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      if (target.length) {
+        $('html,body').animate({
+          scrollTop: target.offset().top
+        }, 1000);
+        return false;
+      }
+    }
+  });
+});
+</script>

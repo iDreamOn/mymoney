@@ -1,0 +1,3 @@
+[submodule "app/assets/stylish-portfolio"]
+	path = app/assets/stylish-portfolio
+	url = git@github.com:iDreamOn/startbootstrap-stylish-portfolio.git

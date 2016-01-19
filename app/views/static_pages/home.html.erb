@@ -1,5 +1,11 @@
 <% provide(:title, "Home") %>
-<h1>Home Page</h1>
 
-<p><%= "Hi #{current_user.first_name}," if user_signed_in? %><br>
-Welcome to the My Money app. Use it to manage all your financial needs.</p>
+<header id="top" class="header">
+  <div class="text-vertical-center">
+    <h1><%= "Hi #{current_user.first_name}," if user_signed_in? %><br></h1>
+    <h2>Welcome To MyMoney</h2>
+    <h3>One Stop Shop For All Your Personal Money Management Needs</h3>
+    <br>
+    <a href="#SignUp" class="btn btn-dark btn-lg">Sign Up</a>
+  </div>
+</header>
