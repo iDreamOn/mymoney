@@ -23,11 +23,11 @@ RSpec.describe SpendingsController, type: :controller do
   # Spending. As you add validations to Spending, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    build(:spending).attributes
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    build(:spending, description: nil).attributes
   end
 
   # This should return the minimal set of values that should be in the session
@@ -38,6 +38,7 @@ RSpec.describe SpendingsController, type: :controller do
   describe 'GET #index' do
     it 'assigns all spendings as @spendings' do
       spending = Spending.create! valid_attributes
+      login(spending.owner)
       get :index, {}, valid_session
       expect(assigns(:spendings)).to eq([spending])
     end
@@ -46,6 +47,7 @@ RSpec.describe SpendingsController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested spending as @spending' do
       spending = Spending.create! valid_attributes
+      login(spending.owner)
       get :show, { id: spending.to_param }, valid_session
       expect(assigns(:spending)).to eq(spending)
     end
@@ -53,14 +55,16 @@ RSpec.describe SpendingsController, type: :controller do
 
   describe 'GET #new' do
     it 'assigns a new spending as @spending' do
+      login_user
       get :new, {}, valid_session
-      skip # expect(assigns(:spending)).to be_a_new(Spending)
+      expect(assigns(:spending)).to be_a_new(Spending)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested spending as @spending' do
       spending = Spending.create! valid_attributes
+      login(spending.owner)
       get :edit, { id: spending.to_param }, valid_session
       expect(assigns(:spending)).to eq(spending)
     end
@@ -68,6 +72,7 @@ RSpec.describe SpendingsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
+      before(:each) { login_user }
       it 'creates a new Spending' do
         expect do
           post :create, { spending: valid_attributes }, valid_session
@@ -87,6 +92,7 @@ RSpec.describe SpendingsController, type: :controller do
     end
 
     context 'with invalid params' do
+      before(:each) { login_user }
       it 'assigns a newly created but unsaved spending as @spending' do
         post :create, { spending: invalid_attributes }, valid_session
         expect(assigns(:spending)).to be_a_new(Spending)
@@ -102,24 +108,27 @@ RSpec.describe SpendingsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        build(:spending, description: 'new spending').attributes
       end
 
       it 'updates the requested spending' do
         spending = Spending.create! valid_attributes
+        login(spending.owner)
         put :update, { id: spending.to_param, spending: new_attributes }, valid_session
         spending.reload
-        skip('Add assertions for updated state')
+        expect(spending.description).to eq('New Spending')
       end
 
       it 'assigns the requested spending as @spending' do
         spending = Spending.create! valid_attributes
+        login(spending.owner)
         put :update, { id: spending.to_param, spending: valid_attributes }, valid_session
         expect(assigns(:spending)).to eq(spending)
       end
 
       it 'redirects to the spending' do
         spending = Spending.create! valid_attributes
+        login(spending.owner)
         put :update, { id: spending.to_param, spending: valid_attributes }, valid_session
         expect(response).to redirect_to(spending)
       end
@@ -128,12 +137,14 @@ RSpec.describe SpendingsController, type: :controller do
     context 'with invalid params' do
       it 'assigns the spending as @spending' do
         spending = Spending.create! valid_attributes
+        login(spending.owner)
         put :update, { id: spending.to_param, spending: invalid_attributes }, valid_session
         expect(assigns(:spending)).to eq(spending)
       end
 
       it "re-renders the 'edit' template" do
         spending = Spending.create! valid_attributes
+        login(spending.owner)
         put :update, { id: spending.to_param, spending: invalid_attributes }, valid_session
         expect(response).to render_template('edit')
       end
@@ -143,6 +154,7 @@ RSpec.describe SpendingsController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested spending' do
       spending = Spending.create! valid_attributes
+      login(spending.owner)
       expect do
         delete :destroy, { id: spending.to_param }, valid_session
       end.to change(Spending, :count).by(-1)
@@ -150,8 +162,36 @@ RSpec.describe SpendingsController, type: :controller do
 
     it 'redirects to the spendings list' do
       spending = Spending.create! valid_attributes
+      login(spending.owner)
       delete :destroy, { id: spending.to_param }, valid_session
       expect(response).to redirect_to(spendings_url)
+    end
+  end
+
+  describe 'GET #graphs' do
+    before(:each) do
+      spending = Spending.create! valid_attributes
+      login(spending.owner)
+    end
+
+    it 'renders a json for spendings_by_month' do
+      get :spendings_by_month, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
+    end
+
+    it 'renders a json for spendings_by_category' do
+      get :spendings_by_category, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
+    end
+
+    it 'renders a json for spendings_by_payment_method' do
+      get :spendings_by_payment_method, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
+    end
+
+    it 'renders a json for cc_purchase_vs_payment' do
+      get :cc_purchase_vs_payment, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
     end
   end
 end

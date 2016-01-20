@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
 
   def authorize(object = nil)
-    return if object.authorize(current_user)
+    owner = object.owner || User.new
+    return if owner == current_user || (owner.contributors.include?(current_user) && current_user.contributors.include?(owner))
     flash[:error] = 'You dont have permission to access this section'
     redirect_to root_url
   end

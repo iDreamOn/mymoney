@@ -6,9 +6,8 @@ class AccountBalance < ActiveRecord::Base
 
   attr_accessor :total_distribution
 
-  def authorize(user = nil)
-    owner = account.user
-    owner.id == user.id || owner.contributors.where(id: user.id).exists?
+  def owner
+    account.owner
   end
 
   def debts

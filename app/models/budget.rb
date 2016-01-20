@@ -21,8 +21,7 @@ class Budget < ActiveRecord::Base
     end
   end
 
-  def authorize(user = nil)
-    owner = category.user
-    owner.id == user.id || owner.contributors.where(id: user.id).exists?
+  def owner
+    category.owner
   end
 end

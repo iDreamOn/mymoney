@@ -70,8 +70,8 @@ class SpendingsController < ApplicationController
 
     respond_to do |format|
       if @spending.save
-        format.html { redirect_to spendings_path, notice: 'Spending was successfully created.' }
-        format.json { render :index, status: :created }
+        format.html { redirect_to @spending, notice: 'Spending was successfully created.' }
+        format.json { render :show, status: :created }
       else
         format.html { render :new }
         format.json { render json: @spending.errors, status: :unprocessable_entity }
