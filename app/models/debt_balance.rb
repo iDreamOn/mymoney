@@ -86,7 +86,7 @@ class DebtBalance < ActiveRecord::Base
 
   def self.search_by_date(date)
     date = Time.now.to_date if date.nil?
-    where("payment_start_date <= '#{date}' && '#{date}' <= due_date")
+    where("debt_balances.payment_start_date <= '#{date}' && '#{date}' <= debt_balances.due_date")
   end
 
   def self.search(search)
