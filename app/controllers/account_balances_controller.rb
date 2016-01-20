@@ -1,6 +1,4 @@
 class AccountBalancesController < ApplicationController
-  include AccountBalancesHelper
-
   before_action :set_account_balance, only: [:show, :edit, :update, :destroy, :make_payments, :undo_payments]
 
   # GET /account_balances
@@ -67,8 +65,8 @@ class AccountBalancesController < ApplicationController
   # Make the payments
   def make_payments
     notice = 'Payments successfully made.'
-    notice = "Some payments were not successful. Check if there is a budget for that month" unless @account_balance.make_payments
-    
+    notice = 'Some payments were not successful. Check if there is a budget for that month' unless @account_balance.make_payments
+
     respond_to do |format|
       format.html { redirect_to @account_balance, notice: notice }
       format.json { render :show, status: :made, location: @account_balance }

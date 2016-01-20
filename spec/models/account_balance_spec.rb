@@ -46,22 +46,22 @@ RSpec.describe AccountBalance, type: :model do
     expect(account_balance.to_s).to eq(account.name)
   end
 
-  describe "filter by date" do      
+  describe 'filter by date' do
     before :each do
-      @smith = FactoryGirl.create(:account_balance, balance_date: "2016-02-01")
-      @jones = FactoryGirl.create(:account_balance, balance_date: "2016-01-01")
-      @johnson = FactoryGirl.create(:account_balance, balance_date: "2016-01-01")
+      @smith = FactoryGirl.create(:account_balance, balance_date: '2016-02-01')
+      @jones = FactoryGirl.create(:account_balance, balance_date: '2016-01-01')
+      @johnson = FactoryGirl.create(:account_balance, balance_date: '2016-01-01')
     end
 
-    context "matching dates" do
-      it "returns an array of results that match" do
-        expect(AccountBalance.search_by_date("2016-01-01")).to  match_array([@johnson, @jones])
+    context 'matching dates' do
+      it 'returns an array of results that match' do
+        expect(AccountBalance.search_by_date('2016-01-01')).to match_array([@johnson, @jones])
       end
     end
 
-    context "non-matching dates" do
+    context 'non-matching dates' do
       it "does not return account_balances that don't match the provided date" do
-        expect(AccountBalance.search_by_date("2016-02-01")).to  match_array([@smith])
+        expect(AccountBalance.search_by_date('2016-02-01')).to match_array([@smith])
       end
     end
   end

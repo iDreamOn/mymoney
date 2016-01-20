@@ -5,18 +5,17 @@ module Recommender
 
   def make_payments
     success = true
-    recommendations.each do |k,v|
-      unless Debt.do_not_pay_list.include? k
-        if new_debt = Debt.find_by(name: k, deleted_at: nil)
-          db = debts.find_by(debt_id: new_debt.id)
-          budget = db.debt.category.budgets.find_by(budget_month: balance_date.change(day: 1))
-          pm = PaymentMethod.find_by(name: 'Debit')
-          if db && budget && pm
-            Spending.create(amount: v[1], description: db.debt.name, spending_date: balance_date, budget: budget, payment_method: pm, debt_balance: db) unless v[1] == 0
-          else
-            success = false
-          end
-        end
+    recommendations.each do |k, v|
+      next if Debt.do_not_pay_list.include? k
+      new_debt = Debt.find_by(name: k, deleted_at: nil)
+      next unless new_debt.nil?
+      db = debts.find_by(debt_id: new_debt.id)
+      budget = db.debt.category.budgets.find_by(budget_month: balance_date.change(day: 1))
+      pm = PaymentMethod.find_by(name: 'Debit')
+      if db && budget && pm
+        Spending.create(amount: v[1], description: db.debt.name, spending_date: balance_date, budget: budget, payment_method: pm, debt_balance: db) unless v[1] == 0
+      else
+        success = false
       end
     end
     update(paid: true)
@@ -71,7 +70,7 @@ module Recommender
     end
 
     total = 0
-    result.map { |k, v| total += v[1].abs }
+    result.map { |_k, v| total += v[1].abs }
     self.total_distribution = total
     result
   end

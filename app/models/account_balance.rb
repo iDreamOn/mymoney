@@ -17,7 +17,7 @@ class AccountBalance < ActiveRecord::Base
 
   def to_s
     account.to_s
-  end  
+  end
 
   include Recommender
 end
