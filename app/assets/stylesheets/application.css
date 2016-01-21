@@ -13,6 +13,8 @@
  *= require bootstrap-datepicker
  *= require_tree .
  *= require_self
+ *= require recurring_select
+ *= require jquery-mobile-rs
  */
 
 

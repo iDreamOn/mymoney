@@ -4,7 +4,7 @@ RSpec.describe 'income_sources/show', type: :view do
   before(:each) do
     @income_source = assign(:income_source, IncomeSource.create!(
                                               name: 'Name',
-                                              pay_schedule: 'Pay Schedule',
+                                              schedule: 'Pay Schedule',
                                               pay_day: 'Pay Day',
                                               amount: 1.5
     ))
