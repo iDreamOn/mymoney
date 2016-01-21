@@ -1,6 +1,11 @@
 class AccountBalancesController < ApplicationController
   before_action :set_account_balance, only: [:show, :edit, :update, :destroy, :make_payments, :undo_payments]
 
+  def balances_by_day
+    graph = current_user.get_all('accounts').map { |acct| { name: acct.name, data: acct.account_balances.group(:balance_date).sum(:amount) } }
+    render json: graph
+  end
+
   # GET /account_balances
   # GET /account_balances.json
   def index
