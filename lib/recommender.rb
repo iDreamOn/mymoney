@@ -8,7 +8,7 @@ module Recommender
     recommendations.each do |k, v|
       next if Debt.do_not_pay_list.include? k
       new_debt = Debt.find_by(name: k, deleted_at: nil)
-      next unless new_debt.nil?
+      next if new_debt.nil?
       db = debts.find_by(debt_id: new_debt.id)
       budget = db.debt.category.budgets.find_by(budget_month: balance_date.change(day: 1))
       pm = PaymentMethod.find_by(name: 'Debit')
@@ -23,8 +23,7 @@ module Recommender
   end
 
   def undo_payments
-    pm = PaymentMethod.find_by(name: 'Debit')
-    payments = Spending.where(payment_method: pm, spending_date: balance_date)
+    payments = Spending.where(spending_date: balance_date).where.not(debt_balance_id: nil)
     payments.each(&:destroy)
     update(paid: false)
   end
