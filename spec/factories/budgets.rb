@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :budget do
-    budget_month '2015-12-26'
-    amount '9.99'
+    budget_month { Faker::Date.between(5.days.ago, 3.days.ago) }
+    amount { Faker::Commerce.price }
     category
 
     factory :budget_with_spendings do
@@ -9,8 +9,8 @@ FactoryGirl.define do
         spendings_count 2
       end
 
-      after(:create) do |param1, evaluator|
-        create_list(:spending, evaluator.spendings_count, budget: param1)
+      after(:create) do |budget, evaluator|
+        create_list(:spending, evaluator.spendings_count, budget: budget)
       end
     end
   end

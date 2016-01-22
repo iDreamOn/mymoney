@@ -16,8 +16,8 @@ FactoryGirl.define do
         debt_balances_count 1
       end
 
-      after(:create) do |param1, evaluator|
-        create_list(:debt_balance, evaluator.debt_balances_count, debt: param1)
+      after(:create) do |debt, evaluator|
+        create_list(:debt_balance, evaluator.debt_balances_count, debt: debt)
       end
     end
   end

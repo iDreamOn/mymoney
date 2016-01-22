@@ -34,8 +34,8 @@ class BudgetsController < ApplicationController
   end
 
   def budgets_by_month
-    spendings = [{ name: 'Spending', data: current_user.real_spendings.group_by_month(:spending_date, format: '%b %Y', last: 12).sum(:amount) }]
-    budgets = [{ name: 'Budget', data: current_user.real_budgets.group_by_month(:budget_month, format: '%b %Y', last: 12).sum(:amount) }]
+    spendings = [{ name: 'Spending', data: current_user.real_spendings.group_by_month(:spending_date, format: '%b %Y', last: 25).sum(:amount) }]
+    budgets = [{ name: 'Budget', data: current_user.real_budgets.group_by_month(:budget_month, format: '%b %Y', last: 25).sum(:amount) }]
     graph = spendings + budgets
     render json: graph
   end
