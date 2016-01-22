@@ -41,9 +41,8 @@ class Debt < ActiveRecord::Base
     name
   end
 
-  def authorize(user = nil)
-    owner = account.user
-    owner.id == user.id || owner.contributors.where(id: user.id).exists?
+  def owner
+    account.owner
   end
 
   private

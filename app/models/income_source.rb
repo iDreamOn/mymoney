@@ -12,9 +12,8 @@ class IncomeSource < ActiveRecord::Base
   validate :semi_monthly_pay, if: proc { |k| k.pay_schedule == 'semi-monthly' }
   validate :start_and_end
 
-  def authorize(user = nil)
-    owner = account.user
-    owner.id == user.id || owner.contributors.where(id: user.id).exists?
+  def owner
+    account.owner
   end
 
   def paydays

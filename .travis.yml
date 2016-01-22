@@ -17,6 +17,7 @@ script:
   - bundle exec rspec spec/controllers
 before_install:
   - mysql -e "create database IF NOT EXISTS test;" -uroot
+  - mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql
 before_script:
   - mysql -e 'create database myapp_test'
 bundler_args: "--binstubs=./bundler_stubs"
