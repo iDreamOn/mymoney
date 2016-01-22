@@ -18,8 +18,9 @@ RSpec.describe Category, type: :model do
   end
 
   it 'must be unique per user' do
-    cat1 = FactoryGirl.create(:category)
-    cat2 = FactoryGirl.build(:category, user: cat1.user)
+    user1 = FactoryGirl.create(:user)
+    cat1 = FactoryGirl.create(:category, user: user1)
+    cat2 = FactoryGirl.build(:category, user: user1, name: cat1.name)
     expect(cat2).to_not be_valid
   end
 
@@ -29,16 +30,13 @@ RSpec.describe Category, type: :model do
     expect(category.errors).to have_key(:user)
   end
 
-  it 'can has many debts' do
+  it 'can have many debts' do
     category = FactoryGirl.create(:category_with_debts)
     expect(category.debts.length).to eq(2)
   end
 
-  it 'can has many budgets' do
+  it 'can have many budgets' do
     category = FactoryGirl.create(:category_with_budgets)
-    expect(category.budgets.length).to eq(2)
+    expect(category.budgets.length).to eq(1)
   end
-
 end
-
-
