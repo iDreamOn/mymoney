@@ -48,7 +48,7 @@ class DebtBalance < ActiveRecord::Base
       end
     else
       paychecks_all = debt.account.user.get_all('income_sources').total_paychecks(debt.account, payment_date || payment_start_date, due_date)
-      result = balance_of_interest / paychecks_all unless paychecks_all == 0
+      result = max_payment / paychecks_all unless paychecks_all == 0
     end
     result
   end

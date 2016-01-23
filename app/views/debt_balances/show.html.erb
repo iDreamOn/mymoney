@@ -32,11 +32,6 @@
 </p>
 
 <p>
-  <strong>Estimated Balance so far:</strong>
-  <%= number_to_currency(@debt_balance.after_pay_balance) %>
-</p>
-
-<p>
   <strong>Estimated Payments left:</strong>
   <%= number_to_currency(@debt_balance.max_payment) %>
 </p>
@@ -48,7 +43,7 @@
 
   <p style="text-indent: 2em;">
 	<strong>Per payday: </strong>
-	<%= "#{number_to_currency(@debt_balance.payment_due)} x #{current_user.get_all('income_sources').total_paychecks(@debt_balance.debt.account, @debt_balance.payment_start_date, @debt_balance.due_date)}" %>
+	<%= "#{number_to_currency(@debt_balance.payment_due(Time.now.to_date))} x #{current_user.get_all('income_sources').total_paychecks(@debt_balance.debt.account, Time.now.to_date, @debt_balance.due_date)}" %>
   </p>
 <% else %>
   <p style="text-indent: 0em; color:green;">
