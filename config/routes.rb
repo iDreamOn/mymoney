@@ -11,12 +11,6 @@ Rails.application.routes.draw do
   end
   resources :accounts
   resources :income_sources
-  resources :income_distributions do
-    member do
-      get :make_payments
-      get :undo_payments
-    end
-  end
 
   root	'static_pages#home'
   get	'home'		=>	'static_pages#home'
@@ -33,7 +27,6 @@ Rails.application.routes.draw do
 
   resources :spendings do
     collection do
-      get :spendings_by_day
       get :spendings_by_month
       get :spendings_by_category
       get :spendings_by_payment_method
