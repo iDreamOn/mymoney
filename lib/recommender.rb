@@ -53,6 +53,7 @@ module Recommender
         max_amount -= main_account_payment
       end
       recommendation = [d.payment_due(balance_date), 0].max
+      recommendation = [recommendation, max_amount].min # do not recommend more than the max
       actual = [max_amount, recommendation].min
       actual = max_amount if max_amount <= 25
       result[d.debt.name] = [recommendation, actual, max_amount]
