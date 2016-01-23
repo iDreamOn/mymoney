@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :account_balance_distributions
   resources :account_balances do
     member do
       get :make_payments

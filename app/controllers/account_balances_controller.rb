@@ -64,10 +64,11 @@ class AccountBalancesController < ApplicationController
 
   # Make the payments
   def make_payments
-    @account_balance.make_payments
+    notice = 'Payments successfully made.'
+    notice = 'Some payments were not successful. Check if there is a budget for that month' unless @account_balance.make_payments
 
     respond_to do |format|
-      format.html { redirect_to @account_balance, notice: 'Payments successfully made.' }
+      format.html { redirect_to @account_balance, notice: notice }
       format.json { render :show, status: :made, location: @account_balance }
     end
   end
@@ -76,7 +77,7 @@ class AccountBalancesController < ApplicationController
     @account_balance.undo_payments
 
     respond_to do |format|
-      format.html { redirect_to @account_balance, notice: 'Payments successfully made.' }
+      format.html { redirect_to @account_balance, notice: 'Payments successfully undone.' }
       format.json { render :show, status: :made, location: @account_balance }
     end
   end
@@ -91,6 +92,6 @@ class AccountBalancesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def account_balance_params
-    params.require(:account_balance).permit(:balance_date, :account_id, :amount, :buffer, :debt_id, :paid)
+    params.require(:account_balance).permit(:balance_date, :account_id, :amount, :buffer, :debt_balance_id, :paid)
   end
 end

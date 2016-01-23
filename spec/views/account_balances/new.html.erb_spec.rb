@@ -21,7 +21,7 @@ RSpec.describe 'account_balances/new', type: :view do
 
       assert_select 'input#account_balance_buffer[name=?]', 'account_balance[buffer]'
 
-      assert_select 'input#account_balance_debt_id[name=?]', 'account_balance[debt_id]'
+      assert_select 'input#account_balance.debt_balance_id[name=?]', 'account_balance.debt_balance_id]'
 
       assert_select 'input#account_balance_paid[name=?]', 'account_balance[paid]'
     end

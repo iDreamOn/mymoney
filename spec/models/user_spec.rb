@@ -122,10 +122,6 @@ RSpec.describe User, type: :model do
       user = FactoryGirl.create(:user_with_debt_balances)
       expect(user.debt_balances.length).to eq(1)
     end
-
-    it 'has many account_balance_distributions' do
-      skip 'MIGHT BE DELETED'
-    end
   end
 
   context "has contributor but doesn't contributes" do
@@ -162,14 +158,6 @@ RSpec.describe User, type: :model do
       user_2 = FactoryGirl.create(:user_with_account_balances)
       user_1.contributors << user_2
       expect(user_1.get_all('account_balances').length).to eq(1)
-    end
-
-    it 'cant see eachothers account_balance_distributions' do
-      skip 'MIGHT BE DELETED'
-      # user_1 = FactoryGirl.create(:user_with_account_balance_distributions)
-      # user_2 = FactoryGirl.create(:user_with_account_balance_distributions)
-      # user_1.contributors << user_2
-      # expect(user_1.get_all('account_balance_distributions').length).to eq(1)
     end
 
     it 'cant see eachothers budgets' do
@@ -247,10 +235,6 @@ RSpec.describe User, type: :model do
       user_1.contributors << user_2
       user_2.contributors << user_1
       expect(user_1.get_all('account_balances').length).to eq(2)
-    end
-
-    it 'can see eachothers account_balance_distributions' do
-      skip 'MIGHT BE DELETED'
     end
 
     it 'can see eachothers budgets' do
