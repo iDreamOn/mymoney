@@ -3,7 +3,7 @@ FactoryGirl.define do
     paid false
     amount '9.99'
     buffer '9.99'
-    balance_date { Faker::Date.between(10.days.ago, Date.today) }
+    sequence(:balance_date) { |n| Faker::Date.backward(n) }
     account
     debt_balance
   end
