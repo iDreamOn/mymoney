@@ -1,6 +1,7 @@
 class AccountBalance < ActiveRecord::Base
   belongs_to :account
   belongs_to :debt
+  belongs_to :debt_balance
 
   has_many :account_balance_distributions
 
