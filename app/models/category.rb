@@ -5,8 +5,8 @@ class Category < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_presence_of :description, :name, :user_id
-  validates_uniqueness_of :name, case_sensitive: false, scope: :user_id
+  validates_presence_of :description, :name, :user
+  validates_uniqueness_of :name, case_sensitive: false, scope: :user
 
   def to_s
     name

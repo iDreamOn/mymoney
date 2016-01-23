@@ -5,15 +5,25 @@ FactoryGirl.define do
     name { Faker::Commerce.product_name }
     description { Faker::Commerce.department(5) }
     user
-  end
 
-  factory :category_with_budgets do
-    transient do
-      budgets_count 2
+    factory :category_with_debts do
+      transient do
+        debts_count 2
+      end
+
+      after(:create) do |category, evaluator|
+        create_list(:debt, evaluator.debts_count, category: category)
+      end
     end
 
-    after(:create) do |category, evaluator|
-      create_list(:budget, evaluator.budgets_count, category: category)
+    factory :category_with_budgets do
+      transient do
+        budgets_count 1
+      end
+
+      after(:create) do |param1, evaluator|
+        create_list(:budget, evaluator.budgets_count, category: param1)
+      end
     end
   end
 end
