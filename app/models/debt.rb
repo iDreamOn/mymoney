@@ -27,7 +27,7 @@ class Debt < ActiveRecord::Base
     where(deleted_at: nil)
   end
 
-  def soft_delete
+  def destroy
     update_attribute(:deleted_at, Time.now)
   end
 
