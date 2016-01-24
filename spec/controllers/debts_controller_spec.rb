@@ -19,25 +19,20 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe DebtsController, type: :controller do
-  # This should return the minimal set of attributes required to create a valid
-  # Debt. As you add validations to Debt, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    build(:debt).attributes
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    build(:debt, account: nil).attributes
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # DebtsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe 'GET #index' do
     it 'assigns all debts as @debts' do
       debt = Debt.create! valid_attributes
+      login(debt.owner)
       get :index, {}, valid_session
       expect(assigns(:debts)).to eq([debt])
     end
@@ -46,6 +41,7 @@ RSpec.describe DebtsController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested debt as @debt' do
       debt = Debt.create! valid_attributes
+      login(debt.owner)
       get :show, { id: debt.to_param }, valid_session
       expect(assigns(:debt)).to eq(debt)
     end
@@ -53,14 +49,16 @@ RSpec.describe DebtsController, type: :controller do
 
   describe 'GET #new' do
     it 'assigns a new debt as @debt' do
+      login_user
       get :new, {}, valid_session
-      skip # expect(assigns(:debt)).to be_a_new(Debt)
+      expect(assigns(:debt)).to be_a_new(Debt)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested debt as @debt' do
       debt = Debt.create! valid_attributes
+      login(debt.owner)
       get :edit, { id: debt.to_param }, valid_session
       expect(assigns(:debt)).to eq(debt)
     end
@@ -68,6 +66,7 @@ RSpec.describe DebtsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
+      before(:each) { login_user }
       it 'creates a new Debt' do
         expect do
           post :create, { debt: valid_attributes }, valid_session
@@ -87,6 +86,7 @@ RSpec.describe DebtsController, type: :controller do
     end
 
     context 'with invalid params' do
+      before(:each) { login_user }
       it 'assigns a newly created but unsaved debt as @debt' do
         post :create, { debt: invalid_attributes }, valid_session
         expect(assigns(:debt)).to be_a_new(Debt)
@@ -102,24 +102,27 @@ RSpec.describe DebtsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        build(:debt, name: 'newDebt').attributes
       end
 
       it 'updates the requested debt' do
         debt = Debt.create! valid_attributes
+        login(debt.owner)
         put :update, { id: debt.to_param, debt: new_attributes }, valid_session
         debt.reload
-        skip('Add assertions for updated state')
+        expect(debt.name).to eq('NewDebt')
       end
 
       it 'assigns the requested debt as @debt' do
         debt = Debt.create! valid_attributes
+        login(debt.owner)
         put :update, { id: debt.to_param, debt: valid_attributes }, valid_session
         expect(assigns(:debt)).to eq(debt)
       end
 
       it 'redirects to the debt' do
         debt = Debt.create! valid_attributes
+        login(debt.owner)
         put :update, { id: debt.to_param, debt: valid_attributes }, valid_session
         expect(response).to redirect_to(debt)
       end
@@ -128,12 +131,14 @@ RSpec.describe DebtsController, type: :controller do
     context 'with invalid params' do
       it 'assigns the debt as @debt' do
         debt = Debt.create! valid_attributes
+        login(debt.owner)
         put :update, { id: debt.to_param, debt: invalid_attributes }, valid_session
         expect(assigns(:debt)).to eq(debt)
       end
 
       it "re-renders the 'edit' template" do
         debt = Debt.create! valid_attributes
+        login(debt.owner)
         put :update, { id: debt.to_param, debt: invalid_attributes }, valid_session
         expect(response).to render_template('edit')
       end
@@ -143,13 +148,15 @@ RSpec.describe DebtsController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested debt' do
       debt = Debt.create! valid_attributes
-      expect do
-        delete :destroy, { id: debt.to_param }, valid_session
-      end.to change(Debt, :count).by(-1)
+      login(debt.owner)
+      delete :destroy, { id: debt.to_param }, valid_session
+      debt.reload
+      expect(debt.deleted_at).not_to be_nil
     end
 
     it 'redirects to the debts list' do
       debt = Debt.create! valid_attributes
+      login(debt.owner)
       delete :destroy, { id: debt.to_param }, valid_session
       expect(response).to redirect_to(debts_url)
     end
