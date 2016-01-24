@@ -5,6 +5,6 @@ FactoryGirl.define do
     buffer '9.99'
     balance_date '2015-12-27'
     account
-    debt
+    debt_balance
   end
 end

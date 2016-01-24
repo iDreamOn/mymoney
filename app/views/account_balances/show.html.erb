@@ -23,7 +23,7 @@
 
 <p>
   <strong>Leftover:</strong>
-  <%= @account_balance.debt %>
+  <%= @account_balance.debt_balance %>
 </p>
 
 <p>
@@ -39,8 +39,8 @@
   <thead>
     <tr>
       <th>Account</th>
-      <th>Balance</th>
-      <th>Distribution</th>
+      <th>Recommended</th>
+      <th>Actual</th>
       <% if Rails.env.development? %>
         <th>Max</th>
       <% end %>
@@ -62,7 +62,7 @@
     <tr>
       <td></td>
       <td><strong>Total</strong></td>
-      <td><%= number_to_currency(account_balance.total_distribution) %></td>
+      <td style="background-color:<%= equal_cell_color(account_balance.total_distribution,account_balance.amount)%>"><%= number_to_currency(account_balance.total_distribution) %></td>
       <% if Rails.env.development? %>
         <td></td>
       <% end %>

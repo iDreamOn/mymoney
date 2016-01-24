@@ -33,5 +33,13 @@ RSpec.describe AccountBalancesController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/account_balances/1').to route_to('account_balances#destroy', id: '1')
     end
+
+    it 'routes to #make_payments via GET' do
+      expect(get: '/account_balances/1/make_payments').to route_to('account_balances#make_payments', id: '1')
+    end
+
+    it 'routes to #undo_payments via GET' do
+      expect(get: '/account_balances/1/undo_payments').to route_to('account_balances#undo_payments', id: '1')
+    end
   end
 end
