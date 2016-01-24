@@ -54,8 +54,7 @@ class DebtsController < ApplicationController
   # DELETE /debts/1
   # DELETE /debts/1.json
   def destroy
-    # @debt.destroy
-    @debt.soft_delete
+    @debt.destroy
     respond_to do |format|
       format.html { redirect_to debts_url, notice: 'Debt was successfully destroyed.' }
       format.json { head :no_content }
