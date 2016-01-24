@@ -1,8 +1,8 @@
-<header class="navbar navbar-fixed-top navbar-inverse navbar-default nav-down">
-  <div class="container">
+<div class="container">
+  <header class="navbar navbar-fixed-top navbar-inverse navbar-default nav-down">
     <%= link_to "Where Did My Money Go?", '#', id: "logo" %>
     <nav>
-      <ul class="nav navbar-nav navbar-right navbar-default">
+      <ul class="nav navbar-nav navbar-right ">
       <li><%= link_to "Home", root_path %></li>
       <% if user_signed_in? %>
 
@@ -42,5 +42,5 @@
         <% end %>
       </ul>
     </nav>
-  </div>
-</header>
+  </header>
+</div>
