@@ -15,12 +15,15 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :schedule %><br/>
-    <%= f.select_recurring :schedule, [
-      IceCube::Rule.weekly(2).day(:friday)
-    ] %>
-  </div>
+  <% @income_source.build_schedule unless @income_source.schedule %>
+  <%= f.fields_for :schedule do |u| %>
+    <div class="field">
+      <%= u.label :rule, "Schedule" %><br/>
+      <%= u.select_recurring :rule, [
+        IceCube::Rule.weekly(2).day(:friday)
+      ] %>
+    </div>
+  <% end %>
   <div class="field">
     <%= f.label :account_id %><br>
     <%= f.collection_select :account_id, current_user.get_all("accounts").order(:name), :id, :name %>
