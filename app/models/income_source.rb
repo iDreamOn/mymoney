@@ -22,7 +22,11 @@ class IncomeSource < ActiveRecord::Base
   def paychecks(from = Time.now.to_date, to = Time.now.to_date)
     from = [from, start_date].max
     to = [to, end_date].min
-    schedule.occurrences(from, to)
+    if schedule
+      schedule.occurrences(from, to)
+    else
+      []
+    end
   end
 
   def income(from = Time.now.to_date, to = Time.now.to_date)
