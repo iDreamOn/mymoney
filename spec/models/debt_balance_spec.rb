@@ -52,7 +52,7 @@ RSpec.describe DebtBalance, type: :model do
 
     it 'payment start date is after its own due date' do
       debt = FactoryGirl.create(:debt)
-      debt_balance = FactoryGirl.build(:debt_balance, debt: debt, payment_start_date: Time.now, due_date: 1.days.ago)
+      debt_balance = FactoryGirl.build(:debt_balance, debt: debt, payment_start_date: Time.now.to_date, due_date: 2.days.ago)
       expect(debt_balance).to_not be_valid
       expect(debt_balance.errors).to have_key(:payment_start_date)
     end

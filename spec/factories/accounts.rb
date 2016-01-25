@@ -17,7 +17,7 @@ FactoryGirl.define do
 
     factory :account_with_income_sources do
       transient do
-        income_sources_count 3
+        income_sources_count 1
       end
       after(:create) do |account, evaluator|
         create_list(:income_source, evaluator.income_sources_count, account: account)

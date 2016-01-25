@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121201704) do
+ActiveRecord::Schema.define(version: 20160125055651) do
 
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
@@ -95,17 +95,18 @@ ActiveRecord::Schema.define(version: 20160121201704) do
   add_index "debts", ["name", "deleted_at"], name: "by_category_name", unique: true, using: :btree
 
   create_table "income_sources", force: :cascade do |t|
-    t.string   "name",       limit: 255,                         null: false
-    t.string   "schedule",   limit: 255,                         null: false
-    t.decimal  "amount",                 precision: 8, scale: 2, null: false
-    t.date     "start_date",                                     null: false
-    t.date     "end_date",                                       null: false
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.integer  "account_id", limit: 4
+    t.string   "name",        limit: 255,                         null: false
+    t.decimal  "amount",                  precision: 8, scale: 2, null: false
+    t.date     "start_date",                                      null: false
+    t.date     "end_date",                                        null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "account_id",  limit: 4
+    t.integer  "schedule_id", limit: 4
   end
 
   add_index "income_sources", ["account_id"], name: "index_income_sources_on_account_id", using: :btree
+  add_index "income_sources", ["schedule_id"], name: "index_income_sources_on_schedule_id", using: :btree
 
   create_table "payment_methods", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -117,6 +118,12 @@ ActiveRecord::Schema.define(version: 20160121201704) do
 
   add_index "payment_methods", ["user_id", "name"], name: "by_user_name", unique: true, using: :btree
   add_index "payment_methods", ["user_id"], name: "index_payment_methods_on_user_id", using: :btree
+
+  create_table "schedules", force: :cascade do |t|
+    t.text     "rule",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "spendings", force: :cascade do |t|
     t.string   "description",       limit: 255,                         null: false
@@ -182,6 +189,7 @@ ActiveRecord::Schema.define(version: 20160121201704) do
   add_foreign_key "debts", "accounts"
   add_foreign_key "debts", "categories"
   add_foreign_key "income_sources", "accounts"
+  add_foreign_key "income_sources", "schedules"
   add_foreign_key "payment_methods", "users"
   add_foreign_key "spendings", "budgets"
   add_foreign_key "spendings", "debt_balances"

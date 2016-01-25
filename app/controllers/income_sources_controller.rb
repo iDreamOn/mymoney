@@ -71,6 +71,6 @@ class IncomeSourcesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def income_source_params
-    params.require(:income_source).permit(:name, :account_id, :schedule, :pay_day, :amount, :start_date, :end_date)
+    params.require(:income_source).permit(:name, :account_id, :amount, :start_date, :end_date, :schedule_id, schedule_attributes: [:rule])
   end
 end

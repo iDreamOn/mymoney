@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :schedules
   resources :account_balances do
     member do
       get :make_payments

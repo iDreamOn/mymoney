@@ -1,30 +1,18 @@
 class IncomeSource < ActiveRecord::Base
   include DateModule
 
-  # recuring model
-  include IceCube
-  include ActiveModel::Validations
-  include ActiveModel::Conversion
-  extend ActiveModel::Naming
-
   belongs_to :account
+  belongs_to :schedule, inverse_of: :income_sources
   delegate :name, to: :account, prefix: true, allow_nil: true
 
-  validates_presence_of :name, :schedule, :amount, :start_date, :end_date, :account
-  validates_numericality_of :amount
+  accepts_nested_attributes_for :schedule
 
+  validates_presence_of :name, :amount, :start_date, :end_date, :account, :schedule
+  validates_numericality_of :amount
   validate :start_and_end
 
-  serialize :schedule, Hash
-
-  def schedule=(new_schedule)
-    write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_hash) unless new_schedule.nil?
-  end
-
-  def converted_schedule
-    the_schedule = Schedule.new(start_date)
-    the_schedule.add_recurrence_rule(RecurringSelect.dirty_hash_to_rule(schedule)) unless schedule.blank?
-    the_schedule
+  def schedule_attributes=(attrs)
+    self.schedule = Schedule.find_or_initialize_by(attrs)
   end
 
   def owner
@@ -34,7 +22,7 @@ class IncomeSource < ActiveRecord::Base
   def paychecks(from = Time.now.to_date, to = Time.now.to_date)
     from = [from, start_date].max
     to = [to, end_date].min
-    converted_schedule.occurrences_between(from, to).map(&:to_date)
+    schedule.occurrences(from, to)
   end
 
   def income(from = Time.now.to_date, to = Time.now.to_date)
