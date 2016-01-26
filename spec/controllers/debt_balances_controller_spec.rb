@@ -19,9 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe DebtBalancesController, type: :controller do
-  # This should return the minimal set of attributes required to create a valid
-  # DebtBalance. As you add validations to DebtBalance, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) do
     build(:debt_balance).attributes
   end
@@ -30,9 +27,6 @@ RSpec.describe DebtBalancesController, type: :controller do
     build(:debt_balance, debt: nil).attributes
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # DebtBalancesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe 'GET #index' do
@@ -165,6 +159,23 @@ RSpec.describe DebtBalancesController, type: :controller do
       login(debt_balance.owner)
       delete :destroy, { id: debt_balance.to_param }, valid_session
       expect(response).to redirect_to(debt_balances_url)
+    end
+  end
+
+  describe 'GET #graphs' do
+    before(:each) do
+      debt_balance = DebtBalance.create! valid_attributes
+      login(debt_balance.owner)
+    end
+
+    it 'renders a json for ccs_by_month' do
+      get :ccs_by_month, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
+    end
+
+    it 'renders a json for loans_by_month' do
+      get :loans_by_month, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
     end
   end
 end
