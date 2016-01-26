@@ -3,8 +3,6 @@ class SpendingsController < ApplicationController
 
   before_action :set_spending, only: [:show, :edit, :update, :destroy]
 
-  FLOOR = '2014-01-01'
-
   # GET /spendings
   # GET /spendings.json
   def index
@@ -12,41 +10,34 @@ class SpendingsController < ApplicationController
                  .search(params[:search])
                  .order(sort_column + ' ' + sort_direction)
                  .order(updated_at: :desc)
-                 .where("spending_date >= '#{FLOOR}'")
+                 .limit(1000)
                  .paginate(page: params[:page])
   end
 
   def spendings_by_month
     render json: current_user.real_spendings
-      .group_by_month(:spending_date, format: '%b %Y')
-      .sum(:amount)
+      .group_by_month(:spending_date, format: '%b %Y', last: 24)
+      .sum(:amount).select { |_k, v| v > 0 }
   end
 
   def spendings_by_category
     render json: current_user.real_spendings
-      .select('spendings.*, categories.name')
-      .group('categories.name').sum('spendings.amount')
+      .includes(:budget)
+      .group('categories.name')
+      .sum('spendings.amount')
   end
 
   def spendings_by_payment_method
     render json: current_user.real_spendings
-      .joins(:payment_method)
-      .select('spendings.*, payment_methods.name')
+      .includes(:payment_method)
       .group('payment_methods.name').sum(:amount)
   end
 
   def cc_purchase_vs_payment
-    h1 = {}
-
-    current_user.cc_spendings.where("spending_date >= '#{FLOOR}'").group_by_month(:spending_date, format: '%b %Y').sum(:amount).each do |spending|
-      h1.store(['Spendings', spending[0]], spending[1])
-    end
-
-    current_user.cc_payments.where("spending_date >= '#{FLOOR}'").group_by_month(:budget_month, format: '%b %Y').sum(:amount).each do |budget|
-      h1.store(['Payments', budget[0]], budget[1])
-    end
-
-    render json: h1.chart_json
+    spendings = [{ name: 'Spending', data: current_user.cc_spendings.group_by_month(:spending_date, format: '%b %Y', last: 24).sum(:amount).select { |_k, v| v > 0 } }]
+    payments = [{ name: 'Budget', data: current_user.cc_payments.group_by_month(:budget_month, format: '%b %Y', last: 24).sum(:amount).select { |_k, v| v > 0 } }]
+    graph = spendings + payments
+    render json: graph
   end
 
   # GET /spendings/1

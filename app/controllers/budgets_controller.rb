@@ -34,17 +34,10 @@ class BudgetsController < ApplicationController
   end
 
   def budgets_by_month
-    h1 = {}
-
-    current_user.real_spendings.group_by_month(:spending_date, format: '%b %Y').sum(:amount).each do |spending|
-      h1.store(['Spending', spending[0]], spending[1])
-    end
-
-    current_user.real_budgets.group_by_month(:budget_month, format: '%b %Y').sum(:amount).each do |budget|
-      h1.store(['Budget', budget[0]], budget[1])
-    end
-
-    render json: h1.chart_json
+    spendings = [{ name: 'Spending', data: current_user.real_spendings.group_by_month(:spending_date, format: '%b %Y', last: 12).sum(:amount) }]
+    budgets = [{ name: 'Budget', data: current_user.real_budgets.group_by_month(:budget_month, format: '%b %Y', last: 12).sum(:amount) }]
+    graph = spendings + budgets
+    render json: graph
   end
 
   # Reset all budgets
