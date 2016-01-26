@@ -19,25 +19,20 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe DebtBalancesController, type: :controller do
-  # This should return the minimal set of attributes required to create a valid
-  # DebtBalance. As you add validations to DebtBalance, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    build(:debt_balance).attributes
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    build(:debt_balance, debt: nil).attributes
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # DebtBalancesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe 'GET #index' do
     it 'assigns all debt_balances as @debt_balances' do
       debt_balance = DebtBalance.create! valid_attributes
+      login(debt_balance.owner)
       get :index, {}, valid_session
       expect(assigns(:debt_balances)).to eq([debt_balance])
     end
@@ -46,6 +41,7 @@ RSpec.describe DebtBalancesController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested debt_balance as @debt_balance' do
       debt_balance = DebtBalance.create! valid_attributes
+      login(debt_balance.owner)
       get :show, { id: debt_balance.to_param }, valid_session
       expect(assigns(:debt_balance)).to eq(debt_balance)
     end
@@ -53,14 +49,16 @@ RSpec.describe DebtBalancesController, type: :controller do
 
   describe 'GET #new' do
     it 'assigns a new debt_balance as @debt_balance' do
+      login_user
       get :new, {}, valid_session
-      skip # expect(assigns(:debt_balance)).to be_a_new(DebtBalance)
+      expect(assigns(:debt_balance)).to be_a_new(DebtBalance)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested debt_balance as @debt_balance' do
       debt_balance = DebtBalance.create! valid_attributes
+      login(debt_balance.owner)
       get :edit, { id: debt_balance.to_param }, valid_session
       expect(assigns(:debt_balance)).to eq(debt_balance)
     end
@@ -68,6 +66,7 @@ RSpec.describe DebtBalancesController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
+      before(:each) { login_user }
       it 'creates a new DebtBalance' do
         expect do
           post :create, { debt_balance: valid_attributes }, valid_session
@@ -87,6 +86,7 @@ RSpec.describe DebtBalancesController, type: :controller do
     end
 
     context 'with invalid params' do
+      before(:each) { login_user }
       it 'assigns a newly created but unsaved debt_balance as @debt_balance' do
         post :create, { debt_balance: invalid_attributes }, valid_session
         expect(assigns(:debt_balance)).to be_a_new(DebtBalance)
@@ -102,24 +102,27 @@ RSpec.describe DebtBalancesController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        build(:debt_balance, balance: '2000').attributes
       end
 
       it 'updates the requested debt_balance' do
         debt_balance = DebtBalance.create! valid_attributes
+        login(debt_balance.owner)
         put :update, { id: debt_balance.to_param, debt_balance: new_attributes }, valid_session
         debt_balance.reload
-        skip('Add assertions for updated state')
+        expect(debt_balance.balance).to eq('2000'.to_d)
       end
 
       it 'assigns the requested debt_balance as @debt_balance' do
         debt_balance = DebtBalance.create! valid_attributes
+        login(debt_balance.owner)
         put :update, { id: debt_balance.to_param, debt_balance: valid_attributes }, valid_session
         expect(assigns(:debt_balance)).to eq(debt_balance)
       end
 
       it 'redirects to the debt_balance' do
         debt_balance = DebtBalance.create! valid_attributes
+        login(debt_balance.owner)
         put :update, { id: debt_balance.to_param, debt_balance: valid_attributes }, valid_session
         expect(response).to redirect_to(debt_balance)
       end
@@ -128,12 +131,14 @@ RSpec.describe DebtBalancesController, type: :controller do
     context 'with invalid params' do
       it 'assigns the debt_balance as @debt_balance' do
         debt_balance = DebtBalance.create! valid_attributes
+        login(debt_balance.owner)
         put :update, { id: debt_balance.to_param, debt_balance: invalid_attributes }, valid_session
         expect(assigns(:debt_balance)).to eq(debt_balance)
       end
 
       it "re-renders the 'edit' template" do
         debt_balance = DebtBalance.create! valid_attributes
+        login(debt_balance.owner)
         put :update, { id: debt_balance.to_param, debt_balance: invalid_attributes }, valid_session
         expect(response).to render_template('edit')
       end
@@ -143,6 +148,7 @@ RSpec.describe DebtBalancesController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested debt_balance' do
       debt_balance = DebtBalance.create! valid_attributes
+      login(debt_balance.owner)
       expect do
         delete :destroy, { id: debt_balance.to_param }, valid_session
       end.to change(DebtBalance, :count).by(-1)
@@ -150,8 +156,26 @@ RSpec.describe DebtBalancesController, type: :controller do
 
     it 'redirects to the debt_balances list' do
       debt_balance = DebtBalance.create! valid_attributes
+      login(debt_balance.owner)
       delete :destroy, { id: debt_balance.to_param }, valid_session
       expect(response).to redirect_to(debt_balances_url)
+    end
+  end
+
+  describe 'GET #graphs' do
+    before(:each) do
+      debt_balance = DebtBalance.create! valid_attributes
+      login(debt_balance.owner)
+    end
+
+    it 'renders a json for ccs_by_month' do
+      get :ccs_by_month, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
+    end
+
+    it 'renders a json for loans_by_month' do
+      get :loans_by_month, {}, valid_session
+      expect(response.header['Content-Type']).to match(/json/)
     end
   end
 end
