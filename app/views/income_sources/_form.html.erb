@@ -16,16 +16,14 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :pay_schedule %><br>
-    <%= f.select :pay_schedule, options_for_select([['weekly', 'weekly'], ['bi-weekly', 'bi-weekly'], ['semi-monthly', 'semi-monthly']], @income_source.pay_schedule) %>
+    <%= f.label :schedule %><br/>
+    <%= f.select_recurring :schedule, [
+      IceCube::Rule.weekly(2).day(:friday)
+    ] %>
   </div>
   <div class="field">
     <%= f.label :account_id %><br>
     <%= f.collection_select :account_id, current_user.get_all("accounts").order(:name), :id, :name %>
-  </div>
-  <div class="field">
-    <%= f.label :pay_day %><br>
-    <%= f.text_field :pay_day %>
   </div>
   <div class="field">
     <%= f.label :amount %><br>

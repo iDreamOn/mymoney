@@ -5,13 +5,13 @@ RSpec.describe 'income_sources/index', type: :view do
     assign(:income_sources, [
       IncomeSource.create!(
         name: 'Name',
-        pay_schedule: 'Pay Schedule',
+        schedule: 'Pay Schedule',
         pay_day: 'Pay Day',
         amount: 1.5
       ),
       IncomeSource.create!(
         name: 'Name',
-        pay_schedule: 'Pay Schedule',
+        schedule: 'Pay Schedule',
         pay_day: 'Pay Day',
         amount: 1.5
       )

@@ -84,7 +84,7 @@ Budget.import([:id, :category_id, :budget_month, :amount, :created_at, :updated_
   [19, 4, '2015-09-01', '277.6', '2015-09-04 13:30:57', '2016-01-21 02:59:24'],
   [20, 5, '2015-09-01', '152.07', '2015-09-04 13:30:57', '2016-01-21 02:59:24']
 ])
-IncomeSource.import([:id, :name, :pay_schedule, :pay_day, :amount, :start_date, :end_date, :created_at, :updated_at, :account_id], [
+IncomeSource.import([:id, :name, :schedule, :pay_day, :amount, :start_date, :end_date, :created_at, :updated_at, :account_id], [
   [2, 'Job 2', 'semi-monthly', '15, last', '100.0', '2015-10-01', '2015-12-31', '2015-12-13 22:10:29', '2016-01-21 02:59:24', 1],
   [3, 'Job 1', 'weekly', 'thursday', '100.0', '2015-01-01', '2015-12-31', '2015-12-14 00:41:21', '2016-01-21 02:59:24', 1],
   [4, 'Job 3b', 'weekly', 'friday', '150.0', '2015-12-04', '2016-01-01', '2015-12-25 07:01:55', '2016-01-21 02:59:24', 5]

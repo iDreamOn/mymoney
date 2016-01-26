@@ -1,41 +1,40 @@
 class IncomeSource < ActiveRecord::Base
   include DateModule
 
+  # recuring model
+  include IceCube
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
+
   belongs_to :account
   delegate :name, to: :account, prefix: true, allow_nil: true
 
-  validates_presence_of :name, :pay_schedule, :pay_day, :amount, :start_date, :end_date, :account
+  validates_presence_of :name, :schedule, :amount, :start_date, :end_date, :account
   validates_numericality_of :amount
 
-  validate :weekly_payday, if: proc { |k| k.pay_schedule == 'weekly' }
-  validate :bi_weekly_payday, if: proc { |k| k.pay_schedule == 'bi-weekly' }
-  validate :semi_monthly_pay, if: proc { |k| k.pay_schedule == 'semi-monthly' }
   validate :start_and_end
+
+  serialize :schedule, Hash
+
+  def schedule=(new_schedule)
+    write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_hash) unless new_schedule.nil?
+  end
+
+  def converted_schedule
+    the_schedule = Schedule.new(start_date)
+    the_schedule.add_recurrence_rule(RecurringSelect.dirty_hash_to_rule(schedule)) unless schedule.blank?
+    the_schedule
+  end
 
   def owner
     account.owner
   end
 
-  def paydays
-    if pay_schedule == 'weekly' || pay_schedule == 'bi-weekly'
-      pay_day.titleize
-    else
-      pay_day.split(',').map { |word| word.to_i > 0 ? word.to_i.ordinalize : word.titleize }.join(' and ')
-    end
-  end
-
   def paychecks(from = Time.now.to_date, to = Time.now.to_date)
     from = [from, start_date].max
     to = [to, end_date].min
-    result = []
-    if pay_schedule == 'weekly'
-      result = (from..to).to_a.select { |k| day_of_week?(k, pay_day) }
-    elsif pay_schedule == 'bi-weekly'
-      result = (from..to).to_a.select { |k| day_of_week?(k, pay_day) && (k - start_date) % 14 == 0 }
-    elsif pay_schedule == 'semi-monthly'
-      result = (from..to).to_a.select { |k| day_of_month?(k, pay_day.split(',')[0]) || day_of_month?(k, pay_day.split(',')[1]) }
-    end
-    result
+    converted_schedule.occurrences_between(from, to).map(&:to_date)
   end
 
   def income(from = Time.now.to_date, to = Time.now.to_date)
@@ -67,33 +66,6 @@ class IncomeSource < ActiveRecord::Base
   end
 
   private
-
-  def bi_weekly_payday
-    return unless start_date && end_date && pay_day
-    errors.add(:pay_day, "must be a valid day (#{days_of_week.join(', ')})") unless days_of_week.include?(pay_day.titleize)
-    errors.add(:start_date, "must be a #{pay_day.titleize}") unless day_of_week?(start_date, pay_day)
-    errors.add(:end_date, "must be a #{pay_day.titleize}") unless day_of_week?(end_date, pay_day)
-  end
-
-  def weekly_payday
-    return unless start_date && end_date && pay_day
-    errors.add(:pay_day, "must be a valid day (#{days_of_week.join(', ')})") unless days_of_week.include?(pay_day.titleize)
-    errors.add(:start_date, "must be a #{pay_day.titleize}") unless day_of_week?(start_date, pay_day)
-    errors.add(:end_date, "must be a #{pay_day.titleize}") unless day_of_week?(end_date, pay_day)
-  end
-
-  def semi_monthly_pay
-    return unless start_date && end_date && pay_day
-    if pay_day.split(',').size != 2
-      errors.add(:pay_day, "must be a list of 2 elements. e.g. '1, 15' for 1st and 15th of each month. Days can be 'first' or 'last'.")
-    else
-      pay_day.split(',').each do |k|
-        unless (k.to_i >= 1 && k.to_i <= 31) || %w(first last).include?(k.strip.downcase)
-          errors.add(:pay_day, "must be between the 1st and the 31st or 'first' or 'last'.")
-        end
-      end
-    end
-  end
 
   def start_and_end
     return unless start_date && end_date

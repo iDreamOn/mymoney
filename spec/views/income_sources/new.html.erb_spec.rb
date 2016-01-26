@@ -4,7 +4,7 @@ RSpec.describe 'income_sources/new', type: :view do
   before(:each) do
     assign(:income_source, IncomeSource.new(
                              name: 'MyString',
-                             pay_schedule: 'MyString',
+                             schedule: 'MyString',
                              pay_day: 'MyString',
                              amount: 1.5
     ))
@@ -16,7 +16,7 @@ RSpec.describe 'income_sources/new', type: :view do
     assert_select 'form[action=?][method=?]', income_sources_path, 'post' do
       assert_select 'input#income_source_name[name=?]', 'income_source[name]'
 
-      assert_select 'input#income_source_pay_schedule[name=?]', 'income_source[pay_schedule]'
+      assert_select 'input#income_source_schedule[name=?]', 'income_source[schedule]'
 
       assert_select 'input#income_source_pay_day[name=?]', 'income_source[pay_day]'
 

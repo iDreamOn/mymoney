@@ -17,5 +17,12 @@
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require recurring_select
+//= require jquery-mobile-rs
 //= require_tree .
 
+$.fn.recurring_select.options = {
+  monthly: {
+    show_week: [true, true, true, true, true, true]
+  }
+};
