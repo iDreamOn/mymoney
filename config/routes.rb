@@ -4,6 +4,10 @@ Rails.application.routes.draw do
       get :make_payments
       get :undo_payments
     end
+
+    collection do
+      get :balances_by_day
+    end
   end
   resources :accounts
   resources :income_sources
