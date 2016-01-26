@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160119212117) do
 
-  create_table "account_balance_distributions", force: :cascade do |t|
-    t.integer  "account_balance_id", limit: 4
-    t.integer  "debt_id",            limit: 4
-    t.decimal  "recommendation",               precision: 8, scale: 2, null: false
-    t.decimal  "actual",                       precision: 8, scale: 2, null: false
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-  end
-
-  add_index "account_balance_distributions", ["account_balance_id"], name: "index_account_balance_distributions_on_account_balance_id", using: :btree
-  add_index "account_balance_distributions", ["debt_id"], name: "index_account_balance_distributions_on_debt_id", using: :btree
-
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
     t.integer  "account_id",      limit: 4
@@ -188,8 +176,6 @@ ActiveRecord::Schema.define(version: 20160119212117) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
-  add_foreign_key "account_balance_distributions", "account_balances"
-  add_foreign_key "account_balance_distributions", "debts"
   add_foreign_key "account_balances", "accounts"
   add_foreign_key "account_balances", "debt_balances"
   add_foreign_key "account_balances", "debts"

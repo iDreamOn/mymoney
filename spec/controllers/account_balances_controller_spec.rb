@@ -23,11 +23,11 @@ RSpec.describe AccountBalancesController, type: :controller do
   # AccountBalance. As you add validations to AccountBalance, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    build(:account_balance).attributes
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    build(:account_balance, amount: nil).attributes
   end
 
   # This should return the minimal set of values that should be in the session
@@ -38,6 +38,7 @@ RSpec.describe AccountBalancesController, type: :controller do
   describe 'GET #index' do
     it 'assigns all account_balances as @account_balances' do
       account_balance = AccountBalance.create! valid_attributes
+      login(account_balance.owner)
       get :index, {}, valid_session
       expect(assigns(:account_balances)).to eq([account_balance])
     end
@@ -46,22 +47,32 @@ RSpec.describe AccountBalancesController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested account_balance as @account_balance' do
       account_balance = AccountBalance.create! valid_attributes
+      login(account_balance.owner)
       get :show, { id: account_balance.to_param }, valid_session
       expect(assigns(:account_balance)).to eq(account_balance)
+    end
+
+    it 'assigns all account_balances with the same date as @account_balances' do
+      account_balance = AccountBalance.create! valid_attributes
+      account_balance_2 = create(:account_balance, balance_date: account_balance.balance_date)
+      login(account_balance.owner)
+      get :show, { id: account_balance.to_param }, valid_session
+      expect(assigns(:account_balances)).to eq([account_balance, account_balance_2])
     end
   end
 
   describe 'GET #new' do
     it 'assigns a new account_balance as @account_balance' do
+      login_user
       get :new, {}, valid_session
-      skip('not yet implemented')
-      # expect(assigns(:account_balance)).to be_a_new(AccountBalance)
+      expect(assigns(:account_balance)).to be_a_new(AccountBalance)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested account_balance as @account_balance' do
       account_balance = AccountBalance.create! valid_attributes
+      login(account_balance.owner)
       get :edit, { id: account_balance.to_param }, valid_session
       expect(assigns(:account_balance)).to eq(account_balance)
     end
@@ -69,6 +80,7 @@ RSpec.describe AccountBalancesController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
+      before(:each) { login_user }
       it 'creates a new AccountBalance' do
         expect do
           post :create, { account_balance: valid_attributes }, valid_session
@@ -88,6 +100,7 @@ RSpec.describe AccountBalancesController, type: :controller do
     end
 
     context 'with invalid params' do
+      before(:each) { login_user }
       it 'assigns a newly created but unsaved account_balance as @account_balance' do
         post :create, { account_balance: invalid_attributes }, valid_session
         expect(assigns(:account_balance)).to be_a_new(AccountBalance)
@@ -103,24 +116,27 @@ RSpec.describe AccountBalancesController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        build(:account_balance, amount: 212).attributes
       end
 
       it 'updates the requested account_balance' do
         account_balance = AccountBalance.create! valid_attributes
+        login(account_balance.owner)
         put :update, { id: account_balance.to_param, account_balance: new_attributes }, valid_session
         account_balance.reload
-        skip('Add assertions for updated state')
+        expect(account_balance.amount).to eq(new_attributes['amount'])
       end
 
       it 'assigns the requested account_balance as @account_balance' do
         account_balance = AccountBalance.create! valid_attributes
+        login(account_balance.owner)
         put :update, { id: account_balance.to_param, account_balance: valid_attributes }, valid_session
         expect(assigns(:account_balance)).to eq(account_balance)
       end
 
       it 'redirects to the account_balance' do
         account_balance = AccountBalance.create! valid_attributes
+        login(account_balance.owner)
         put :update, { id: account_balance.to_param, account_balance: valid_attributes }, valid_session
         expect(response).to redirect_to(account_balance)
       end
@@ -129,12 +145,14 @@ RSpec.describe AccountBalancesController, type: :controller do
     context 'with invalid params' do
       it 'assigns the account_balance as @account_balance' do
         account_balance = AccountBalance.create! valid_attributes
+        login(account_balance.owner)
         put :update, { id: account_balance.to_param, account_balance: invalid_attributes }, valid_session
         expect(assigns(:account_balance)).to eq(account_balance)
       end
 
       it "re-renders the 'edit' template" do
         account_balance = AccountBalance.create! valid_attributes
+        login(account_balance.owner)
         put :update, { id: account_balance.to_param, account_balance: invalid_attributes }, valid_session
         expect(response).to render_template('edit')
       end
@@ -144,6 +162,7 @@ RSpec.describe AccountBalancesController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested account_balance' do
       account_balance = AccountBalance.create! valid_attributes
+      login(account_balance.owner)
       expect do
         delete :destroy, { id: account_balance.to_param }, valid_session
       end.to change(AccountBalance, :count).by(-1)
@@ -151,6 +170,7 @@ RSpec.describe AccountBalancesController, type: :controller do
 
     it 'redirects to the account_balances list' do
       account_balance = AccountBalance.create! valid_attributes
+      login(account_balance.owner)
       delete :destroy, { id: account_balance.to_param }, valid_session
       expect(response).to redirect_to(account_balances_url)
     end

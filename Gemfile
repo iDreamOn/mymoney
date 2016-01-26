@@ -79,6 +79,7 @@ group :development, :test do
   gem 'rubocop'
 
   gem 'mailcatcher'
+  gem 'activerecord-import'
 end
 
 group :development do
