@@ -22,12 +22,12 @@ RSpec.describe Budget, type: :model do
     expect(budget.errors).to have_key(:budget_month)
   end
 
-  it 'has many spendings' do
-    budget = FactoryGirl.create(:user_with_spendings)
-    expect(budget.spendings.length).to eq(1)
+  it 'can have many spendings' do
+    budget = FactoryGirl.create(:budget_with_spendings)
+    expect(budget.spendings.length).to eq(2)
   end
 
-  it 'is unique per budget' do
+  it 'is unique per category per month' do
     budget1 = FactoryGirl.create(:budget)
     budget2 = FactoryGirl.build(:budget, category: budget1.category, budget_month: budget1.budget_month)
     expect(budget2).to_not be_valid

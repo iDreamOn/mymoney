@@ -24,8 +24,8 @@ RSpec.describe PaymentMethod, type: :model do
   end
 
   it 'has many spendings' do
-    payment_method = FactoryGirl.create(:user_with_spendings)
-    expect(payment_method.spendings.length).to eq(1)
+    payment_method = FactoryGirl.create(:payment_method_with_spendings)
+    expect(payment_method.spendings.length).to eq(2)
   end
 
   it 'must belong to user' do
