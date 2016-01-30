@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def real_budgets
-    budgets.joins(:category).where("categories.name <> 'Credit Cards'")
+    get_all('budgets').includes(:category).where("categories.name <> 'Credit Cards'")
   end
 
   def authorize(user = nil)
