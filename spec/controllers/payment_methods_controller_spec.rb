@@ -23,11 +23,11 @@ RSpec.describe PaymentMethodsController, type: :controller do
   # PaymentMethod. As you add validations to PaymentMethod, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    build(:payment_method).attributes
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    build(:payment_method, user: nil).attributes
   end
 
   # This should return the minimal set of values that should be in the session
@@ -38,6 +38,7 @@ RSpec.describe PaymentMethodsController, type: :controller do
   describe 'GET #index' do
     it 'assigns all payment_methods as @payment_methods' do
       payment_method = PaymentMethod.create! valid_attributes
+      login(payment_method.owner)
       get :index, {}, valid_session
       expect(assigns(:payment_methods)).to eq([payment_method])
     end
@@ -46,6 +47,7 @@ RSpec.describe PaymentMethodsController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested payment_method as @payment_method' do
       payment_method = PaymentMethod.create! valid_attributes
+      login(payment_method.owner)
       get :show, { id: payment_method.to_param }, valid_session
       expect(assigns(:payment_method)).to eq(payment_method)
     end
@@ -53,14 +55,16 @@ RSpec.describe PaymentMethodsController, type: :controller do
 
   describe 'GET #new' do
     it 'assigns a new payment_method as @payment_method' do
+      login_user
       get :new, {}, valid_session
-      skip # expect(assigns(:payment_method)).to be_a_new(PaymentMethod)
+      expect(assigns(:payment_method)).to be_a_new(PaymentMethod)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested payment_method as @payment_method' do
       payment_method = PaymentMethod.create! valid_attributes
+      login(payment_method.owner)
       get :edit, { id: payment_method.to_param }, valid_session
       expect(assigns(:payment_method)).to eq(payment_method)
     end
@@ -68,6 +72,7 @@ RSpec.describe PaymentMethodsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
+      before(:each) { login_user }
       it 'creates a new PaymentMethod' do
         expect do
           post :create, { payment_method: valid_attributes }, valid_session
@@ -87,6 +92,7 @@ RSpec.describe PaymentMethodsController, type: :controller do
     end
 
     context 'with invalid params' do
+      before(:each) { login_user }
       it 'assigns a newly created but unsaved payment_method as @payment_method' do
         post :create, { payment_method: invalid_attributes }, valid_session
         expect(assigns(:payment_method)).to be_a_new(PaymentMethod)
@@ -102,24 +108,27 @@ RSpec.describe PaymentMethodsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        build(:payment_method, name: 'newPaymentMethod').attributes
       end
 
       it 'updates the requested payment_method' do
         payment_method = PaymentMethod.create! valid_attributes
+        login(payment_method.owner)
         put :update, { id: payment_method.to_param, payment_method: new_attributes }, valid_session
         payment_method.reload
-        skip('Add assertions for updated state')
+        expect(payment_method.name).to eq('newPaymentMethod')
       end
 
       it 'assigns the requested payment_method as @payment_method' do
         payment_method = PaymentMethod.create! valid_attributes
+        login(payment_method.owner)
         put :update, { id: payment_method.to_param, payment_method: valid_attributes }, valid_session
         expect(assigns(:payment_method)).to eq(payment_method)
       end
 
       it 'redirects to the payment_method' do
         payment_method = PaymentMethod.create! valid_attributes
+        login(payment_method.owner)
         put :update, { id: payment_method.to_param, payment_method: valid_attributes }, valid_session
         expect(response).to redirect_to(payment_method)
       end
@@ -128,12 +137,14 @@ RSpec.describe PaymentMethodsController, type: :controller do
     context 'with invalid params' do
       it 'assigns the payment_method as @payment_method' do
         payment_method = PaymentMethod.create! valid_attributes
+        login(payment_method.owner)
         put :update, { id: payment_method.to_param, payment_method: invalid_attributes }, valid_session
         expect(assigns(:payment_method)).to eq(payment_method)
       end
 
       it "re-renders the 'edit' template" do
         payment_method = PaymentMethod.create! valid_attributes
+        login(payment_method.owner)
         put :update, { id: payment_method.to_param, payment_method: invalid_attributes }, valid_session
         expect(response).to render_template('edit')
       end
@@ -143,6 +154,7 @@ RSpec.describe PaymentMethodsController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested payment_method' do
       payment_method = PaymentMethod.create! valid_attributes
+      login(payment_method.owner)
       expect do
         delete :destroy, { id: payment_method.to_param }, valid_session
       end.to change(PaymentMethod, :count).by(-1)
@@ -150,6 +162,7 @@ RSpec.describe PaymentMethodsController, type: :controller do
 
     it 'redirects to the payment_methods list' do
       payment_method = PaymentMethod.create! valid_attributes
+      login(payment_method.owner)
       delete :destroy, { id: payment_method.to_param }, valid_session
       expect(response).to redirect_to(payment_methods_url)
     end
