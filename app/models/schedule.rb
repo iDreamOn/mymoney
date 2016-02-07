@@ -16,7 +16,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def occurrences(from = Time.now.to_date, to = Time.now.to_date)
-    schedule = Schedule.new(Date.new(2010, 1, 1))
+    schedule = Schedule.new(from)
     schedule.add_recurrence_rule(RecurringSelect.dirty_hash_to_rule(rule))
     schedule.occurrences_between(from, to).map(&:to_date)
   end
