@@ -15,11 +15,20 @@ RSpec.describe 'Debts', type: :request do
       expect(response).to have_http_status(200)
     end
 
-    it 'new_debt_path'
+    it 'new_debt_path' do
+      get new_debt_path
+      expect(response).to have_http_status(200)
+    end
 
-    it 'edit_debt_path'
+    it 'edit_debt_path' do
+      get edit_debt_path(debt)
+      expect(response).to have_http_status(200)
+    end
 
-    it 'debt_path'
+    it 'debt_path' do
+      get debt_path(debt)
+      expect(response).to have_http_status(200)
+    end
   end
 
   context 'respond with 302 (FOUND) when NOT logged in' do
@@ -27,10 +36,19 @@ RSpec.describe 'Debts', type: :request do
       get debts_path
       expect(response).to have_http_status(302)
     end
-    it 'new_debt_path'
+    it 'new_debt_path' do
+      get new_debt_path
+      expect(response).to have_http_status(302)
+    end
 
-    it 'edit_debt_path'
+    it 'edit_debt_path' do
+      get edit_debt_path(debt)
+      expect(response).to have_http_status(302)
+    end
 
-    it 'debt_path'
+    it 'debt_path' do
+      get debt_path(debt)
+      expect(response).to have_http_status(302)
+    end
   end
 end
