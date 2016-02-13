@@ -10,16 +10,6 @@ RSpec.describe 'Budgets', type: :request do
       login(budget.owner)
     end
 
-    it 'reset_budgets_path' do
-      get reset_budgets_path
-      expect(response).to have_http_status(200)
-    end
-
-    it 'reset_current_month_budgets_path' do
-      get reset_current_month_budgets_path
-      expect(response).to have_http_status(200)
-    end
-
     it 'budgets_by_month_budgets_path' do
       get budgets_by_month_budgets_path
       expect(response).to have_http_status(200)
@@ -47,16 +37,6 @@ RSpec.describe 'Budgets', type: :request do
   end
 
   context 'respond with 302 (FOUND) when NOT logged in' do
-    it 'reset_budgets_path' do
-      get reset_budgets_path
-      expect(response).to have_http_status(302)
-    end
-
-    it 'reset_current_month_budgets_path' do
-      get reset_current_month_budgets_path
-      expect(response).to have_http_status(302)
-    end
-
     it 'budgets_by_month_budgets_path' do
       get budgets_by_month_budgets_path
       expect(response).to have_http_status(302)
