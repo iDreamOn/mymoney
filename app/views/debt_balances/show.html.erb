@@ -54,9 +54,6 @@
 
 <%= link_to 'Edit', edit_debt_balance_path(@debt_balance) %> |
 <%= link_to 'Back', debt_balances_path %>
-<% if @debt_balance.due_date > Time.now.to_date %> |
-  <%= link_to 'Close', close_debt_balance_path(@debt_balance) %>
-<% end %>
 
 <h2>Spendings</h2>
 

@@ -39,11 +39,6 @@ RSpec.describe 'DebtBalances', type: :request do
       get loans_by_month_debt_balances_path
       expect(response).to have_http_status(200)
     end
-
-    it 'close_debt_balance' do
-      get close_debt_balance_path(debt_balance)
-      expect(response).to have_http_status(200)
-    end
   end
 
   context 'respond with 302 (FOUND) when NOT logged in' do
@@ -76,9 +71,5 @@ RSpec.describe 'DebtBalances', type: :request do
       expect(response).to have_http_status(302)
     end
 
-    it 'close_debt_balance' do
-      get close_debt_balance_path(debt_balance)
-      expect(response).to have_http_status(302)
-    end
   end
 end
