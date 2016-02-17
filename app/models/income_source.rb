@@ -23,7 +23,7 @@ class IncomeSource < ActiveRecord::Base
     from = [from, start_date].max
     to = [to, end_date].min
     if schedule
-      schedule.occurrences(from, to)
+      schedule.occurrences(from, to, start_date)
     else
       []
     end
