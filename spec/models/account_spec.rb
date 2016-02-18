@@ -35,7 +35,7 @@ RSpec.describe Account, type: :model do
 
   it 'has many income_sources' do
     account = FactoryGirl.create(:account_with_income_sources)
-    expect(account.income_sources.length).to eq(3)
+    expect(account.income_sources.length).to eq(1)
   end
 
   it 'has many account_balances' do

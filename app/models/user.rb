@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
   has_many :debts, through: :accounts
   has_many :account_balances, through: :accounts
   has_many :debt_balances, through: :debts
-  has_many :account_balance_distributions, through: :account_balances
 
   has_and_belongs_to_many :contributors,
                           autosave: true,

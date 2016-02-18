@@ -23,11 +23,11 @@ RSpec.describe IncomeSourcesController, type: :controller do
   # IncomeSource. As you add validations to IncomeSource, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    build(:income_source).attributes
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    build(:income_source, name: nil).attributes
   end
 
   # This should return the minimal set of values that should be in the session
@@ -38,6 +38,7 @@ RSpec.describe IncomeSourcesController, type: :controller do
   describe 'GET #index' do
     it 'assigns all income_sources as @income_sources' do
       income_source = IncomeSource.create! valid_attributes
+      login(income_source.owner)
       get :index, {}, valid_session
       expect(assigns(:income_sources)).to eq([income_source])
     end
@@ -46,6 +47,7 @@ RSpec.describe IncomeSourcesController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested income_source as @income_source' do
       income_source = IncomeSource.create! valid_attributes
+      login(income_source.owner)
       get :show, { id: income_source.to_param }, valid_session
       expect(assigns(:income_source)).to eq(income_source)
     end
@@ -53,14 +55,16 @@ RSpec.describe IncomeSourcesController, type: :controller do
 
   describe 'GET #new' do
     it 'assigns a new income_source as @income_source' do
+      login_user
       get :new, {}, valid_session
-      skip # expect(assigns(:income_source)).to be_a_new(IncomeSource)
+      expect(assigns(:income_source)).to be_a_new(IncomeSource)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested income_source as @income_source' do
       income_source = IncomeSource.create! valid_attributes
+      login(income_source.owner)
       get :edit, { id: income_source.to_param }, valid_session
       expect(assigns(:income_source)).to eq(income_source)
     end
@@ -68,6 +72,7 @@ RSpec.describe IncomeSourcesController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
+      before(:each) { login_user }
       it 'creates a new IncomeSource' do
         expect do
           post :create, { income_source: valid_attributes }, valid_session
@@ -87,6 +92,7 @@ RSpec.describe IncomeSourcesController, type: :controller do
     end
 
     context 'with invalid params' do
+      before(:each) { login_user }
       it 'assigns a newly created but unsaved income_source as @income_source' do
         post :create, { income_source: invalid_attributes }, valid_session
         expect(assigns(:income_source)).to be_a_new(IncomeSource)
@@ -102,24 +108,27 @@ RSpec.describe IncomeSourcesController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        build(:payment_method, name: 'newIncomeSource').attributes
       end
 
       it 'updates the requested income_source' do
         income_source = IncomeSource.create! valid_attributes
+        login(income_source.owner)
         put :update, { id: income_source.to_param, income_source: new_attributes }, valid_session
         income_source.reload
-        skip('Add assertions for updated state')
+        expect(income_source.name).to eq('newIncomeSource')
       end
 
       it 'assigns the requested income_source as @income_source' do
         income_source = IncomeSource.create! valid_attributes
+        login(income_source.owner)
         put :update, { id: income_source.to_param, income_source: valid_attributes }, valid_session
         expect(assigns(:income_source)).to eq(income_source)
       end
 
       it 'redirects to the income_source' do
         income_source = IncomeSource.create! valid_attributes
+        login(income_source.owner)
         put :update, { id: income_source.to_param, income_source: valid_attributes }, valid_session
         expect(response).to redirect_to(income_source)
       end
@@ -128,12 +137,14 @@ RSpec.describe IncomeSourcesController, type: :controller do
     context 'with invalid params' do
       it 'assigns the income_source as @income_source' do
         income_source = IncomeSource.create! valid_attributes
+        login(income_source.owner)
         put :update, { id: income_source.to_param, income_source: invalid_attributes }, valid_session
         expect(assigns(:income_source)).to eq(income_source)
       end
 
       it "re-renders the 'edit' template" do
         income_source = IncomeSource.create! valid_attributes
+        login(income_source.owner)
         put :update, { id: income_source.to_param, income_source: invalid_attributes }, valid_session
         expect(response).to render_template('edit')
       end
@@ -143,6 +154,7 @@ RSpec.describe IncomeSourcesController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested income_source' do
       income_source = IncomeSource.create! valid_attributes
+      login(income_source.owner)
       expect do
         delete :destroy, { id: income_source.to_param }, valid_session
       end.to change(IncomeSource, :count).by(-1)
@@ -150,6 +162,7 @@ RSpec.describe IncomeSourcesController, type: :controller do
 
     it 'redirects to the income_sources list' do
       income_source = IncomeSource.create! valid_attributes
+      login(income_source.owner)
       delete :destroy, { id: income_source.to_param }, valid_session
       expect(response).to redirect_to(income_sources_url)
     end

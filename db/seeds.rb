@@ -84,10 +84,14 @@ Budget.import([:id, :category_id, :budget_month, :amount, :created_at, :updated_
   [19, 4, '2015-09-01', '277.6', '2015-09-04 13:30:57', '2016-01-21 02:59:24'],
   [20, 5, '2015-09-01', '152.07', '2015-09-04 13:30:57', '2016-01-21 02:59:24']
 ])
-IncomeSource.import([:id, :name, :schedule, :amount, :start_date, :end_date, :created_at, :updated_at, :account_id], [
-  [2, 'Job 2', { "validations": { "day": [5] }, "rule_type": 'IceCube::WeeklyRule', "interval": 2, "week_start": 0 }, '100.0', '2015-10-01', '2015-12-31', '2015-12-13 22:10:29', '2016-01-21 02:59:24', 1],
-  [3, 'Job 1', { "validations": { "day": [5] }, "rule_type": 'IceCube::WeeklyRule', "interval": 2, "week_start": 0 }, '100.0', '2015-01-01', '2015-12-31', '2015-12-14 00:41:21', '2016-01-21 02:59:24', 1],
-  [4, 'Job 3b', { "validations": { "day": [5] }, "rule_type": 'IceCube::WeeklyRule', "interval": 2, "week_start": 0 }, '150.0', '2015-12-04', '2016-01-01', '2015-12-25 07:01:55', '2016-01-21 02:59:24', 5]
+Schedule.import([:id, :rule], [
+  [1, "{\"validations\":{\"day\":[5]},\"rule_type\":\"IceCube::WeeklyRule\",\"interval\":1,\"week_start\":0}"],
+  [2, "{\"validations\":{\"day\":[4]},\"rule_type\":\"IceCube::WeeklyRule\",\"interval\":2,\"week_start\":0}"]
+])
+IncomeSource.import([:id, :name, :schedule_id, :amount, :start_date, :end_date, :created_at, :updated_at, :account_id], [
+  [2, 'Job 2', 1, '100.0', '2015-10-01', '2015-12-31', '2015-12-13 22:10:29', '2016-01-21 02:59:24', 1],
+  [3, 'Job 1', 1, '2015-01-01', '2015-12-31', '2015-12-14 00:41:21', '2016-01-21 02:59:24', 1],
+  [4, 'Job 3b', 2, '150.0', '2015-12-04', '2016-01-01', '2015-12-25 07:01:55', '2016-01-21 02:59:24', 5]
 ])
 PaymentMethod.import([:id, :name, :description, :created_at, :updated_at, :user_id], [
   [1, 'Credit', 'Any of our cc', '2015-09-04 17:29:53', '2016-01-21 02:59:24', 2],

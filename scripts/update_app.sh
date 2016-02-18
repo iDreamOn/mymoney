@@ -6,5 +6,5 @@ cd /var/apps/mymoney
 echo "updating gems and migrations. running as $(whoami)"
 echo "current directory: $(pwd)"
 bundle install --without development test
-RAILS_ENV=production bundle exec rake db:migrate
+RAILS_ENV=production rake db:migrate
 cd $DIR

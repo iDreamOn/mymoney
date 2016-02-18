@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :schedules
   resources :account_balances do
     member do
       get :make_payments
@@ -36,8 +37,6 @@ Rails.application.routes.draw do
 
   resources :budgets do
     collection do
-      get :reset
-      get :reset_current_month
       get :budgets_by_month
     end
   end

@@ -40,22 +40,6 @@ class BudgetsController < ApplicationController
     render json: graph
   end
 
-  # Reset all budgets
-  def reset
-    respond_to do |format|
-      format.html { redirect_to budgets_url, notice: 'Budgets were successfully set.' }
-      format.json { head :no_content }
-    end
-  end
-
-  # Reset current month's budgets
-  def reset_current_month
-    respond_to do |format|
-      format.html { redirect_to budgets_url, notice: 'Budgets were successfully set.' }
-      format.json { head :no_content }
-    end
-  end
-
   # POST /budgets
   # POST /budgets.json
   def create
