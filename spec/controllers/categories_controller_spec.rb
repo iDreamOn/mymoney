@@ -155,9 +155,6 @@ RSpec.describe CategoriesController, type: :controller do
     it 'destroys the requested category' do
       category = Category.create! valid_attributes
       login(category.owner)
-      #delete :destroy, { id: category.to_param }, valid_session
-      #category.reload
-      #expect(category.deleted_at).not_to be_nil
       expect do
         delete :destroy, { id: category.to_param }, valid_session
       end.to change(Category, :count).by(-1)
