@@ -69,17 +69,6 @@ class DebtBalance < ActiveRecord::Base
     end
   end
 
-  def close
-    if debt.is_asset?
-      new_target_balance = balance + (payment_due * payments_to_date)
-    else
-      new_target_balance = balance - (payment_due * payments_to_date)
-    end
-
-    update_attribute(:target_balance, new_target_balance)
-    update_attribute(:due_date, Time.now.to_date)
-  end
-
   def in_payment?(date = Time.now.to_date)
     payment_start_date <= date && date <= due_date
   end
