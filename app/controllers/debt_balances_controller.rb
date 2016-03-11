@@ -28,7 +28,7 @@ class DebtBalancesController < ApplicationController
       end_date = [date[1].end_of_month, Spending.maximum(:spending_date) || Time.now.to_date].min
       total_debt = 0
       current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{end_date}' AND '#{end_date}' <= due_date AND debts.is_asset=false AND categories.name <> 'Bill' AND categories.name = 'Credit Cards'").each { |k| total_debt += k.max_payment(end_date, true) }
-      current_user.get_all('debt_balances').joins(debt: :category).where("'#{end_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Credit Cards')").each { |k| total_debt += k.max_payment(end_date, true) }
+      current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{end_date}' AND '#{end_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Credit Cards')").each { |k| total_debt += k.max_payment(end_date, true) }
       h1.store(date[0], total_debt)
     end
 
