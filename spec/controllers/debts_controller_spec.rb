@@ -102,7 +102,7 @@ RSpec.describe DebtsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        build(:debt, name: 'newDebt').attributes
+        build(:debt, name: 'New Debt').attributes
       end
 
       it 'updates the requested debt' do
@@ -110,7 +110,7 @@ RSpec.describe DebtsController, type: :controller do
         login(debt.owner)
         put :update, { id: debt.to_param, debt: new_attributes }, valid_session
         debt.reload
-        expect(debt.name).to eq('NewDebt')
+        expect(debt.name).to eq('New Debt')
       end
 
       it 'assigns the requested debt as @debt' do
