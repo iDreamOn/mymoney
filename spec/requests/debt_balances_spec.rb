@@ -70,6 +70,5 @@ RSpec.describe 'DebtBalances', type: :request do
       get loans_by_month_debt_balances_path
       expect(response).to have_http_status(302)
     end
-
   end
 end
