@@ -39,7 +39,7 @@ textarea {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
-  font-family:'Apple Chancery','Monotype Corsiva','ITC Zapf Chancery','URW Chancery L',san-serif;
+  font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
 }
 
 .image-size {
@@ -229,11 +229,8 @@ aside {
 }
 
 /* forms */
-.container {
-  width:40%;
-}
 
-input, textarea, select, .editable-input {
+input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   margin-bottom: 15px;
@@ -270,7 +267,7 @@ input {
 
 #session_remember_me {
   width: auto;
-  margin-left: 20px;
+  margin-left: 0;
 }
 
 /* Users index */
