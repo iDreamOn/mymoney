@@ -39,7 +39,7 @@ textarea {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
-  font-family:'Apple Chancery','Monotype Corsiva','ITC Zapf Chancery','URW Chancery L',san-serif;
+  font-family:'Apple Chancery','Monotype Corsiva','ITC Zapf Chancery','URW Chancery L',cursive;
 }
 
 .image-size {
@@ -256,6 +256,12 @@ input {
 }
 
 .actions {
+  width:45%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sign {
   width:45%;
   margin-left: auto;
   margin-right: auto;
