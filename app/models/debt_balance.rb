@@ -35,7 +35,7 @@ class DebtBalance < ActiveRecord::Base
     (target_balance - balance).abs
   end
 
-  def payment_due(payment_date = nil, _live = true)
+  def payment_due(payment_date = nil, after_last_payment = false)
     result = 0
     if debt.fix_amount
       if debt.schedule == 'Bi-Weekly'
@@ -47,10 +47,15 @@ class DebtBalance < ActiveRecord::Base
         result = (debt.fix_amount * paychecks_todate) / paychecks_all unless paychecks_all == 0
       end
     else
+      payment_date = last_payment_date + 1 if after_last_payment
       paychecks_all = debt.account.user.get_all('income_sources').total_paychecks(debt.account, payment_date || payment_start_date, due_date)
       result = max_payment / paychecks_all unless paychecks_all == 0
     end
     result
+  end
+
+  def last_payment_date
+    payments.maximum(:spending_date) || Time.now.to_date - 1
   end
 
   def after_pay_balance(up_to_date = nil, inclusive = false)
