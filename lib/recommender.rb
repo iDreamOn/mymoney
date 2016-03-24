@@ -48,11 +48,11 @@ module Recommender
     left_over_amount -= buffer
 
     debts.select { |db| db.debt.account == account || db == debt_balance }.map do |d|
-      max_amount = [d.max_payment(balance_date), 0].max
+      max_amount = [d.max_payment(balance_date, true), 0].max
       if d.debt.account != account && check_main_account
         max_amount -= main_account_payment
       end
-      recommendation = [d.payment_due(balance_date), 0].max
+      recommendation = [d.payment_due(balance_date, true), 0].max
       recommendation = [recommendation, max_amount].min # do not recommend more than the max
       actual = [max_amount, recommendation].min
       actual = max_amount if max_amount <= 25
