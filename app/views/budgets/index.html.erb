@@ -46,7 +46,7 @@
       <tr>
         <td><%= budget.category %></td>
         <td><%= budget.budget_month.strftime('%B %Y') %></td>
-        <td><%= number_to_currency(budget.amount) %></td>
+        <td><%= "#{number_to_currency(budget.amount)} (#{number_to_percentage(budget.amount*100/(overall_budget(@curr_budget)+0.0000001), precision: 2)})" %></td>
         <td><%= number_to_currency(budget.spendings.sum(:amount)) %></td>
         <td style="background-color:<%= good_pos_cell_color_comparison(budget.amount,budget.spendings.sum(:amount), budget.category_name)%>"><%= number_to_currency(budget.amount - budget.spendings.sum(:amount)) %></td>
         <td><%= link_to 'Show', budget %></td>
