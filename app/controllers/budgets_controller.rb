@@ -37,7 +37,7 @@ class BudgetsController < ApplicationController
   def budgets_by_month
     h1 = {}
 
-    last_n_months(25).reverse_each do |date|
+    last_n_months(24).reverse_each do |date|
       end_date = date[1].end_of_month
       total_income = current_user.get_all('income_sources').total_income(nil, date[1], end_date)
       h1.store(date[0], total_income)
