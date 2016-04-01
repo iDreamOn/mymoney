@@ -1,5 +1,6 @@
 class BudgetsController < ApplicationController
   include SpendingsHelper
+  include DateModule
 
   before_action :set_budget, only: [:show, :edit, :update, :destroy]
 
@@ -34,9 +35,18 @@ class BudgetsController < ApplicationController
   end
 
   def budgets_by_month
+    h1 = {}
+
+    last_n_months(25).reverse_each do |date|
+      end_date = date[1].end_of_month
+      total_income = current_user.get_all('income_sources').total_income(nil, date[1], end_date)
+      h1.store(date[0], total_income)
+    end
+
     spendings = [{ name: 'Spending', data: current_user.real_spendings.group_by_month(:spending_date, format: '%b %Y', last: 25).sum(:amount) }]
     budgets = [{ name: 'Budget', data: current_user.real_budgets.group_by_month(:budget_month, format: '%b %Y', last: 25).sum(:amount) }]
-    graph = spendings + budgets
+    incomes = [{ name: 'Income', data: h1 }]
+    graph = spendings + budgets + incomes
     render json: graph
   end
 
