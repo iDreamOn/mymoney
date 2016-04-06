@@ -12,9 +12,9 @@ default: &default
 
 development:
   <<: *default
-  database: mymoney_development
-  username: rails
-  password: rails
+  database: <%= ENV["DBName"] %>
+  username: <%= ENV["DBUser"] %>
+  password: <%= ENV["DBPassword"] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -26,6 +26,6 @@ test:
 
 production:
   <<: *default
-  database: mymoney_production
-  username: <%= ENV["DB_USER"] %>
-  password: <%= ENV["DB_PW"] %>
+  database: <%= ENV["DBName"] %>
+  username: <%= ENV["DBUser"] %>
+  password: <%= ENV["DBPassword"] %>
