@@ -6,8 +6,6 @@ if ENV['CI']
     repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
     "https://emthomas:#{ENV.fetch('CI_USER_PASSWORD')}@github.com/#{repo_name}.git"
   end
-else
-  gem 'seed_dump', git: 'https://github.com/iDreamOn/seed_dump.git', branch: 'order-by-association'
 end
 
 # Add bootstrap
@@ -83,6 +81,8 @@ group :development, :test do
 
   gem 'mailcatcher'
   gem 'activerecord-import'
+  
+  gem 'seed_dump', git: 'https://github.com/iDreamOn/seed_dump.git', branch: 'order-by-association'
 end
 
 group :development do
