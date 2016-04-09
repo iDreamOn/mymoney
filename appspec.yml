@@ -7,7 +7,7 @@ hooks:
   AfterInstall:
     - location: scripts/update_app.sh
       timeout: 300
-      runas: mymoney
+      runas: root
   ApplicationStart:
     - location: scripts/reload_app.sh
       timeout: 300
