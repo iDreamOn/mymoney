@@ -81,8 +81,6 @@ group :development, :test do
 
   gem 'mailcatcher'
   gem 'activerecord-import'
-  
-  gem 'seed_dump', git: 'https://github.com/iDreamOn/seed_dump.git', branch: 'order-by-association'
 end
 
 group :development do
