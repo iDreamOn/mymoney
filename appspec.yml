@@ -10,6 +10,6 @@ permissions:
     group: mymoney
 hooks:
   ApplicationStart:
-    - location: /var/apps/mymoney/start-application
+    - location: scripts/start-application
       timeout: 300
       runas: root
