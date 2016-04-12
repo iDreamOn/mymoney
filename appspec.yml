@@ -6,7 +6,7 @@ files:
 hooks:
   AfterInstall:
     - location: scripts/update_app.sh
-      timeout: 300
+      timeout: 299
       runas: root
   ApplicationStart:
     - location: scripts/reload_app.sh
