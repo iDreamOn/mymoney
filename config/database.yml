@@ -26,6 +26,8 @@ test:
 
 production:
   <<: *default
-  database: mymoney_production
-  username: <%= ENV["DB_USER"] %>
-  password: <%= ENV["DB_PW"] %>
+  database: <%= ENV["DBName"] %>
+  username: <%= ENV["DBUser"] %>
+  password: <%= ENV["DBPassword"] %>
+  host: <%= ENV["DBHost"] %>
+  port: <%= ENV["DBPort"] %>

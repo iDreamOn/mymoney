@@ -27,3 +27,5 @@ db/backups/*prod*
 passenger*
 
 coverage
+
+Gemfile.lock

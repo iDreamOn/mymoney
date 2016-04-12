@@ -2,13 +2,14 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/apps/mymoney
+    destination: /home/mymoney/application
+permissions:
+  - object: /home/mymoney/application
+    pattern: "*"
+    owner: mymoney
+    group: mymoney
 hooks:
-  AfterInstall:
-    - location: scripts/update_app.sh
-      timeout: 299
-      runas: root
   ApplicationStart:
-    - location: scripts/reload_app.sh
+    - location: scripts/start-application
       timeout: 300
       runas: root
