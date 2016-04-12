@@ -38,8 +38,8 @@ class DebtBalancesController < ApplicationController
   # GET /debt_balances/1.json
   def show
     @spendings = @debt_balance.payments
-                 .order(sort_column + ' ' + sort_direction)
-                 .order(updated_at: :desc)
+                              .order(sort_column + ' ' + sort_direction)
+                              .order(updated_at: :desc)
   end
 
   # GET /debt_balances/new

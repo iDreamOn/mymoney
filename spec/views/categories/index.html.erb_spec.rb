@@ -3,15 +3,15 @@ require 'rails_helper'
 RSpec.describe 'categories/index', type: :view do
   before(:each) do
     assign(:categories, [
-      Category.create!(
-        name: 'Name',
-        description: 'Description'
-      ),
-      Category.create!(
-        name: 'Name',
-        description: 'Description'
-      )
-    ])
+             Category.create!(
+               name: 'Name',
+               description: 'Description'
+             ),
+             Category.create!(
+               name: 'Name',
+               description: 'Description'
+             )
+           ])
   end
 
   it 'renders a list of categories' do

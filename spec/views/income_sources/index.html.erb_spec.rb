@@ -3,19 +3,19 @@ require 'rails_helper'
 RSpec.describe 'income_sources/index', type: :view do
   before(:each) do
     assign(:income_sources, [
-      IncomeSource.create!(
-        name: 'Name',
-        schedule: 'Pay Schedule',
-        pay_day: 'Pay Day',
-        amount: 1.5
-      ),
-      IncomeSource.create!(
-        name: 'Name',
-        schedule: 'Pay Schedule',
-        pay_day: 'Pay Day',
-        amount: 1.5
-      )
-    ])
+             IncomeSource.create!(
+               name: 'Name',
+               schedule: 'Pay Schedule',
+               pay_day: 'Pay Day',
+               amount: 1.5
+             ),
+             IncomeSource.create!(
+               name: 'Name',
+               schedule: 'Pay Schedule',
+               pay_day: 'Pay Day',
+               amount: 1.5
+             )
+           ])
   end
 
   it 'renders a list of income_sources' do

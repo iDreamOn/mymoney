@@ -3,19 +3,19 @@ require 'rails_helper'
 RSpec.describe 'spendings/index', type: :view do
   before(:each) do
     assign(:spendings, [
-      Spending.create!(
-        description: 'Description',
-        category: Category.create!(name: 'uncategorized', description: 'Description'),
-        amount: '9.99',
-        spending_date: DateTime.new(2001, 2, 3)
-      ),
-      Spending.create!(
-        description: 'Description',
-        category: Category.create!(name: 'uncategorized', description: 'Description'),
-        amount: '9.99',
-        spending_date: DateTime.new(2001, 2, 3)
-      )
-    ])
+             Spending.create!(
+               description: 'Description',
+               category: Category.create!(name: 'uncategorized', description: 'Description'),
+               amount: '9.99',
+               spending_date: DateTime.new(2001, 2, 3)
+             ),
+             Spending.create!(
+               description: 'Description',
+               category: Category.create!(name: 'uncategorized', description: 'Description'),
+               amount: '9.99',
+               spending_date: DateTime.new(2001, 2, 3)
+             )
+           ])
   end
 
   it 'renders a list of spendings' do

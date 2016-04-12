@@ -3,15 +3,15 @@ require 'rails_helper'
 RSpec.describe 'budgets/index', type: :view do
   before(:each) do
     assign(:budgets, [
-      Budget.create!(
-        category: nil,
-        amount: '9.99'
-      ),
-      Budget.create!(
-        category: nil,
-        amount: '9.99'
-      )
-    ])
+             Budget.create!(
+               category: nil,
+               amount: '9.99'
+             ),
+             Budget.create!(
+               category: nil,
+               amount: '9.99'
+             )
+           ])
   end
 
   it 'renders a list of budgets' do

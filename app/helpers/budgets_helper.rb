@@ -1,7 +1,7 @@
 module BudgetsHelper
   include DateModule
 
-  THRESHOLD = '2015-10-01'
+  THRESHOLD = '2015-10-01'.freeze
 
   def overall_budget(date = nil)
     start_date = date.nil? ? Date.new(1864, 1, 1) : date.change(day: 1)

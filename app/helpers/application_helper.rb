@@ -1,10 +1,10 @@
 module ApplicationHelper
-  VALID = %w(Amex Freedom Travel Cash Jcp Express)
-  VALID_GOOD_NEG = ['Credit Cards', 'Savings', 'Loans']
-  ERROR = '#FF0000'
-  NEUTRAL = '#FFFFFF'
-  SUCCESS = '#00FFFF'
-  WARNING = '#F7FE2E'
+  VALID = %w(Amex Freedom Travel Cash Jcp Express).freeze
+  VALID_GOOD_NEG = ['Credit Cards', 'Savings', 'Loans'].freeze
+  ERROR = '#FF0000'.freeze
+  NEUTRAL = '#FFFFFF'.freeze
+  SUCCESS = '#00FFFF'.freeze
+  WARNING = '#F7FE2E'.freeze
 
   # Returns the full title on a per-page basis.
   def full_title(page_title = '')

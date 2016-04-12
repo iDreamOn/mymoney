@@ -4,16 +4,16 @@ class BudgetsController < ApplicationController
 
   before_action :set_budget, only: [:show, :edit, :update, :destroy]
 
-  FLOOR = '2014-01-01'
+  FLOOR = '2014-01-01'.freeze
 
   # GET /budgets
   # GET /budgets.json
   def index
     @budgets = current_user.get_all('budgets')
-               .joins(:category)
-               .search(params[:search])
-               .order('categories.name')
-               .where("budget_month >= '#{FLOOR}'")
+                           .joins(:category)
+                           .search(params[:search])
+                           .order('categories.name')
+                           .where("budget_month >= '#{FLOOR}'")
     @curr_budget = (params[:search] || Time.now.to_date.change(day: 1)).to_date
   end
 
@@ -21,8 +21,8 @@ class BudgetsController < ApplicationController
   # GET /budgets/1.json
   def show
     @spendings = @budget.spendings
-                 .order(sort_column + ' ' + sort_direction)
-                 .order(updated_at: :desc)
+                        .order(sort_column + ' ' + sort_direction)
+                        .order(updated_at: :desc)
   end
 
   # GET /budgets/new

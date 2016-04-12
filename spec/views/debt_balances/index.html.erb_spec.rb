@@ -3,15 +3,15 @@ require 'rails_helper'
 RSpec.describe 'debt_balances/index', type: :view do
   before(:each) do
     assign(:debt_balances, [
-      DebtBalance.create!(
-        debt: nil,
-        balance: 1.5
-      ),
-      DebtBalance.create!(
-        debt: nil,
-        balance: 1.5
-      )
-    ])
+             DebtBalance.create!(
+               debt: nil,
+               balance: 1.5
+             ),
+             DebtBalance.create!(
+               debt: nil,
+               balance: 1.5
+             )
+           ])
   end
 
   it 'renders a list of debt_balances' do

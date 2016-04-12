@@ -7,17 +7,17 @@ class SpendingsController < ApplicationController
   # GET /spendings.json
   def index
     @spendings = current_user.get_all('spendings')
-                 .search(params[:search])
-                 .order(sort_column + ' ' + sort_direction)
-                 .order(updated_at: :desc)
-                 .limit(1000)
-                 .paginate(page: params[:page])
+                             .search(params[:search])
+                             .order(sort_column + ' ' + sort_direction)
+                             .order(updated_at: :desc)
+                             .limit(1000)
+                             .paginate(page: params[:page])
   end
 
   def spendings_by_month
     render json: current_user.real_spendings
-      .group_by_month(:spending_date, format: '%b %Y', last: 24)
-      .sum(:amount).select { |_k, v| v > 0 }
+                             .group_by_month(:spending_date, format: '%b %Y', last: 24)
+                             .sum(:amount).select { |_k, v| v > 0 }
   end
 
   def spendings_by_category

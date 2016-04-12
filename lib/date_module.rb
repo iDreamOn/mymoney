@@ -61,7 +61,7 @@ module DateModule
 
   def last_n_months(n = 12)
     end_date = curr_month.change(day: 1)
-    end_date = 1.month.since end_date if (Time.now >= 1.month.from_now.change(day: 1) - 5.days)
+    end_date = 1.month.since end_date if Time.now >= 1.month.from_now.change(day: 1) - 5.days
     start_date = n.month.ago end_date
     (start_date..end_date).map { |k| [k.strftime('%b %Y'), k] if k.day == 1 }.compact.reverse!
   end

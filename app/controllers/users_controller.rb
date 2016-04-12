@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def remove_contributor
-    current_user.contributors.delete(User.find params['id'])
+    current_user.contributors.delete(User.find(params['id']))
 
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully removed as contributor.' }
