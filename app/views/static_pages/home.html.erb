@@ -7,4 +7,25 @@
 <% if !user_signed_in? %>
   <p class="center"><%= link_to "Sign In", new_user_session_path %> or <%= link_to "Sign Up", new_user_registration_path %><br> 
   to get started.</p>
+<% else %>
+  <h3>===== Getting Started =====</h3>
+  <h4>1. Add <%= link_to "Payment Methods", payment_methods_path %>:</h4>
+  <p class="center">You want to track you spendings right? You must have a way to pay for them. <br>
+  Please add those first (credit, debit, cash, gift card, etc).</p>
+
+  <h4>2. Add Spending <%= link_to "Categories", categories_path %>:</h4> 
+  <p class="center">Now that you know how you are going to pay for your spendings, you need to know what you are spending your money on.<br> 
+  Organize your spendings by categories (rent, loans, utilities, etc).</p>
+
+  <h4>3. Add <%= link_to "Budgets", budgets_path %>:</h4>
+  <p class="center">Spending without a budget is like setting sail without direction. <br>
+  Setting a budget for each category each month will help you stay on track, know where your money is going, <br>
+  and accomplish your financial goals faster. </p>
+
+  <h4>4. Track Your <%= link_to "Spendings", spendings_path %>:</h4> 
+  <p class="center">Now your are ready to spend (or not). Keep track of your spendings by recording them into the mymoney. <br>
+  Manually recording your spendings ensures that you are on top of your financials.</p>
+
+  <h4>More To Come:</h4>
+  <p class="center">Instructions on how to use the Accounts, Contributors, Debts, and Income Sources features.</p>
 <% end %>
