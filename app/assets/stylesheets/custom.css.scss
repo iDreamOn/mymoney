@@ -6,7 +6,7 @@
   // @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
   //http://www.w3schools.com/tags/ref_colornames.asp
   @include button-variant(DarkGoldenRod, darkblue, gray);
-  font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 1.5em;
 
 }
@@ -39,7 +39,7 @@ textarea {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
-  font-family:'Apple Chancery','Monotype Corsiva','ITC Zapf Chancery','URW Chancery L',cursive;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .image-size {
@@ -48,25 +48,43 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 4em;
+  font-size: 50px;
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
 }
 
 h2 {
-  font-size: 3em;
+  font-size: 75px;
   letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: #777;
+  color: #000;
+}
+
+h3 {
+  font-size: 50px;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #000;
+}
+
+h4 {
+  font-size: 25px;
+  letter-spacing: -1px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-weight: normal;
+  color: #000;
 }
 
 p {
   font-size: 1.5em;
   line-height: 1.7em;
-  font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .erb-image-wrapper {
@@ -308,7 +326,7 @@ margin-bottom: 10px;
 th, td {
     border: 1px solid black;
     border-collapse: collapse;
-    font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 th, td {
