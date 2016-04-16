@@ -13,7 +13,7 @@ class DebtBalancesController < ApplicationController
 
   def ccs_by_month
     render json: current_user.get_all('debt_balances').joins(debt: :category)
-      .where("categories.name = 'Credit Cards'")
+      .where('categories.cc_payment = ?', true)
       .group('debts.name')
       .group_by_month(:due_date, format: '%b %Y')
       .having('sum(debt_balances.balance) > ?', 0)

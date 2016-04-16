@@ -23,6 +23,10 @@
     <%= f.label :description %><br>
     <%= f.text_field :description %>
   </div>
+  <div class="field">
+    <%= f.label :cc_payment, 'Credit Card Payment?' %><br>
+    <%= f.check_box :cc_payment %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
