@@ -3,6 +3,7 @@ require 'faker'
 FactoryGirl.define do
   factory :payment_method do
     name { Faker::Commerce.product_name }
+    method_type 'Credit'
     description { Faker::Commerce.department(5) }
     user
 
