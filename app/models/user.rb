@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def cc_spendings
-    get_all('spendings').joins(:payment_method).where("payment_methods.name = 'Credit'")
+    get_all('spendings').joins(:payment_method).where("payment_methods.method_type = 'Credit'")
   end
 
   def cc_payments

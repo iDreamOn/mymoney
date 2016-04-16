@@ -20,6 +20,10 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :method_type %><br>
+    <%= f.select :method_type, ['Credit', 'Debit', 'Cash', 'Other'], prompt: 'Select One'  %>
+  </div>
+  <div class="field">
     <%= f.label :description %><br>
     <%= f.text_field :description %>
   </div>
