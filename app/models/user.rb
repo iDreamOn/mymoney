@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
                     allow_blank: false
 
   def real_spendings
-    get_all('spendings').joins(budget: :category).where("categories.name <> 'Credit Cards'")
+    get_all('spendings').joins(budget: :category).where('categories.cc_payment = ?', false)
   end
 
   def cc_spendings
@@ -48,11 +48,11 @@ class User < ActiveRecord::Base
   end
 
   def cc_payments
-    get_all('spendings').joins(budget: :category).where("categories.name = 'Credit Cards'")
+    get_all('spendings').joins(budget: :category).where('categories.cc_payment = ?', true)
   end
 
   def real_budgets
-    get_all('budgets').includes(:category).where("categories.name <> 'Credit Cards'")
+    get_all('budgets').includes(:category).where('categories.cc_payment = ?', false)
   end
 
   def authorize(user = nil)

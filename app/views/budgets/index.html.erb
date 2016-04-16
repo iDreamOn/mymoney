@@ -44,7 +44,7 @@
   <tbody>
     <% @budgets.each do |budget| %>
       <tr>
-        <td><%= budget.category %></td>
+        <td><%= budget.category %><% if budget.category.cc_payment? %><sup><a href="#fn1" id="ref1"> 1</a></sup><% end %></td>
         <td><%= budget.budget_month.strftime('%B %Y') %></td>
         <td><%= "#{number_to_currency(budget.amount)} (#{number_to_percentage(budget.amount*100/(overall_budget(@curr_budget)+0.0000001), precision: 2)})" %></td>
         <td><%= number_to_currency(budget.spendings.sum(:amount)) %></td>
@@ -64,6 +64,7 @@
 <hr></hr>
 
 <p>
+<sup id="fn1">1: Credit Card Payments are not counted in total spending since you are actually paying back an expense you did hopefully not to long ago. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
 <sup id="fn2">2. <%= credit_payment_budget_notes(@curr_budget) %><a href="#ref2" title="Jump back to footnote 2 in the text.">↩</a></sup><br>
 <sup id="fn3">3. <%= potential_income_notes(@curr_budget) %><a href="#ref3" title="Jump back to footnote 3 in the text.">↩</a></sup><br>
 <sup id="fn4">4. <span style="background-color:<%= good_pos_cell_color_comparison(100,0)%>">Below budget</span>; <span style="background-color:<%= good_pos_cell_color_comparison(100.00,109.00)%>">Over by less than 10%</span>; <span style="background-color:<%= good_pos_cell_color_comparison(100.00,111.00)%>">More than 10% over</span>. <a href="#ref4" title="Jump back to footnote 4 in the text.">↩</a></sup><br>

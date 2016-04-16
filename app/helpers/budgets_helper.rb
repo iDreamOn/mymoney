@@ -5,7 +5,7 @@ module BudgetsHelper
 
   def overall_budget(date = nil)
     start_date = date.nil? ? Date.new(1864, 1, 1) : date.change(day: 1)
-    current_user.get_all('budgets').joins(:category).where("categories.name NOT IN ('Credit Cards')").where(budget_month: start_date).sum(:amount)
+    current_user.get_all('budgets').joins(:category).where('categories.cc_payment = ?', false).where(budget_month: start_date).sum(:amount)
   end
 
   def overall_spending(date = nil)
