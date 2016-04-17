@@ -1,5 +1,6 @@
 class Account < ActiveRecord::Base
   belongs_to :user
+  has_one :payment_method
   has_many :income_sources
   has_many :debts
   has_many :debt_balances, through: :debts

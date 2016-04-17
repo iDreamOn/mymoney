@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160416025648) do
+ActiveRecord::Schema.define(version: 20160417203153) do
 
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
@@ -116,8 +116,10 @@ ActiveRecord::Schema.define(version: 20160416025648) do
     t.datetime "updated_at",              null: false
     t.integer  "user_id",     limit: 4
     t.string   "method_type", limit: 255
+    t.integer  "account_id",  limit: 4
   end
 
+  add_index "payment_methods", ["account_id"], name: "index_payment_methods_on_account_id", using: :btree
   add_index "payment_methods", ["user_id", "name"], name: "by_user_name", unique: true, using: :btree
   add_index "payment_methods", ["user_id"], name: "index_payment_methods_on_user_id", using: :btree
 
@@ -192,6 +194,7 @@ ActiveRecord::Schema.define(version: 20160416025648) do
   add_foreign_key "debts", "categories"
   add_foreign_key "income_sources", "accounts"
   add_foreign_key "income_sources", "schedules"
+  add_foreign_key "payment_methods", "accounts"
   add_foreign_key "payment_methods", "users"
   add_foreign_key "spendings", "budgets"
   add_foreign_key "spendings", "debt_balances"
