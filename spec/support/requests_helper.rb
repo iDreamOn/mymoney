@@ -12,4 +12,8 @@ module RequestsHelper
   def current_user
     subject.current_user
   end
+
+  def json
+    JSON.parse(response.body)
+  end
 end

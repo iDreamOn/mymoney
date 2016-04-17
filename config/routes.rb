@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get :spendings_by_month
       get :spendings_by_category
       get :spendings_by_payment_method
+      get :spendings_by_payment_method_type
       get :cc_purchase_vs_payment
     end
   end
