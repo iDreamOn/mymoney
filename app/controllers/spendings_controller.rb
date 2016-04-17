@@ -27,6 +27,12 @@ class SpendingsController < ApplicationController
       .sum('spendings.amount')
   end
 
+  def spendings_by_payment_method_type
+    render json: current_user.real_spendings
+      .includes(:payment_method)
+      .group('payment_methods.method_type').sum(:amount)
+  end
+
   def spendings_by_payment_method
     render json: current_user.real_spendings
       .includes(:payment_method)

@@ -21,6 +21,12 @@
 
 <div class="row">
   <div class="col-xs-12">
+    <%= pie_chart spendings_by_payment_method_type_spendings_path, discrete: true, library: {title: "Spendings By Payment Method Type"} %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
     <%= line_chart cc_purchase_vs_payment_spendings_path, discrete: true, library: {title: "CC Spendings vs Payments"} %>
   </div>
 </div>

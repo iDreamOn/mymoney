@@ -1,4 +1,4 @@
 json.array!(@debts) do |debt|
-  json.extract! debt, :id, :category, :old_category, :sub_category, :name, :is_asset
+  json.extract! debt, :id, :sub_category, :name, :created_at, :updated_at, :is_asset, :deleted_at, :fix_amount, :schedule, :payment_start_date, :autopay, :category_id, :account_id
   json.url debt_url(debt, format: :json)
 end
