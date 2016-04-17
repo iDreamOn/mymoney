@@ -9,6 +9,7 @@
       <th>Name</th>
       <th>Type</th>
       <th>Description</th>
+      <th>Associated Account</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
         <td><%= payment_method.name %></td>
         <td><%= payment_method.method_type %></td>
         <td><%= payment_method.description %></td>
+        <td><%= payment_method.account %></td>
         <td><%= link_to 'Show', payment_method %></td>
         <td><%= link_to 'Edit', edit_payment_method_path(payment_method) %></td>
         <td><%= link_to 'Destroy', payment_method, method: :delete, data: { confirm: 'Are you sure?' } %></td>

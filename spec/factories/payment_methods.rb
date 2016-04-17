@@ -5,6 +5,7 @@ FactoryGirl.define do
     name { Faker::Commerce.product_name }
     method_type 'Credit'
     description { Faker::Commerce.department(5) }
+    account
     user
 
     factory :payment_method_with_spendings do

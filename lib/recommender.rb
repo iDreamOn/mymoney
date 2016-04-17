@@ -11,7 +11,7 @@ module Recommender
       next if new_debt.nil?
       db = debts.find_by(debt_id: new_debt.id)
       budget = db.debt.category.budgets.find_by(budget_month: balance_date.change(day: 1))
-      pm = PaymentMethod.find_by(name: 'Debit')
+      pm = db.debt.account.payment_method
       if db && budget && pm
         Spending.create(amount: v[1], description: db.debt.name, spending_date: balance_date, budget: budget, payment_method: pm, debt_balance: db) unless v[1] == 0
       else
