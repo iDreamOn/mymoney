@@ -33,7 +33,7 @@
   <thead>
     <tr>
       <th>Category</th>
-      <th>Month</th>
+      <th>% of Total</th>
       <th>Budget Amount</th>
       <th>Spendings</th>
       <th>+/-<sup><a href="#fn4" id="ref4"> 4</a></sup></th>
@@ -45,8 +45,8 @@
     <% @budgets.each do |budget| %>
       <tr>
         <td><%= budget.category %><% if budget.category.cc_payment? %><sup><a href="#fn1" id="ref1"> 1</a></sup><% end %></td>
-        <td><%= budget.budget_month.strftime('%B %Y') %></td>
-        <td><%= "#{number_to_currency(budget.amount)} (#{number_to_percentage(budget.amount*100/(overall_budget(@curr_budget)+0.0000001), precision: 2)})" %></td>
+        <td><% if budget.category.cc_payment? %>N/A<% else %><%= number_to_percentage(budget.amount*100/(overall_budget(@curr_budget)+0.0000001), precision: 2) %><% end %></td>
+        <td><%= number_to_currency(budget.amount) %></td>
         <td><%= number_to_currency(budget.spendings.sum(:amount)) %></td>
         <td style="background-color:<%= good_pos_cell_color_comparison(budget.amount,budget.spendings.sum(:amount), budget.category_name)%>"><%= number_to_currency(budget.amount - budget.spendings.sum(:amount)) %></td>
         <td><%= link_to 'Show', budget %></td>
