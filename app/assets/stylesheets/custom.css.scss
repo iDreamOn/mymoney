@@ -106,7 +106,7 @@ header {
 #logo {
   float: left;
   margin-right: 10px;
-  margin-left: 10px;
+  margin-left: 1%;
   font-size: 1.7em;
   color: #fff;
   text-transform: uppercase;
@@ -156,6 +156,7 @@ header {
 
 .navbar-nav.navbar-right:last-child {
     margin-right: 0;
+    padding-right: 1%;
 }
 
 /* footer */

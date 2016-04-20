@@ -17,11 +17,11 @@
   </div>
   <div class="field">
     <%= f.label :balance %><br>
-    <%= f.number_field :balance %>
+    <%= f.number_field :balance, :class => 'text_field', :step => 0.01 %>
   </div>
   <div class="field">
     <%= f.label :target_balance %><br>
-    <%= f.number_field :target_balance %>
+    <%= f.number_field :target_balance, :class => 'text_field', :step => 0.01 %>
   </div>
   <div class="field">
     <%= f.label :payment_start_date %><br>
