@@ -16,17 +16,17 @@ RSpec.describe 'Accounts', type: :request do
     end
 
     it 'new_account_path' do
-      get new_account_path
+      xhr :get, new_account_path, format: :js
       expect(response).to have_http_status(200)
     end
 
     it 'edit_account_path' do
-      get edit_account_path(account)
+      xhr :get, edit_account_path(account), format: :js
       expect(response).to have_http_status(200)
     end
 
     it 'account_path' do
-      get account_path(account)
+      xhr :get, account_path(account), format: :js
       expect(response).to have_http_status(200)
     end
   end
