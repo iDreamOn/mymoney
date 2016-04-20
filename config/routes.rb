@@ -10,7 +10,9 @@ Rails.application.routes.draw do
       get :balances_by_day
     end
   end
+
   resources :accounts
+
   resources :income_sources
 
   root	'static_pages#home'

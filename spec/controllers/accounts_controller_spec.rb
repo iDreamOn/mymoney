@@ -48,7 +48,7 @@ RSpec.describe AccountsController, type: :controller do
     it 'assigns the requested account as @account' do
       account = Account.create! valid_attributes
       login(account.owner)
-      get :show, { id: account.to_param }, valid_session
+      xhr :get, :show, { id: account.to_param }, format: :js
       expect(assigns(:account)).to eq(account)
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe AccountsController, type: :controller do
   describe 'GET #new' do
     it 'assigns a new account as @account' do
       login_user
-      get :new, {}, valid_session
+      xhr :get, :new, {}, format: :js
       expect(assigns(:account)).to be_a_new(Account)
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe AccountsController, type: :controller do
     it 'assigns the requested account as @account' do
       account = Account.create! valid_attributes
       login(account.owner)
-      get :edit, { id: account.to_param }, valid_session
+      xhr :get, :edit, { id: account.to_param }, format: :js
       expect(assigns(:account)).to eq(account)
     end
   end
@@ -94,12 +94,12 @@ RSpec.describe AccountsController, type: :controller do
     context 'with invalid params' do
       before(:each) { login_user }
       it 'assigns a newly created but unsaved account as @account' do
-        post :create, { account: invalid_attributes }, valid_session
+        xhr :post, :create, { account: invalid_attributes }, valid_session, format: :js
         expect(assigns(:account)).to be_a_new(Account)
       end
 
       it "re-renders the 'new' template" do
-        post :create, { account: invalid_attributes }, valid_session
+        xhr :post, :create, { account: invalid_attributes }, valid_session, format: :js
         expect(response).to render_template('new')
       end
     end
@@ -138,14 +138,14 @@ RSpec.describe AccountsController, type: :controller do
       it 'assigns the account as @account' do
         account = Account.create! valid_attributes
         login(account.owner)
-        put :update, { id: account.to_param, account: invalid_attributes }, valid_session
+        xhr :put, :update, { id: account.to_param, account: invalid_attributes }, valid_session, format: :js
         expect(assigns(:account)).to eq(account)
       end
 
       it "re-renders the 'edit' template" do
         account = Account.create! valid_attributes
         login(account.owner)
-        put :update, { id: account.to_param, account: invalid_attributes }, valid_session
+        xhr :put, :update, { id: account.to_param, account: invalid_attributes }, valid_session, format: :js
         expect(response).to render_template('edit')
       end
     end
