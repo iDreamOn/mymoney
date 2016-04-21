@@ -49,6 +49,7 @@ RSpec.describe SpendingsController, type: :controller do
       spending = Spending.create! valid_attributes
       login(spending.owner)
       get :show, { id: spending.to_param }, valid_session
+      xhr :get, :show, { id: spending.to_param }, format: :js
       expect(assigns(:spending)).to eq(spending)
     end
   end
@@ -57,6 +58,7 @@ RSpec.describe SpendingsController, type: :controller do
     it 'assigns a new spending as @spending' do
       login_user
       get :new, {}, valid_session
+      xhr :get, :new, {}, format: :js
       expect(assigns(:spending)).to be_a_new(Spending)
     end
   end
@@ -66,6 +68,7 @@ RSpec.describe SpendingsController, type: :controller do
       spending = Spending.create! valid_attributes
       login(spending.owner)
       get :edit, { id: spending.to_param }, valid_session
+      xhr :get, :edit, { id: spending.to_param }, format: :js
       expect(assigns(:spending)).to eq(spending)
     end
   end
@@ -95,11 +98,13 @@ RSpec.describe SpendingsController, type: :controller do
       before(:each) { login_user }
       it 'assigns a newly created but unsaved spending as @spending' do
         post :create, { spending: invalid_attributes }, valid_session
+        xhr :post, :create, { spending: invalid_attributes }, valid_session, format: :js
         expect(assigns(:spending)).to be_a_new(Spending)
       end
 
       it "re-renders the 'new' template" do
         post :create, { spending: invalid_attributes }, valid_session
+        xhr :post, :create, { spending: invalid_attributes }, valid_session, format: :js
         expect(response).to render_template('new')
       end
     end
@@ -139,6 +144,7 @@ RSpec.describe SpendingsController, type: :controller do
         spending = Spending.create! valid_attributes
         login(spending.owner)
         put :update, { id: spending.to_param, spending: invalid_attributes }, valid_session
+        xhr :put, :update, { id: spending.to_param, spending: invalid_attributes }, valid_session, format: :js
         expect(assigns(:spending)).to eq(spending)
       end
 
@@ -146,6 +152,7 @@ RSpec.describe SpendingsController, type: :controller do
         spending = Spending.create! valid_attributes
         login(spending.owner)
         put :update, { id: spending.to_param, spending: invalid_attributes }, valid_session
+        xhr :put, :update, { id: spending.to_param, spending: invalid_attributes }, valid_session, format: :js
         expect(response).to render_template('edit')
       end
     end

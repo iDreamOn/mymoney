@@ -18,15 +18,21 @@ RSpec.describe 'Spendings', type: :request do
     it 'new_spending_path' do
       get new_spending_path
       expect(response).to have_http_status(200)
+      xhr :get, new_spending_path, format: :js
+      expect(response).to have_http_status(200)
     end
 
     it 'edit_spending_path' do
       get edit_spending_path(spending)
       expect(response).to have_http_status(200)
+      xhr :get, edit_spending_path(spending), format: :js
+      expect(response).to have_http_status(200)
     end
 
     it 'spending_path' do
       get spending_path(spending)
+      expect(response).to have_http_status(200)
+      xhr :get, spending_path(spending), format: :js
       expect(response).to have_http_status(200)
     end
 

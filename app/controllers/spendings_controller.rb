@@ -68,9 +68,11 @@ class SpendingsController < ApplicationController
     respond_to do |format|
       if @spending.save
         format.html { redirect_to @spending, notice: 'Spending was successfully created.' }
+        format.js   {}
         format.json { render :show, status: :created }
       else
         format.html { render :new }
+        format.js   { render :new }
         format.json { render json: @spending.errors, status: :unprocessable_entity }
       end
     end
@@ -82,9 +84,11 @@ class SpendingsController < ApplicationController
     respond_to do |format|
       if @spending.update(spending_params)
         format.html { redirect_to @spending, notice: 'Spending was successfully updated.' }
+        format.js   {}
         format.json { render :show, status: :ok, location: @spending }
       else
         format.html { render :edit }
+        format.js   { render :edit }
         format.json { render json: @spending.errors, status: :unprocessable_entity }
       end
     end

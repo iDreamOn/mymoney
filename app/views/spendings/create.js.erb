@@ -1,0 +1,9 @@
+$("ul.errors").html("")
+<% if @spending.errors.any? %>
+  <% @spending.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+  $("<%= escape_javascript(render 'spendings/partials/spending', spending: @spending) %>").prependTo("#spendings");
+  $("#spending-modal").modal("hide")
+<% end %>
