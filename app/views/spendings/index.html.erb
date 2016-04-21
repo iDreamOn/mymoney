@@ -44,7 +44,7 @@
   </table>
 <% end %>
 
-<%= link_to 'New Spending', new_spending_path %>
+<%= link_to 'New Spending', new_spending_path, remote: true %>
 
 <%= will_paginate @spendings %>
 
@@ -53,7 +53,7 @@
     <%= render "spendings/partials/header" %>
   </thead>
 
-  <tbody>
+  <tbody id="spendings">
     <%= render partial: "spendings/partials/spending", collection: @spendings %>
   </tbody>
 </table>
@@ -62,4 +62,5 @@
 
 <br>
 
-<%= link_to 'New Spending', new_spending_path %>
+<%= link_to 'New Spending', new_spending_path, remote: true %>
+<div id="spending-modal" class="modal fade"></div>
