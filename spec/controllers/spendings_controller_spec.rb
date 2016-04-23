@@ -57,7 +57,7 @@ RSpec.describe SpendingsController, type: :controller do
   describe 'GET #new' do
     it 'assigns a new spending as @spending' do
       login_user
-      get :new, {}, valid_session
+      xhr :get, :new, {}, format: :html
       xhr :get, :new, {}, format: :js
       expect(assigns(:spending)).to be_a_new(Spending)
     end

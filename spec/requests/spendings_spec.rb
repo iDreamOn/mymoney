@@ -16,7 +16,7 @@ RSpec.describe 'Spendings', type: :request do
     end
 
     it 'new_spending_path' do
-      get new_spending_path
+      xhr :get, new_spending_path, format: :html
       expect(response).to have_http_status(200)
       xhr :get, new_spending_path, format: :js
       expect(response).to have_http_status(200)
