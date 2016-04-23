@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417203153) do
+ActiveRecord::Schema.define(version: 20160423195039) do
 
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
@@ -122,6 +122,11 @@ ActiveRecord::Schema.define(version: 20160417203153) do
   add_index "payment_methods", ["account_id"], name: "index_payment_methods_on_account_id", using: :btree
   add_index "payment_methods", ["user_id", "name"], name: "by_user_name", unique: true, using: :btree
   add_index "payment_methods", ["user_id"], name: "index_payment_methods_on_user_id", using: :btree
+
+  create_table "quotes", force: :cascade do |t|
+    t.string "body",   limit: 255
+    t.string "author", limit: 255
+  end
 
   create_table "schedules", force: :cascade do |t|
     t.text     "rule",       limit: 65535

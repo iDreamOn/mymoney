@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  before_action :set_quote
 
   def authorize(object = nil)
     owner = object.owner || User.new
@@ -15,6 +16,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def set_quote
+    @random_quote = Quote.random
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :username, :password, :password_confirmation) }
