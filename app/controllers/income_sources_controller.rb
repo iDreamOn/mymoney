@@ -15,10 +15,12 @@ class IncomeSourcesController < ApplicationController
   # GET /income_sources/new
   def new
     @income_source = IncomeSource.new
+    set_grouped_items
   end
 
   # GET /income_sources/1/edit
   def edit
+    set_grouped_items
   end
 
   # POST /income_sources
@@ -67,6 +69,11 @@ class IncomeSourcesController < ApplicationController
   def set_income_source
     @income_source = IncomeSource.find(params[:id])
     authorize @income_source
+  end
+
+  def set_grouped_items
+    accounts = current_user.get_all("accounts").order(:name)
+    @grouped_accounts = get_grouped(accounts)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

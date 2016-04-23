@@ -21,10 +21,12 @@ class AccountBalancesController < ApplicationController
   # GET /account_balances/new
   def new
     @account_balance = AccountBalance.new
+    set_grouped_items
   end
 
   # GET /account_balances/1/edit
   def edit
+    set_grouped_items
   end
 
   # POST /account_balances
@@ -93,6 +95,11 @@ class AccountBalancesController < ApplicationController
   def set_account_balance
     @account_balance = AccountBalance.find(params[:id])
     authorize @account_balance
+  end
+
+  def set_grouped_items
+    accounts = current_user.get_all("accounts").order(:name)
+    @grouped_accounts = get_grouped(accounts) || []
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

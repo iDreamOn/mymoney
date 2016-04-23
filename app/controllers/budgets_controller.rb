@@ -28,10 +28,12 @@ class BudgetsController < ApplicationController
   # GET /budgets/new
   def new
     @budget = Budget.new
+    set_grouped_items
   end
 
   # GET /budgets/1/edit
   def edit
+    set_grouped_items
   end
 
   def budgets_by_month
@@ -96,6 +98,11 @@ class BudgetsController < ApplicationController
   def set_budget
     @budget = Budget.find(params[:id])
     authorize @budget
+  end
+
+  def set_grouped_items
+    categories = current_user.get_all('categories').order(:name)
+    @grouped_categories = get_grouped(categories)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

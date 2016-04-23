@@ -15,10 +15,12 @@ class PaymentMethodsController < ApplicationController
   # GET /payment_methods/new
   def new
     @payment_method = current_user.payment_methods.build
+    set_grouped_items
   end
 
   # GET /payment_methods/1/edit
   def edit
+    set_grouped_items
   end
 
   # POST /payment_methods
@@ -67,6 +69,11 @@ class PaymentMethodsController < ApplicationController
   def set_payment_method
     @payment_method = PaymentMethod.find(params[:id])
     authorize @payment_method
+  end
+
+  def set_grouped_items
+    accounts = current_user.get_all('accounts').order(:name)
+    @grouped_accounts = get_grouped(accounts)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

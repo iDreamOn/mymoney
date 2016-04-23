@@ -1,6 +1,5 @@
 class SpendingsController < ApplicationController
   include SpendingsHelper
-
   before_action :set_spending, only: [:show, :edit, :update, :destroy]
 
   # GET /spendings
@@ -54,10 +53,12 @@ class SpendingsController < ApplicationController
   # GET /spendings/new
   def new
     @spending = Spending.new
+    set_grouped_items
   end
 
   # GET /spendings/1/edit
   def edit
+    set_grouped_items
   end
 
   # POST /spendings
@@ -110,6 +111,15 @@ class SpendingsController < ApplicationController
   def set_spending
     @spending = Spending.find(params[:id])
     authorize @spending
+  end
+
+  def set_grouped_items
+    budgets = current_user.get_all('budgets').search(@spending.spending_date).sort_by(&:category_name)
+    @grouped_budgets = get_grouped(budgets)
+    goals = current_user.get_all('debt_balances').search_by_date(@spending.spending_date).sort_by(&:debt_name)
+    @grouped_goals = get_grouped(goals)
+    payment_methods = current_user.get_all('payment_methods')
+    @grouped_payment_methods = get_grouped(payment_methods)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

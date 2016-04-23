@@ -29,7 +29,7 @@
   </div>
   <div class="field">
     <%= f.label :account_id %><br>
-    <%= f.collection_select :account_id, current_user.get_all("accounts").order(:name), :id, :name, include_blank: 'None' %>
+    <%= f.grouped_collection_select :account_id, @grouped_accounts, :items, :name, :id, :name, include_blank: 'None' %>
   </div>
   <div class="actions">
     <%= f.submit %>

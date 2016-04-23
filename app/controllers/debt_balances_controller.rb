@@ -46,10 +46,12 @@ class DebtBalancesController < ApplicationController
   # GET /debt_balances/new
   def new
     @debt_balance = DebtBalance.new
+    set_grouped_items
   end
 
   # GET /debt_balances/1/edit
   def edit
+    set_grouped_items
   end
 
   # POST /debt_balances
@@ -107,6 +109,11 @@ class DebtBalancesController < ApplicationController
   def set_debt_balance
     @debt_balance = DebtBalance.find(params[:id])
     authorize @debt_balance
+  end
+
+  def set_grouped_items
+    debts = current_user.get_all('debts').active.order(:name)
+    @grouped_debts = get_grouped(debts)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

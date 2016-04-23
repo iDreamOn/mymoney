@@ -77,4 +77,9 @@ module ApplicationHelper
   def success(is_success = false)
     is_success ? SUCCESS : NEUTRAL
   end
+
+  Struct.new('GroupedItemsForSelect', :name, :items)
+  def get_grouped(list)
+    list.group_by(&:owner).map { |owner, models| Struct::GroupedItemsForSelect.new(owner.first_name, models) }
+  end
 end
