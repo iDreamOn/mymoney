@@ -31,6 +31,13 @@ class DebtBalance < ActiveRecord::Base
     spendings.where("spending_date>='#{payment_start_date}' AND spending_date<='#{due_date}' #{threshold}")
   end
 
+  def new_balance=(amount)
+    unless amount.blank?
+      self.balance = balance + amount.to_f - max_payment
+      save
+    end
+  end
+
   def balance_of_interest
     (target_balance - balance).abs
   end

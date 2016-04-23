@@ -37,6 +37,7 @@ class DebtBalancesController < ApplicationController
   # GET /debt_balances/1
   # GET /debt_balances/1.json
   def show
+    @debt_balance.new_balance = params[:new_balance]
     @spendings = @debt_balance.payments
                               .order(sort_column + ' ' + sort_direction)
                               .order(updated_at: :desc)

@@ -32,9 +32,18 @@
 </p>
 
 <p>
-  <strong>Estimated Payments left:</strong>
+  <strong>Estimated Remaining Balance:</strong>
   <%= number_to_currency(@debt_balance.max_payment) %>
 </p>
+
+<%= form_tag debt_balance_path, method: :get, id: "db_adjust" do %>
+  <table class="filters">
+    <tr>
+        <td><%= number_field_tag :new_balance, nil, step: 0.01, placeholder: "remaining balance" %></td>
+        <td><%= submit_tag "Adjust", :name => nil %></td>
+    </tr>
+  </table>
+<% end %>
 
 <% if !@debt_balance.debt.fix_amount %>
   <p>
