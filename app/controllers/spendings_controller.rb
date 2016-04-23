@@ -52,8 +52,22 @@ class SpendingsController < ApplicationController
 
   # GET /spendings/new
   def new
-    @spending = Spending.new
-    set_grouped_items
+    if current_user.get_all("payment_methods").length==0
+      flash[:notice] = "You must have a payment method before you can spend."
+      flash.keep(:notice)
+      render js: "window.location = #{payment_methods_path.to_json}"
+    elsif current_user.get_all("categories").length==0
+      flash[:notice] = "You must have a category before you can spend."
+      flash.keep(:notice)
+      render js: "window.location = #{categories_path.to_json}"
+    elsif current_user.get_all("budgets").search(nil).length==0
+      flash[:notice] = "You must have a budget before you can spend."
+      flash.keep(:notice)
+      render js: "window.location = #{budgets_path.to_json}"
+    else
+      @spending = Spending.new
+      set_grouped_items
+    end
   end
 
   # GET /spendings/1/edit
