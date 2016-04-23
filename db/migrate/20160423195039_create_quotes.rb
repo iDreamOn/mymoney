@@ -4,7 +4,7 @@ class CreateQuotes < ActiveRecord::Migration
       t.string :body
       t.string :author
 
-      #t.timestamps null: false
+      # t.timestamps null: false
     end
   end
 end

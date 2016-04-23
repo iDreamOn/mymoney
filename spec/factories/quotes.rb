@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :quote do
-    value "MyString"
-    author "MyString"
+    value 'MyString'
+    author 'MyString'
   end
 end

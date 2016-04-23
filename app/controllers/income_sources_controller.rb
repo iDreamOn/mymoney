@@ -72,7 +72,7 @@ class IncomeSourcesController < ApplicationController
   end
 
   def set_grouped_items
-    accounts = current_user.get_all("accounts").order(:name)
+    accounts = current_user.get_all('accounts').order(:name)
     @grouped_accounts = get_grouped(accounts)
   end
 
