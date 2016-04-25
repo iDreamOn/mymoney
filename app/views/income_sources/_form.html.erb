@@ -19,9 +19,7 @@
   <%= f.fields_for :schedule do |u| %>
     <div class="field">
       <%= u.label :rule, "Schedule" %><br/>
-      <%= u.select_recurring :rule, [
-        IceCube::Rule.weekly(2).day(:friday)
-      ] %>
+      <%= u.select_recurring :rule %>
     </div>
   <% end %>
   <div class="field">

@@ -1,10 +1,9 @@
 <% provide(:title, "Home") %>
 <h1>MyMoney</h1>
-<h2>Your One Stop Shop For All Your Personal Finances.</h2>
+<h2><%= t('home_summary') %></h2>
 
 <% if !user_signed_in? %>
-  <p class="center"><%= link_to "Sign In", new_user_session_path %> or <%= link_to "Sign Up", new_user_registration_path %><br> 
-  to get started.</p>
+  <p class="center"> <%= t("getting_started_message_html", login_path: link_to(t('log_in'), new_user_session_path), sign_up_path: link_to(t('sign_up'), new_user_registration_path)) %> </p>
 <% else %>
   <h3>===== Getting Started =====</h3>
   <h4>1. Add <%= link_to "Payment Methods", payment_methods_path %>:</h4>
