@@ -23,6 +23,13 @@
     <%= f.email_field :email, autofocus: true %>
   </div>
 
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :role %><br>
+      <%= f.select :role, User.roles.keys.map {|role| [role.titleize,role]} %>
+    </div>
+  <% end %>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

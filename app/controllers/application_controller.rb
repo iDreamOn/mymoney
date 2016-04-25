@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  def admin_only
+    redirect_to :root, alert: 'Access denied.' unless current_user.admin?
+  end
+
   protected
 
   def set_quote

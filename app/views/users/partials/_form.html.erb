@@ -35,6 +35,10 @@
     <%= f.label :password_confirmation, "Confirmation" %><br>
     <%= f.password_field :password_confirmation %>
   </div>
+  <div class="field">
+    <%= f.label :role %><br>
+    <%= f.select :role, User.roles.keys.map {|role| [role.titleize,role]} %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
