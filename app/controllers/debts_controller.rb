@@ -1,5 +1,6 @@
 class DebtsController < ApplicationController
   before_action :set_debt, only: [:show, :edit, :update, :destroy]
+  before_action :admin_only
 
   # GET /debts
   # GET /debts.json

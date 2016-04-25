@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423195039) do
+ActiveRecord::Schema.define(version: 20160425025931) do
 
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 20160423195039) do
     t.integer  "failed_attempts",        limit: 4,   default: 0, null: false
     t.string   "unlock_token",           limit: 255
     t.datetime "locked_at"
+    t.integer  "role",                   limit: 4,   default: 0
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
