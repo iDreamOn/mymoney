@@ -1,5 +1,6 @@
 class AccountBalancesController < ApplicationController
   before_action :set_account_balance, only: [:show, :edit, :update, :destroy, :make_payments, :undo_payments]
+  before_action :admin_only
 
   def balances_by_day
     graph = current_user.get_all('accounts').map { |acct| { name: acct.name, data: acct.account_balances.group(:balance_date).sum(:amount).select { |_k, v| v > 0 } } }

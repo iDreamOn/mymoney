@@ -10,16 +10,19 @@
   <p class="center">You want to track you spendings right? You must have a way to pay for them. <br>
   Please add those first (credit, debit, cash, gift card, etc).</p>
 
-  <h4>2. Add Spending <%= link_to "Categories", categories_path %>:</h4> 
+  <h4>2. (Optional) Add <%= link_to "Bank Account Name", accounts_path %>:</h4>
+  <p class="center">You can link your Payment Methods to your Accounts. e.g. Chase Debit Card is linked to Chase Checking Account.</p>
+
+  <h4>3. Add Spending <%= link_to "Categories", categories_path %>:</h4> 
   <p class="center">Now that you know how you are going to pay for your spendings, you need to know what you are spending your money on.<br> 
   Organize your spendings by categories (rent, loans, utilities, etc).</p>
 
-  <h4>3. Add <%= link_to "Budgets", budgets_path %>:</h4>
+  <h4>4. Add <%= link_to "Budgets", budgets_path %>:</h4>
   <p class="center">Spending without a budget is like setting sail without direction. <br>
   Setting a budget for each category each month will help you stay on track, know where your money is going, <br>
   and accomplish your financial goals faster. </p>
 
-  <h4>4. Track Your <%= link_to "Spendings", spendings_path %>:</h4> 
+  <h4>5. Track Your <%= link_to "Spendings", spendings_path %>:</h4> 
   <p class="center">Now your are ready to spend (or not). Keep track of your spendings by recording them into the mymoney. <br>
   Manually recording your spendings ensures that you are on top of your financials.</p>
 

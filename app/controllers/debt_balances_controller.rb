@@ -2,6 +2,7 @@ class DebtBalancesController < ApplicationController
   include SpendingsHelper
   include DateModule
 
+  before_action :admin_only
   before_action :set_debt_balance, only: [:show, :edit, :update, :destroy, :close]
 
   # GET /debt_balances
