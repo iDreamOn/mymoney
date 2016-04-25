@@ -3,10 +3,14 @@
   <td><%= user.last_name %></td>
   <td><%= user.email %></td>
   <td><%= user.username %></td>
+  <td><%= user.role %></td>
   <td><% if current_user.contributors.where(id: user.id).exists? %>
         <%= link_to 'Remove', remove_contributor_user_path(user) %>
       <% else %>
         <%= link_to 'Add', add_contributor_user_path(user) %>
+      <% end %>
+      <% if current_user.admin? %>
+        | <%= link_to 'Show', user %>
       <% end %>
   </td>
 </tr>
