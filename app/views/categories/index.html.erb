@@ -1,36 +1,21 @@
 <% provide(:title, "Categories") %>
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Categories</h1>
+<h1><%= plural(Category) %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %><% if category.cc_payment? %><sup><a href="#fn1" id="ref1"> *</a></sup><% end %></td>
-        <td><%= category.description %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= table_for @categories, :tbody_html => { :id => "categories" }, :sortable => true do |table| %>
+  <% table.column :name, data: lambda { |category| category.cc_payment? ? "#{category}<sup><a href=\"#fn1\" id=\"ref1\"> *</a></sup>".html_safe : category } %>
+  <% table.column :description %>
+  <% table.column :data => t('edit'), :link_action => :edit %>
+  <% table.column :data => t('destroy'), link_method: :delete, link_confirm: "Are you sure?" %>
+<% end %>
 
 <br>
 
-<%= link_to 'New Category', new_category_path %>
+<%= link_to genderize(Category,"f"), new_category_path %>
 
 <hr></hr>
 
 <p>
-<sup id="fn1">*: Credit Card Payments are not counted in spendings since you are actually paying back an expense you did hopefully not to long ago. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
+<sup id="fn1">*: <%= t('notes.credit') %> <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
 </p>

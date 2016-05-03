@@ -12,9 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id, readonly: true %>
-  </div>
+    <%= f.hidden_field :user_id, readonly: true %>
+  </div>  
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
@@ -24,7 +23,7 @@
     <%= f.text_field :description %>
   </div>
   <div class="field">
-    <%= f.label :cc_payment, 'Credit Card Payment?' %><br>
+    <%= f.label :cc_payment %><br>
     <%= f.check_box :cc_payment %>
   </div>
   <div class="actions">

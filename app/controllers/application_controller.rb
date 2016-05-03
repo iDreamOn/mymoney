@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
   before_action :set_quote
+  before_filter :set_locale
+
+  def default_url_options
+    { locale: I18n.locale }
+  end
 
   def authorize(object = nil)
     owner = object.owner || User.new
@@ -29,5 +34,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :username, :password, :password_confirmation) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :password, :remember_me) }
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:first_name, :last_name, :email, :username, :password, :password_confirmation, :current_password, :role) }
+  end
+
+  private
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+    @language = I18n.locale
   end
 end

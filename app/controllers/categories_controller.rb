@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = current_user.get_all('categories')
+    @categories = current_user.get_all('categories').order(sort_column + ' ' + sort_direction)
   end
 
   # GET /categories/1

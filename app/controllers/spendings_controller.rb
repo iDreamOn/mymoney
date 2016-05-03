@@ -39,8 +39,8 @@ class SpendingsController < ApplicationController
   end
 
   def cc_purchase_vs_payment
-    spendings = [{ name: 'Spending', data: current_user.cc_spendings.group_by_month(:spending_date, format: '%b %Y', last: 24).sum(:amount).select { |_k, v| v > 0 } }]
-    payments = [{ name: 'Payment', data: current_user.cc_payments.group_by_month(:budget_month, format: '%b %Y', last: 24).sum(:amount).select { |_k, v| v > 0 } }]
+    spendings = [{ name: plural(Spending), data: current_user.cc_spendings.group_by_month(:spending_date, format: '%b %Y', last: 24).sum(:amount).select { |_k, v| v > 0 } }]
+    payments = [{ name: t('credit_card.payment.other'), data: current_user.cc_payments.group_by_month(:budget_month, format: '%b %Y', last: 24).sum(:amount).select { |_k, v| v > 0 } }]
     graph = spendings + payments
     render json: graph
   end

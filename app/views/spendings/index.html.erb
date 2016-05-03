@@ -3,35 +3,35 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <%= line_chart spendings_by_month_spendings_path, discrete: true, library: {title: "Spendings By Month"} %>
+    <%= line_chart spendings_by_month_spendings_path, discrete: true, library: {title: "#{t('graph.title.one', item: plural(Spending))} #{t('graph.group_by.month')}", vAxis: { format: t('graph.vAxis') }} %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <%= pie_chart spendings_by_category_spendings_path, discrete: true, library: {title: "Spendings By Category"} %>
+    <%= pie_chart spendings_by_category_spendings_path, discrete: true, library: {title: "#{t('graph.title.one', item: plural(Spending))} #{t('graph.group_by.other', category: singular(Category))}", vAxis: { format: t('graph.vAxis')}} %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <%= pie_chart spendings_by_payment_method_spendings_path, discrete: true, library: {title: "Spendings By Payment Methods"} %>
+    <%= pie_chart spendings_by_payment_method_spendings_path, discrete: true, library: {title: "#{t('graph.title.one', item: plural(Spending))} #{t('graph.group_by.other', category: singular(PaymentMethod))}", vAxis: { format: t('graph.vAxis') }} %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <%= pie_chart spendings_by_payment_method_type_spendings_path, discrete: true, library: {title: "Spendings By Payment Method Type"} %>
+    <%= pie_chart spendings_by_payment_method_type_spendings_path, discrete: true, library: {title: "#{t('graph.title.one', item: plural(Spending))} #{t('graph.group_by.type_of', category: singular(PaymentMethod))}", vAxis: { format: t('graph.vAxis') }} %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <%= line_chart cc_purchase_vs_payment_spendings_path, discrete: true, library: {title: "CC Spendings vs Payments"} %>
+    <%= line_chart cc_purchase_vs_payment_spendings_path, discrete: true, library: {title: "#{t('graph.title.credit', item_1: plural(Spending), item_2: t('credit_card.payment.other'))} #{t('graph.group_by.month')}", vAxis: { format: t('graph.vAxis') }} %>
   </div>
 </div>
 
-<h1>Listing Spendings</h1>
+<h1><%= plural(Spending) %></h1>
 
 <%= form_tag spendings_path, :method => 'get', :id => "spendings_search" do %>
   <table class="filters">
@@ -39,28 +39,31 @@
         <%= hidden_field_tag :direction, params[:direction] %>
         <%= hidden_field_tag :sort, params[:sort] %>
         <td><%= text_field_tag :search, params[:search] %></td>
-        <td><%= submit_tag "Search", :name => nil %></td>
+        <td><%= submit_tag t('form.actions.search'), :name => nil %></td>
     </tr>
   </table>
 <% end %>
 
-<%= link_to 'New Spending', new_spending_path, remote: true %>
+<%= link_to genderize(Spending,"f"), new_spending_path, remote: true %>
 
 <%= will_paginate @spendings %>
 
-<table>
-  <thead>
-    <%= render "spendings/partials/header" %>
-  </thead>
-
-  <tbody id="spendings">
-    <%= render partial: "spendings/partials/spending", collection: @spendings %>
-  </tbody>
-</table>
+<%= table_for @spendings, :tbody_html => { :id => "spendings" }, :sortable => true do |table| %>
+  <% table.column :description %>
+  <% table.column :budget %>
+  <% if current_user.admin? %>
+    <% table.column :debt_balance %>
+  <% end %>
+  <% table.column :spending_date %>
+  <% table.column :amount, formatter: lambda { |amount| number_to_currency(amount)} %>
+  <% table.column :payment_method %>
+  <% table.column :data => t('edit'), :link_action => :edit, link_html: {remote: true} %>
+  <% table.column :data => t('destroy'), link_method: :delete, link_confirm: "Are you sure?" %>
+<% end %>
 
 <%= will_paginate @spendings %>
 
 <br>
 
-<%= link_to 'New Spending', new_spending_path, remote: true %>
+<%= link_to genderize(Spending,"f"), new_spending_path, remote: true %>
 <div id="spending-modal" class="modal fade"></div>

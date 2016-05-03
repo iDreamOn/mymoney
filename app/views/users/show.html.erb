@@ -26,13 +26,15 @@
   <%= @user.role %>
 </p>
 
-<%= form_tag user_path, method: :put, id: "db_adjust" do %>
-  <table class="filters">
-    <tr>
+<% if current_user.admin? %>
+  <%= form_tag user_path, method: :put, id: "db_adjust" do %>
+    <table class="filters">
+      <tr>
         <td><%= select_tag :role, options_for_select(User.roles.keys.map {|role| [role.titleize,role]}) %></td>
         <td><%= submit_tag "Update Role", :name => nil %></td>
-    </tr>
-  </table>
+      </tr>
+    </table>
+  <% end %>
 <% end %>
 
 <%= link_to 'Edit', edit_user_registration_path %> |

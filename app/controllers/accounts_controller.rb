@@ -1,10 +1,13 @@
 class AccountsController < ApplicationController
+  include AccountsHelper
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   # GET /accounts
   # GET /accounts.json
   def index
     @accounts = current_user.get_all('accounts')
+                            .includes(:payment_method)
+                            .order(sort_column + ' ' + sort_direction)
   end
 
   # GET /accounts/1

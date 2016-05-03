@@ -1,10 +1,45 @@
 fr:
-  home_summary: Votre seul outil pour tous vos besoins financiers.
+  feedback: Reactions
+  logo_text: Ou est passe mon argent?
+  home: Accueil
+  home_summary: Votre unique outil pour tous vos besoins financiers.
   getting_started_message_html: "%{login_path} ou %{sign_up_path} pour commencer."
   log_in: Se connecter
+  log_out: Se deconnecter
+  settings: Configurations
   sign_up: S'enregistrer
+  edit: Modifier
+  destroy: Effacer
+  instruction_add_html: "Ajouter vos <a href='%{link}'>%{item}</a>."
+  total_html: "Total des %{item}"
+  getting_started: Pour Commencer
   activerecord:
     attributes:
+      account:
+        name: Nom
+        account_type: Type
+        payment_method: :"activerecord.models.payment_method.one"
+      budget:
+        budget_month: Mois
+        amount: Montant
+        category: :"activerecord.models.category.one"
+        spendings: :"activerecord.models.spending.other"
+        percent_total: Pourcentage du Total
+      category:
+        name: Nom
+        description: Description
+        cc_payment: Paiements de Carte de Crédit
+      payment_method:
+        name: Nom
+        method_type: Type
+        description: Description
+        account: :"activerecord.models.account.one"
+      spending:
+        description: Description
+        spending_date: Date
+        amount: Montant
+        budget: :"activerecord.models.category.one"
+        payment_method: :"activerecord.models.payment_method.one"
       user:
         first_name: Prenom
         last_name: Nom
@@ -15,17 +50,29 @@ fr:
         password_confirmation: Confirmation du mot de passe
         remember_me: Se souvenir de moi
     models:
-      account_balance: balance de compte
-      account: compte
-      budget: budget
-      category: categorie
-      debt_balance: balance de dette
-      debt: dette
+      account_balance: Balance de Compte
+      account:
+        one: Compte
+        other: Comptes
+      budget:
+        one: Budget
+        other: Budgets
+      category:
+        one: Categorie
+        other: Categories
+      debt_balance: Balance de Dette
+      debt:
+        one: Dette
+        other: Dettes
       income_source: source de revenue
-      payment_method: moyen de payment
+      payment_method: 
+        one: Mode de Payment
+        other: Modes de Payment
       schedule: horaire
-      spending: depense
-      user: utilisateur
+      spending: 
+        one: Depense
+        other: Depenses
+      user: Utilisateur
   devise:
     confirmations:
       confirmed: Votre compte a été confirmé avec succès.
