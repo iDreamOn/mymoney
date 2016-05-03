@@ -50,9 +50,7 @@ class BudgetsController < ApplicationController
     incomes = [{ name: 'Income', data: h1 }]
     graph = spendings + budgets
 
-    if current_user.admin?
-      graph = graph + incomes
-    end
+    graph += incomes if current_user.admin?
     render json: graph
   end
 

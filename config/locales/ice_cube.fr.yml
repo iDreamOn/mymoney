@@ -1,0 +1,173 @@
+fr:
+  ice_cube:
+    pieces_connector: ' / '
+    not: 'not %{target}'
+    not_on: 'not on %{target}'
+    date:
+      formats:
+        default: '%B %-d, %Y'
+      month_names:
+      -
+      - Janvier
+      - Fevrier
+      - Mars
+      - Avril
+      - Mai
+      - Juin
+      - Juillet
+      - Aout
+      - Septembre
+      - Octobre
+      - Novembre
+      - Decembre
+      day_names:
+      - Dimanche
+      - Lundi
+      - Mardi
+      - Mercredi
+      - Jeudi
+      - Vendredi
+      - Samedi
+    times:
+      other: '%{count} fois'
+      one: '%{count} fois'
+    until: 'jusqua %{date}'
+    days_of_week: '%{segments} %{day}'
+    days_of_month:
+      other: '%{segments} jours du mois'
+      one: '%{segments} jour du mois'
+    days_of_year:
+      other: '%{segments} jours de l annee'
+      one: '%{segments} jour de l annee'
+    at_hours_of_the_day:
+      other: aux %{segments} heures du jour
+      one: a la %{segments} heure du jour
+    on_minutes_of_hour:
+      other: aux %{segments} minutes du jour
+      one: a la %{segments} minute du jour
+    at_seconds_of_minute:
+      other: aux %{segments} secondes
+      one: a la %{segments} seconde
+    on_seconds_of_minute:
+      other: aux %{segments} secondes de la minute
+      one: a la %{segments} seconde de la minute
+    each_second:
+      one: Chaque seconde
+      other: Chaque %{count} secondes
+    each_minute:
+      one: Chaque minute
+      other: Chaque %{count} minutes
+    each_hour:
+      one: Chaque heure
+      other: Chaque %{count} heures
+    each_day:
+      one: Chaque jour
+      other: Chaque %{count} jours
+    each_week:
+      one: Chaque semaine
+      other: Chaque %{count} semaines
+    each_month:
+      one: Chaque mois
+      other: Chaque %{count} mois
+    each_year:
+      one: Chaque annee
+      other: Chaque %{count} ans
+    'on': le %{sentence}
+    in: 'in %{target}'
+    integer:
+      negative: '%{ordinal} to last'
+      literal_ordinals:
+        -1: dernier
+        -2: avant dernier
+      ordinal: '%{number}%{ordinal}'
+      ordinals:
+        default: ieme
+        1: er
+    on_weekends: les fin de semaine
+    on_weekdays: les jours de semaine
+    days_on:
+      - Dimanche
+      - Lundi
+      - Mardi
+      - Mercredi
+      - Jeudi
+      - Vendredi
+      - Samedi
+    on_days: le %{days}
+    array:
+      last_word_connector: ', et '
+      two_words_connector: ' et '
+      words_connector: ', '
+    string:
+      format:
+        day: '%{rest} %{current}'
+        day_of_week: '%{rest} %{current}'
+        day_of_month: '%{rest} %{current}'
+        day_of_year: '%{rest} %{current}'
+        hour_of_day: '%{rest} %{current}'
+        minute_of_hour: '%{rest} %{current}'
+        until: '%{rest} %{current}'
+        count: '%{rest} %{current}'
+        default: '%{rest} %{current}'
+
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Fev
+    - Mar
+    - Avr
+    - Mai
+    - Jun
+    - Jul
+    - Aou
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Dimanche
+    - Lundi
+    - Mardi
+    - Mercredi
+    - Jeudi
+    - Vendredi
+    - Samedi
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names:
+    -
+    - Janvier
+    - Fevrier
+    - Mars
+    - Avril
+    - Mai
+    - Juin
+    - Juillet
+    - Aout
+    - Septembre
+    - Octobre
+    - Novembre
+    - Decembre
+    order:
+    - :year
+    - :month
+    - :day
+
+  time:
+    am: am
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: pm

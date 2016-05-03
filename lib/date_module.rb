@@ -63,7 +63,7 @@ module DateModule
     end_date = curr_month.change(day: 1)
     end_date = 1.month.since end_date if Time.now >= 1.month.from_now.change(day: 1) - 5.days
     start_date = n.month.ago end_date
-    (start_date..end_date).map { |k| [ l(k, format: :short), k] if k.day == 1 }.compact.reverse!
+    (start_date..end_date).map { |k| [l(k, format: :short), k] if k.day == 1 }.compact.reverse!
   end
 
   def days_of_week
