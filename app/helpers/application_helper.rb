@@ -4,6 +4,7 @@ module ApplicationHelper
   ERROR = '#FF0000'.freeze
   NEUTRAL = '#FFFFFF'.freeze
   SUCCESS = '#0000FF'.freeze
+  LIGHT_SUCCESS = '#00CCFF'.freeze
   WARNING = '#DEDE0C'.freeze
 
   def sort_column
@@ -83,7 +84,7 @@ module ApplicationHelper
   end
 
   def success(is_success = false)
-    is_success ? SUCCESS : NEUTRAL
+    is_success ? LIGHT_SUCCESS : NEUTRAL
   end
 
   Struct.new('GroupedItemsForSelect', :name, :items)
