@@ -10,7 +10,7 @@ class Schedule < ActiveRecord::Base
   validate :rule_is_valid, if: proc { |k| k.rule && k.rule != 'null' }
 
   def to_s
-    schedule = Schedule.new(Time.now.to_date)
+    schedule = IceCube::Schedule.new(Time.now.to_date)
     schedule.add_recurrence_rule(RecurringSelect.dirty_hash_to_rule(rule))
     schedule
   end

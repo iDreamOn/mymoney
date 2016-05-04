@@ -45,10 +45,12 @@ class BudgetsController < ApplicationController
       h1.store(date[0], total_income)
     end
 
-    spendings = [{ name: 'Spending', data: current_user.real_spendings.group_by_month(:spending_date, format: '%b %Y', last: 25).sum(:amount) }]
-    budgets = [{ name: 'Budget', data: current_user.real_budgets.group_by_month(:budget_month, format: '%b %Y', last: 25).sum(:amount) }]
+    spendings = [{ name: plural(Spending), data: current_user.real_spendings.group_by_month(:spending_date, format: '%b %Y', last: 25).sum(:amount) }]
+    budgets = [{ name: plural(Budget), data: current_user.real_budgets.group_by_month(:budget_month, format: '%b %Y', last: 25).sum(:amount) }]
     incomes = [{ name: 'Income', data: h1 }]
-    graph = spendings + budgets + incomes
+    graph = spendings + budgets
+
+    graph += incomes if current_user.admin?
     render json: graph
   end
 

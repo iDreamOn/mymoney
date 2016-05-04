@@ -1,0 +1,54 @@
+# Translations for Haiti support
+
+fr:
+  new:
+    f: "nouvelle %{item}"
+    m: "nouveau %{item}"
+  number:
+    currency:
+      format:
+        unit: 'HG'
+        delimiter: ','
+        separator: '.'
+        precision: 2
+        format: '%n%u'
+  date:
+    datepicker:
+      default: "dd/mm/yyyy"
+      long: "dd MM yyyy"
+      format: 'yyyy-mm-dd'
+      autoclose: true
+      weekStart: 0
+      todayHighlight: true
+    formats:
+      long: '%d-%m-%y'
+      short: '%B %Y'
+  graph:
+    group_by: 
+      month: "par mois"
+      other: "par %{category}"
+      type_of: "par type de %{category}"
+    title:
+      credit: "Carte de Credit: %{item_1} et %{item_2}"
+      one: "%{item}"
+      two: "%{item_1} et %{item_2}"
+    vAxis: "#,###.##HG"
+  form:
+    actions:
+      go: aller
+      adjust: ajuster
+      search: chercher
+  notes:
+    credit: Les paiements de carte de crédit ne sont pas comptés dans le total des dépenses puisque vous êtes réellement en train de rembourser les dépenses que vous avez faites, espérons pas trop longtemps.
+    below: Sous budget
+    above:
+      less: "Au dela du budget par moins de %{threshold}"
+      more: "Au dela du budget par plus de %{threshold}"
+  credit_card:
+    payment:
+      one: Paiement
+      other: Paiements
+  languages:
+    en: Anglais
+    fr:
+      ht: Francais-Haiti

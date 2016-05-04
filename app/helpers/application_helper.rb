@@ -3,8 +3,16 @@ module ApplicationHelper
   VALID_GOOD_NEG = ['Credit Cards', 'Savings', 'Loans'].freeze
   ERROR = '#FF0000'.freeze
   NEUTRAL = '#FFFFFF'.freeze
-  SUCCESS = '#00FFFF'.freeze
-  WARNING = '#F7FE2E'.freeze
+  SUCCESS = '#0000FF'.freeze
+  WARNING = '#DEDE0C'.freeze
+
+  def sort_column
+    params[:order].nil? ? 'id' : params[:order]
+  end
+
+  def sort_direction
+    %w(asc desc).include?(params[:sort_mode]) ? params[:sort_mode] : 'desc'
+  end
 
   # Returns the full title on a per-page basis.
   def full_title(page_title = '')
@@ -81,5 +89,17 @@ module ApplicationHelper
   Struct.new('GroupedItemsForSelect', :name, :items)
   def get_grouped(list)
     list.group_by(&:owner).map { |owner, models| Struct::GroupedItemsForSelect.new(owner.first_name, models) }
+  end
+
+  def plural(model)
+    model.model_name.human(count: 2).titleize
+  end
+
+  def singular(model)
+    model.model_name.human.titleize
+  end
+
+  def genderize(model, gender)
+    t("new.#{gender}", item: singular(model)).titleize
   end
 end

@@ -3,5 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 
-$(document).on 'change ready page:load', ->
-  $('.datepicker').datepicker({format: 'yyyy-mm-dd', autoclose: true, weekStart: 0, todayHighlight: true });
+$(document).on 'change ready page:load shown.bs.modal', ->
+  $('.datepicker').datepicker({language: $('.datepicker').attr('language'), format: 'yyyy-mm-dd', autoclose: true, weekStart: 0, todayHighlight: true });
+

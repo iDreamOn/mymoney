@@ -1,6 +1,6 @@
-module SpendingsHelper
+module AccountsHelper
   def sort_column
-    Spending.column_names.include?(params[:order]) ? params[:order] : 'spending_date'
+    Account.column_names.include?(params[:order]) ? params[:order] : 'name'
   end
 
   def sort_direction

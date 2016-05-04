@@ -10,6 +10,8 @@ end
 
 gem 'aws-sdk-rails', '~> 1.0'
 
+gem 'table-for'
+
 # Add bootstrap
 gem 'bootstrap-sass', '3.2.0.0'
 gem 'bootstrap-datepicker-rails', '1.4.0'
@@ -60,6 +62,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Needed for recurring events
 gem 'recurring_select', '2.0.0'
+
+# International support
+gem 'rails-i18n', '~> 4.0.0'
+gem 'devise-i18n'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

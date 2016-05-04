@@ -1,71 +1,63 @@
 <% provide(:title, "Budgets") %>
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Budgets</h1>
+<h1><%= plural(Budget) %></h1>
 
-<h2><%= @curr_budget.strftime('%B %Y') %></h2>
+<h2><%= l(@curr_budget, format: :short).titleize %></h2>
 
 <div class="row">
   <div class="col-xs-12">
-    <%= line_chart budgets_by_month_budgets_path, discrete: true, library: {title: "Budget vs Spending By Month"} %>
+    <%= line_chart budgets_by_month_budgets_path, discrete: true, library: {title: "#{t('graph.title.two', item_1: plural(Spending), item_2: plural(Budget))} #{t('graph.group_by.month')}", vAxis: { format: t('graph.vAxis') }} %>
   </div>
 </div>
 
 <p>
-  Expected Income<sup><a href="#fn3" id="ref3"> 3</a></sup>: <%= number_to_currency(potential_income(@curr_budget)) %><br>
-  Total Budget: <%= number_to_currency(overall_budget(@curr_budget)) %><br>
-  Total Spending: <%= number_to_currency(overall_spending(@curr_budget)) %><br>
-  Estimated CC Payments Budget<sup><a href="#fn2" id="ref2"> 2</a></sup>: <%= number_to_currency(credit_payment_budget(@curr_budget)) %><br>
+  <% if current_user.admin? %>
+    Expected Income<sup><a href="#fn3" id="ref3"> 3</a></sup>: <%= number_to_currency(potential_income(@curr_budget)) %><br>
+  <% end %>
+  <%= t('total_html', item: plural(Budget)) %>: <%= number_to_currency(overall_budget(@curr_budget)) %><br>
+  <%= t('total_html', item: plural(Spending)) %>: <%= number_to_currency(overall_spending(@curr_budget)) %><br>
+  <% if current_user.admin? %>
+    Estimated CC Payments Budget<sup><a href="#fn2" id="ref2"> 2</a></sup>: <%= number_to_currency(credit_payment_budget(@curr_budget)) %><br>
+  <% end %>
 </p>
 
 <%= form_tag budgets_path, :method => 'get', :id => "budgets_search" do %>
   <table class="filters">
     <tr>
         <td><%= select_tag :search, options_for_select(last_n_months(12), @curr_budget) %></td>
-        <td><%= submit_tag "See Budget", :name => nil %></td>
+        <td><%= submit_tag t('form.actions.go'), :name => nil %></td>
     </tr>
   </table>
 <% end %>
 
-<%= link_to 'New Budget', new_budget_path %>
+<%= link_to genderize(Budget,"m"), new_budget_path %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>% of Total</th>
-      <th>Budget Amount</th>
-      <th>Spendings</th>
-      <th>+/-<sup><a href="#fn4" id="ref4"> 4</a></sup></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @budgets.each do |budget| %>
-      <tr>
-        <td><%= budget.category %><% if budget.category.cc_payment? %><sup><a href="#fn1" id="ref1"> 1</a></sup><% end %></td>
-        <td><% if budget.category.cc_payment? %>N/A<% else %><%= number_to_percentage(budget.amount*100/(overall_budget(@curr_budget)+0.0000001), precision: 2) %><% end %></td>
-        <td><%= number_to_currency(budget.amount) %></td>
-        <td><%= number_to_currency(budget.spendings.sum(:amount)) %></td>
-        <td style="background-color:<%= good_pos_cell_color_comparison(budget.amount,budget.spendings.sum(:amount), budget.category_name)%>"><%= number_to_currency(budget.amount - budget.spendings.sum(:amount)) %></td>
-        <td><%= link_to 'Show', budget %></td>
-        <td><%= link_to 'Edit', edit_budget_path(budget) %></td>
-        <td><%= link_to 'Destroy', budget, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<%= table_for @budgets, :tbody_html => { :id => "budgets" }, :sortable => false do |table| %>
+  <% table.column :category, formatter: lambda { |category| category.cc_payment? ? "#{category}<sup><a href=\"#fn1\" id=\"ref1\"> 1</a></sup>".html_safe : category } %>
+  <% table.column :percent_total, formatter: lambda {|budget| number_to_percentage(budget, precision: 2) } %>
+  <% table.column :amount, :formatter => lambda { |amount| number_to_currency(amount)} %>
+  <% table.column :spendings, :formatter => lambda {|spendings| number_to_currency(spendings.sum(:amount)) } %>
+  <% table.column :balance, :formatter => lambda {|balance| number_to_currency(balance) }, :data_column_html => {:style => lambda { |budget| "color: #{good_pos_cell_color_comparison(budget.amount,budget.spendings.sum(:amount), budget.category_name)}" } } %>
+  <% table.header :balance do |column, options| %>
+    <%= table.header_sort_link(column, options) do %>
+      +/-<sup><a href="#fn4" id="ref4"> 4</a></sup>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+  <% table.column :data => t('edit'), :link_action => :edit %>
+  <% table.column :data => t('Montrer'), link: true %>
+  <% table.column :data => t('destroy'), link_method: :delete, link_confirm: "Are you sure?" %>
+<% end %>
 
-<br>
-
-<%= link_to 'New Budget', new_budget_path %>
+<%= link_to genderize(Budget,"m"), new_budget_path %>
 
 <hr></hr>
 
 <p>
-<sup id="fn1">1: Credit Card Payments are not counted in total spending since you are actually paying back an expense you did hopefully not to long ago. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
-<sup id="fn2">2. <%= credit_payment_budget_notes(@curr_budget) %><a href="#ref2" title="Jump back to footnote 2 in the text.">↩</a></sup><br>
-<sup id="fn3">3. <%= potential_income_notes(@curr_budget) %><a href="#ref3" title="Jump back to footnote 3 in the text.">↩</a></sup><br>
-<sup id="fn4">4. <span style="background-color:<%= good_pos_cell_color_comparison(100,0)%>">Below budget</span>; <span style="background-color:<%= good_pos_cell_color_comparison(100.00,109.00)%>">Over by less than 10%</span>; <span style="background-color:<%= good_pos_cell_color_comparison(100.00,111.00)%>">More than 10% over</span>. <a href="#ref4" title="Jump back to footnote 4 in the text.">↩</a></sup><br>
+<sup id="fn1">1: <%= t('notes.credit') %> <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup><br>
+<% if current_user.admin? %>
+  <sup id="fn2">2. <%= credit_payment_budget_notes(@curr_budget) %><a href="#ref2" title="Jump back to footnote 2 in the text.">↩</a></sup><br>
+  <sup id="fn3">3. <%= potential_income_notes(@curr_budget) %><a href="#ref3" title="Jump back to footnote 3 in the text.">↩</a></sup><br>
+<% end %>
+<sup id="fn4">4. <span style="color:<%= good_pos_cell_color_comparison(100,0)%>"><%= t('notes.below') %></span>; <span style="color:<%= good_pos_cell_color_comparison(100.00,109.00)%>"><%= t('notes.above.less', threshold: '10%') %></span>; <span style="color:<%= good_pos_cell_color_comparison(100.00,111.00)%>"><%= t('notes.above.more', threshold: '10%') %></span>. <a href="#ref4" title="Jump back to footnote 4 in the text.">↩</a></sup><br>
 </p>

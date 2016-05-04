@@ -1,10 +1,13 @@
 class PaymentMethodsController < ApplicationController
+  include PaymentMethodsHelper
   before_action :set_payment_method, only: [:show, :edit, :update, :destroy]
 
   # GET /payment_methods
   # GET /payment_methods.json
   def index
     @payment_methods = current_user.get_all('payment_methods')
+                                   .includes(:account)
+                                   .order(sort_column + ' ' + sort_direction)
   end
 
   # GET /payment_methods/1

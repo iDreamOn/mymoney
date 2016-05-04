@@ -29,14 +29,17 @@
 <%= link_to 'Edit', edit_budget_path(@budget) %> |
 <%= link_to 'Back', budgets_path %>
 
-<h2>Spendings</h2>
+<h2><%= plural(Spending) %></h2>
 
-<table>
-  <thead>
-    <%= render "spendings/partials/header" %>
-  </thead>
-
-  <tbody>
-    <%= render partial: "spendings/partials/spending", collection: @spendings %>
-  </tbody>
-</table>
+<%= table_for @spendings, :tbody_html => { :id => "spendings" }, :sortable => true do |table| %>
+  <% table.column :description %>
+  <% table.column :budget %>
+  <% if current_user.admin? %>
+    <% table.column :debt_balance %>
+  <% end %>
+  <% table.column :spending_date %>
+  <% table.column :amount, formatter: lambda { |amount| number_to_currency(amount)} %>
+  <% table.column :payment_method %>
+  <% table.column :data => t('edit'), :link_action => :edit, link_html: {remote: true} %>
+  <% table.column :data => t('destroy'), link_method: :delete, link_confirm: "Are you sure?" %>
+<% end %>

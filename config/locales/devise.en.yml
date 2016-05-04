@@ -1,6 +1,78 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 en:
+  feedback: Feedbacks
+  logo_text: Where did my money go?
+  home: Home
+  home_summary: Your One Stop Shop For All Your Personal Finances.
+  getting_started_message_html: "%{login_path} or %{sign_up_path} to get started."
+  log_in: Login
+  log_out: Logout
+  settings: Settings
+  sign_up: Sign Up
+  instruction_add_html: "Add your <a href='%{link}'>%{item}</a>."
+  total_html: "Total %{item}"
+  getting_started: Getting Started
+  activerecord:
+    attributes:
+      account:
+        name: Name
+        account_type: Type
+        payment_method: :"activerecord.models.payment_method.one"
+      budget:
+        budget_month: Month
+        amount: Amount
+        category: :"activerecord.models.category.one"
+        spendings: :"activerecord.models.spending.other"
+        percent_total: Percent of Total
+      category:
+        name: Name
+        description: Description
+        cc_payment: Credit Card Payment
+      payment_method:
+        name: Name
+        method_type: Type
+        description: Description
+        account: :"activerecord.models.account.one"
+      spending:
+        description: Description
+        spending_date: Date
+        amount: Amount
+        budget: :"activerecord.models.category.one"
+        payment_method: :"activerecord.models.payment_method.one"
+      user:
+        first_name: First Name
+        last_name: Last Name
+        username: Username
+        current_password: Current Password
+        email: Email
+        password: Password
+        password_confirmation: Password Confirmation
+        remember_me: Remenber Me
+    models:
+      account_balance: Account Balance
+      account:
+        one: Account
+        other: Accounts
+      budget:
+        one: Budget
+        other: Budgets
+      category:
+        one: Category
+        other: Categories
+      debt_balance: Debt Balance
+      debt:
+        one: Debt
+        other: Debt
+      income_source: Income Source
+      payment_method:
+        one: Payment Method
+        other: Payment Methods
+      schedule: Schedule
+      spending:
+        one: Spending
+        other: Spendings
+      user: User
   devise:
     confirmations:
       confirmed: "Your email address has been successfully confirmed."

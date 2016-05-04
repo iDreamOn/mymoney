@@ -14,12 +14,17 @@
     <div class="container">
       <div class="dynamic_quote"><%= @random_quote %></div>
       <%= debug(params) if Rails.env.development? %>
-
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>">
           <%= value %>
         </div>
       <% end %>
+
+      <p>
+        <%= link_to_unless I18n.locale == :en, t('languages.en'), locale: :en %>
+        |
+        <%= link_to_unless I18n.locale == :fr, t('languages.fr.ht'), locale: :fr %>
+      </p>
 
       <%= yield %>
 

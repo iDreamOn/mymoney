@@ -24,4 +24,20 @@ class Budget < ActiveRecord::Base
   def owner
     category.owner
   end
+
+  def to_s
+    category
+  end
+
+  def balance
+    amount - spendings.sum(:amount)
+  end
+
+  def percent_total
+    category.cc_payment? ? 0 : amount * 100 / (total_budget + 0.0000001)
+  end
+
+  def total_budget
+    owner.get_all('budgets').includes(:category).where('categories.cc_payment = ?', false).where(budget_month: budget_month).sum(:amount)
+  end
 end

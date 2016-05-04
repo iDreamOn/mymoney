@@ -19,9 +19,6 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
-
 en-AU:
   date:
     datepicker:
@@ -39,3 +36,56 @@ en-US:
     formats:
       default: "%m/%d/%Y"
       long: ! '%B %d, %Y'
+
+en:
+  new:
+    f: "new %{item}"
+    m: "new %{item}"
+  number:
+    currency:
+      format:
+        unit: '$'
+        delimiter: ','
+        separator: '.'
+        precision: 2
+        format: '%u%n'
+  date:
+    datepicker:
+      default: "dd/mm/yyyy"
+      long: "dd MM yyyy"
+      format: 'yyyy-mm-dd'
+      autoclose: true
+      weekStart: 0
+      todayHighlight: true
+    formats:
+      long: '%y-%m-%d'
+      short: '%B %Y'
+  graph:
+    group_by: 
+      month: "by month"
+      other: "by %{category}"
+      type_of: "by type of %{category}"
+    title:
+      credit: "Credit Cards: %{item_1} and %{item_2}"
+      one: "%{item}"
+      two: "%{item_1} and %{item_2}"
+    vAxis: "$#,###.##"
+  form:
+    actions:
+      go: go
+      adjust: adjust
+      search: search
+  notes:
+    credit: Credit Card Payments are not counted in total spending since you are actually paying back an expense you did hopefully not to long ago.
+    below: Under budget
+    above:
+      less: "Above budget by less than %{threshold}"
+      more: "Above budget by more than  %{threshold}"
+  credit_card:
+    payment:
+      one: Payment
+      other: Payments
+  languages:
+    en: English
+    fr:
+      ht: French-Haiti

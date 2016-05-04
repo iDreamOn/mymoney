@@ -13,6 +13,10 @@
     <% end %>
 
     <div class="field">
+      <%= f.label :spending_date %>
+      <%= f.calendar_field :spending_date, 'language' => @language %>
+    </div>
+    <div class="field">
       <%= f.label :budget %><br>
       <%= f.grouped_collection_select :budget_id, @grouped_budgets, :items, :name, :id, :category_name, {prompt: 'Please Select'} %>
     </div>
@@ -20,14 +24,12 @@
       <%= f.label :description %><br>
       <%= f.text_field :description %>
     </div>
-    <div class="field">
-      <%= f.label :debt_balance, "Goal" %><br>
-      <%= f.grouped_collection_select :debt_balance_id, @grouped_goals, :items, :name, :id, :debt_name, include_blank: 'None' %>
-    </div>
-    <div class="field">
-      <%= f.label :spending_date, "Date"  %>
-      <%= f.calendar_field :spending_date %>
-    </div>
+    <% if current_user.admin? %>
+      <div class="field">
+        <%= f.label :debt_balance, "Goal" %><br>
+        <%= f.grouped_collection_select :debt_balance_id, @grouped_goals, :items, :name, :id, :debt_name, include_blank: 'None' %>
+      </div>
+    <% end %>
     <div class="field">
       <%= f.label :amount %><br>
       <%= f.number_field :amount, :class => 'text_field', :step => 0.01 %>
