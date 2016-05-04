@@ -22,7 +22,7 @@ fr:
       todayHighlight: true
     formats:
       long: '%d-%m-%y'
-      short: '%B %Y'
+      short: '%b 2016'
   graph:
     group_by: 
       month: "par mois"

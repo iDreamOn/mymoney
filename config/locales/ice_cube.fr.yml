@@ -126,9 +126,9 @@ fr:
     - Mar
     - Avr
     - Mai
-    - Jun
-    - Jul
-    - Aou
+    - Juin
+    - Juillet
+    - Aout
     - Sep
     - Oct
     - Nov
@@ -144,7 +144,7 @@ fr:
     formats:
       default: "%Y-%m-%d"
       long: "%B %d, %Y"
-      short: "%b %d"
+      short: "%b %Y"
     month_names:
     -
     - Janvier

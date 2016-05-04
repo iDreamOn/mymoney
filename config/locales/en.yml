@@ -59,7 +59,7 @@ en:
       todayHighlight: true
     formats:
       long: '%y-%m-%d'
-      short: '%B %Y'
+      short: '%b %Y'
   graph:
     group_by: 
       month: "by month"
