@@ -48,7 +48,7 @@ module ApplicationHelper
 
   def good_pos_cell_color_comparison(base = 0, actual = 0, debt_name = '')
     if VALID_GOOD_NEG.include?(debt_name)
-      good_neg_cell_color(base)
+      good_pos_cell_color_comparison(actual, base)
     else
       diff = actual / base - 1
       if diff <= 0

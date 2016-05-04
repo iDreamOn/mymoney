@@ -8,8 +8,8 @@ fr:
     currency:
       format:
         unit: 'HG'
-        delimiter: ','
-        separator: '.'
+        delimiter: '.'
+        separator: ','
         precision: 2
         format: '%n%u'
   date:
@@ -32,7 +32,7 @@ fr:
       credit: "Carte de Credit: %{item_1} et %{item_2}"
       one: "%{item}"
       two: "%{item_1} et %{item_2}"
-    vAxis: "#,###.##HG"
+    vAxis: "####,##HG"
   form:
     actions:
       go: aller
