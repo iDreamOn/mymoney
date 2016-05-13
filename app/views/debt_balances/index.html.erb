@@ -15,9 +15,25 @@
   </div>
 </div>
 
+<div class="row" style="display:true;">
+  <div class="col-xs-12">
+    <%= line_chart loans_change_by_month_debt_balances_path, discrete: true, library: {title: "% Change By Month", vAxis: {format: "percent"}} %>
+  </div>
+</div>
+
 <p style="color:<%= good_neg_cell_color(@debts.to_a.sum(&:max_payment), nil, true)%>;">
   <strong>Current Estimated Total Debts:</strong>
   <%= number_to_currency(@debts.to_a.sum(&:max_payment)) %>
+</p>
+
+<p style="color:<%= good_neg_cell_color(100*(@last_3_months[1][1]+0.00000001)/(@last_3_months[0][1]+0.00000001)-100, nil, true)%>;">
+  <strong><%= "#{@last_3_months[0][0]} to #{@last_3_months[1][0]}: "%></strong>
+  <%= number_to_percentage(100*(@last_3_months[1][1]+0.00000001)/(@last_3_months[0][1]+0.00000001)-100, precision: 2) %>
+</p>
+
+<p style="color:<%= good_neg_cell_color(100*(@last_3_months[2][1]+0.00000001)/(@last_3_months[1][1]+0.00000001)-100, nil, true)%>;">
+  <strong><%= "#{@last_3_months[1][0]} to #{@last_3_months[2][0]}: "%></strong>
+  <%= number_to_percentage(100*(@last_3_months[2][1]+0.00000001)/(@last_3_months[1][1]+0.00000001)-100, precision: 2) %>
 </p>
 
 <%= form_tag debt_balances_path, :method => 'get', :id => "debt_balances_search" do %>

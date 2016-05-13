@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     collection do
       get :ccs_by_month
       get :loans_by_month
+      get :loans_change_by_month
     end
 
     member do

@@ -10,6 +10,15 @@ class DebtBalancesController < ApplicationController
   def index
     @debt_balances = current_user.get_all('debt_balances').search(params[:debt_balance]).order(due_date: :desc).paginate(per_page: 25, page: params[:page])
     @debts = current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{Time.now.to_date}' AND '#{Time.now.to_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Donation/Gift (Recurring)')")
+
+    @last_3_months = {}
+    last_n_months(2).reverse_each do |date|
+      end_date = [date[1].end_of_month, Time.now.to_date].min
+      total_debt = 0
+      current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{end_date}' AND '#{end_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Donation/Gift (Recurring)')").each { |k| total_debt += k.max_payment(end_date, true) }
+      @last_3_months.store(date[0], total_debt)
+    end
+    @last_3_months = @last_3_months.to_a
   end
 
   def ccs_by_month
@@ -30,6 +39,28 @@ class DebtBalancesController < ApplicationController
       total_debt = 0
       current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{end_date}' AND '#{end_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Donation/Gift (Recurring)')").each { |k| total_debt += k.max_payment(end_date, true) }
       h1.store(date[0], total_debt)
+    end
+
+    render json: h1.chart_json
+  end
+
+  def loans_change_by_month
+    h1 = {}
+
+    last_n_months(12).reverse_each do |date|
+      end_date = [date[1].end_of_month, Time.now.to_date].min
+      prev_end_date = (end_date - 1.month).end_of_month
+
+      total_debt = 0
+      prev_total_debt = 0
+
+      current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{end_date}' AND '#{end_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Donation/Gift (Recurring)')").each { |k| total_debt += k.max_payment(end_date, true) }
+      current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{prev_end_date}' AND '#{prev_end_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Donation/Gift (Recurring)')").each { |k| prev_total_debt += k.max_payment(prev_end_date, true) }
+
+      if prev_total_debt > 0
+        percent_change = ((total_debt + 0.00000001) / (prev_total_debt + 0.00000001) - 1)
+        h1.store(date[0], percent_change)
+      end
     end
 
     render json: h1.chart_json
