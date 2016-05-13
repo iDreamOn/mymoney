@@ -12,7 +12,7 @@ class DebtBalancesController < ApplicationController
     @debts = current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{Time.now.to_date}' AND '#{Time.now.to_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Donation/Gift (Recurring)')")
 
     @last_3_months = {}
-    last_n_months(2).reverse_each do |date|
+    last_n_months(3).reverse_each do |date|
       end_date = [date[1].end_of_month, Time.now.to_date].min
       total_debt = 0
       current_user.get_all('debt_balances').joins(debt: :category).where("debt_balances.payment_start_date <= '#{end_date}' AND '#{end_date}' <= due_date AND debts.is_asset=false AND categories.name NOT IN ('Rent','Donation/Gift (Recurring)')").each { |k| total_debt += k.max_payment(end_date, true) }
