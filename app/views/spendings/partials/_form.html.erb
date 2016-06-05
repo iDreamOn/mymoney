@@ -13,12 +13,12 @@
     <% end %>
 
     <div class="field">
-      <%= f.label :spending_date %>
-      <%= f.calendar_field :spending_date, 'language' => @language %>
-    </div>
-    <div class="field">
       <%= f.label :budget %><br>
       <%= f.grouped_collection_select :budget_id, @grouped_budgets, :items, :name, :id, :category_name, {prompt: 'Please Select'} %>
+    </div>
+    <div class="field">
+      <%= f.label :spending_date %>
+      <%= f.calendar_field :spending_date, 'language' => @language %>
     </div>
     <div class="field">
       <%= f.label :description %><br>
