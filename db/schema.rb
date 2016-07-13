@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425025931) do
+ActiveRecord::Schema.define(version: 20160713211237) do
 
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
@@ -88,12 +88,14 @@ ActiveRecord::Schema.define(version: 20160425025931) do
     t.boolean  "autopay",                                                 default: false
     t.integer  "category_id",        limit: 4
     t.integer  "account_id",         limit: 4
+    t.integer  "schedule_id",        limit: 4
   end
 
   add_index "debts", ["account_id"], name: "index_debts_on_account_id", using: :btree
   add_index "debts", ["category_id"], name: "index_debts_on_category_id", using: :btree
   add_index "debts", ["deleted_at"], name: "index_debts_on_deleted_at", using: :btree
   add_index "debts", ["name", "deleted_at"], name: "by_category_name", unique: true, using: :btree
+  add_index "debts", ["schedule_id"], name: "index_debts_on_schedule_id", using: :btree
 
   create_table "income_sources", force: :cascade do |t|
     t.string   "name",        limit: 255,                         null: false
@@ -198,6 +200,7 @@ ActiveRecord::Schema.define(version: 20160425025931) do
   add_foreign_key "debt_balances", "debts"
   add_foreign_key "debts", "accounts"
   add_foreign_key "debts", "categories"
+  add_foreign_key "debts", "schedules"
   add_foreign_key "income_sources", "accounts"
   add_foreign_key "income_sources", "schedules"
   add_foreign_key "payment_methods", "accounts"
