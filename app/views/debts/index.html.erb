@@ -27,7 +27,7 @@
         <td><%= debt.account %></td>
         <td><%= number_to_currency(debt.fix_amount) %></td>
         <td><%= debt.schedule %></td>
-        <td><%= debt.payment_start_date %></td>
+        <td><%= debt.start_date %></td>
         <td><%= debt.autopay %></td>
         <td><%= link_to 'Show', debt %></td>
         <td><%= link_to 'Edit', edit_debt_path(debt) %></td>

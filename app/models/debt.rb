@@ -1,6 +1,10 @@
 class Debt < ActiveRecord::Base
+  include ScheduleLib
+
   belongs_to :category
   belongs_to :account
+
+  belongs_to :schedule # , inverse_of: :debts
 
   has_many :debt_balances, inverse_of: :debt, dependent: :destroy
 

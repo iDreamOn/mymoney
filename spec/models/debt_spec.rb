@@ -42,7 +42,7 @@ RSpec.describe Debt, type: :model do
   it 'has a fix amount present and payment start date' do
     amount = '29.99'
     debt = FactoryGirl.build(:debt, fix_amount: amount)
-    expect(debt.payment_start_date).to_not be nil
+    expect(debt.start_date).to_not be nil
   end
 
   it 'has a fix amount present and schedule present' do

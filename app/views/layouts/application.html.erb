@@ -20,12 +20,13 @@
         </div>
       <% end %>
 
+<!--
       <p>
         <%= link_to_unless I18n.locale == :en, t('languages.en'), locale: :en %>
         |
         <%= link_to_unless I18n.locale == :fr, t('languages.fr.ht'), locale: :fr %>
       </p>
-
+!-->
       <%= yield %>
 
       <%= render 'layouts/footer' %>

@@ -81,6 +81,6 @@ class DebtsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def debt_params
-    params.require(:debt).permit(:category_id, :sub_category, :name, :is_asset, :account_id, :fix_amount, :schedule, :autopay, :payment_start_date)
+    params.require(:debt).permit(:category_id, :sub_category, :name, :is_asset, :account_id, :fix_amount, :schedule, :autopay, :start_date, :schedule_id, schedule_attributes: [:rule])
   end
 end

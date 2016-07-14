@@ -31,13 +31,24 @@
     <%= f.label :fix_amount %><br>
     <%= f.number_field :fix_amount, :class => 'text_field', :step => 0.01 %>
   </div>
+  <% @debt.build_schedule unless @debt.schedule %>
+  <%= f.fields_for :schedule do |u| %>
+    <div class="field">
+      <%= u.label :rule, "Schedule" %><br/>
+      <%= u.select_recurring :rule, [
+        IceCube::Rule.weekly(2).day(:friday)
+      ] %>
+    </div>
+  <% end %>
+<!--
   <div class="field">
     <%= f.label :schedule %><br>
     <%= f.select :schedule , options_for_select([['Bi-Weekly', 'Bi-Weekly'], ['Monthly', 'Monthly']], @debt.schedule) %>
   </div>
+!-->
   <div class="field">
-    <%= f.label :payment_start_date %><br>
-    <%= f.calendar_field :payment_start_date %>
+    <%= f.label :start_date %><br>
+    <%= f.calendar_field :start_date %>
   </div>
   <div class="field">
     <%= f.label :autopay %>

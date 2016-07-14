@@ -1,5 +1,6 @@
 class IncomeSource < ActiveRecord::Base
   include DateModule
+  include ScheduleLib
 
   belongs_to :account
   belongs_to :schedule, inverse_of: :income_sources
@@ -11,26 +12,8 @@ class IncomeSource < ActiveRecord::Base
   validates_numericality_of :amount
   validate :start_and_end
 
-  def schedule_attributes=(attrs)
-    self.schedule = Schedule.find_or_initialize_by(attrs)
-  end
-
   def owner
     account.owner
-  end
-
-  def paychecks(from = Time.now.to_date, to = Time.now.to_date)
-    from = [from, start_date].max
-    to = [to, end_date].min
-    if schedule
-      schedule.occurrences(from, to, start_date)
-    else
-      []
-    end
-  end
-
-  def income(from = Time.now.to_date, to = Time.now.to_date)
-    paychecks(from, to).size * amount
   end
 
   def self.total_income(source_account = nil, from = Date.new(2010, 1, 1), to = Time.now.to_date)
