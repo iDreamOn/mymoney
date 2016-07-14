@@ -21,6 +21,21 @@ class Schedule < ActiveRecord::Base
     schedule.occurrences_between(from, to).map(&:to_date)
   end
 
+  def next_occurrence(from = Time.now.to_date, base = nil)
+    schedule = Schedule.new(base || from)
+    schedule.add_recurrence_rule(RecurringSelect.dirty_hash_to_rule(rule))
+    result = schedule.next_occurrence(from)
+    if result
+      result.to_date
+    else
+      nil
+    end
+  end
+
+  def previous_occurrence(from = 1.year.ago)
+    occurrences(from - 365.day, from).last || 99.year.from_now 
+  end
+
   private
 
   def rule_is_valid

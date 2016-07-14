@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713211237) do
+ActiveRecord::Schema.define(version: 20160714011345) do
 
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
@@ -76,19 +76,20 @@ ActiveRecord::Schema.define(version: 20160713211237) do
   add_index "debt_balances", ["payment_start_date"], name: "index_debt_balances_on_payment_start_date", using: :btree
 
   create_table "debts", force: :cascade do |t|
-    t.string   "sub_category",       limit: 255,                                          null: false
-    t.string   "name",               limit: 255,                                          null: false
-    t.datetime "created_at",                                                              null: false
-    t.datetime "updated_at",                                                              null: false
-    t.boolean  "is_asset",                                                default: false
+    t.string   "sub_category", limit: 255,                                                 null: false
+    t.string   "name",         limit: 255,                                                 null: false
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+    t.boolean  "is_asset",                                          default: false
     t.datetime "deleted_at"
-    t.decimal  "fix_amount",                     precision: 10, scale: 2
-    t.string   "schedule",           limit: 255
-    t.date     "payment_start_date"
-    t.boolean  "autopay",                                                 default: false
-    t.integer  "category_id",        limit: 4
-    t.integer  "account_id",         limit: 4
-    t.integer  "schedule_id",        limit: 4
+    t.decimal  "fix_amount",               precision: 10, scale: 2
+    t.string   "schedule",     limit: 255
+    t.date     "start_date"
+    t.boolean  "autopay",                                           default: false
+    t.integer  "category_id",  limit: 4
+    t.integer  "account_id",   limit: 4
+    t.integer  "schedule_id",  limit: 4
+    t.date     "end_date",                                          default: '9999-12-31'
   end
 
   add_index "debts", ["account_id"], name: "index_debts_on_account_id", using: :btree
