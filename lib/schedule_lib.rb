@@ -1,5 +1,4 @@
 module ScheduleLib
-
   def schedule_attributes=(attrs)
     self.schedule = Schedule.find_or_initialize_by(attrs)
   end
@@ -17,5 +16,4 @@ module ScheduleLib
   def income(from = Time.now.to_date, to = Time.now.to_date)
     paychecks(from, to).size * amount
   end
-
 end

@@ -5,7 +5,7 @@ FactoryGirl.define do
     is_asset false
     deleted_at nil
     fix_amount '9.99'
-    schedule 'MyString'
+    schedule
     start_date '2015-12-27'
     autopay false
     category
