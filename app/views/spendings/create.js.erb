@@ -4,6 +4,10 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
-  $("<%= escape_javascript(render 'spendings/partials/spending', spending: @spending) %>").prependTo("#spendings");
+  <% if @spending.spending_date <= Date.today %>
+    $("<%= escape_javascript(render 'spendings/partials/spending', spending: @spending) %>").prependTo("#spendings");
+  <% else %>
+    $("<%= escape_javascript(render 'spendings/partials/spending', spending: @spending) %>").prependTo("#future_spendings");
+  <% end %>
   $("#spending-modal").modal("hide")
 <% end %>

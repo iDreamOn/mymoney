@@ -7,10 +7,17 @@ class SpendingsController < ApplicationController
   def index
     @spendings = current_user.get_all('spendings')
                              .search(params[:search])
+                             .where("spending_date <= '#{Date.today}'")
                              .order(sort_column + ' ' + sort_direction)
                              .order(updated_at: :desc)
                              .limit(1000)
                              .paginate(page: params[:page])
+
+    @future_spendings = current_user.get_all('spendings')
+                                    .search(params[:search])
+                                    .where("spending_date > '#{Date.today}'")
+                                    .order(sort_column + ' ' + sort_direction)
+                                    .order(updated_at: :desc)
   end
 
   def spendings_by_month
