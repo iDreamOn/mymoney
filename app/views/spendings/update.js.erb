@@ -4,5 +4,6 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
+  $("table tr#spending_<%= @spending.id %>").replaceWith("<%= escape_javascript(render 'spendings/partials/spending', spending: @spending) %>");
   $("#spending-modal").modal("hide")
 <% end %>
