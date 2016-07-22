@@ -11,35 +11,18 @@
 
 <%= link_to 'New Account balance', new_account_balance_path %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Balance date</th>
-      <th>Account</th>
-      <th>Amount</th>
-      <th>Buffer</th>
-      <th>Leftover Debt</th>
-      <th>Paid</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @account_balances.each do |account_balance| %>
-      <tr>
-        <td><%= account_balance.balance_date %></td>
-        <td><%= account_balance.account %></td>
-        <td><%= number_to_currency(account_balance.amount) %></td>
-        <td><%= number_to_currency(account_balance.buffer) %></td>
-        <td><%= account_balance.debt_balance %></td>
-        <td><%= account_balance.paid %></td>
-        <td><%= link_to 'Show', account_balance %></td>
-        <td><%= link_to 'Edit', edit_account_balance_path(account_balance) %></td>
-        <td><%= link_to 'Destroy', account_balance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= table_for @account_balances, :tbody_html => { :id => "account_balances" }, :sortable => true, :data_row_html => {
+                        :class => lambda { |account_balance| "#{account_balance.paid? ? 'info' : 'success' }"},
+                        :id => lambda { |account_balance| "account_balance-#{account_balance.id}" }} do |table| %>
+  <% table.column :balance_date %>
+  <% table.column :account %>
+  <% table.column :amount, :formatter => lambda { |amount| number_to_currency(amount) } %>
+  <% table.column :buffer, :formatter => lambda { |amount| number_to_currency(amount) } %>
+  <% table.column :debt_balance %>
+  <% table.column :paid %>
+  <% table.column :data => t('details'), link: true %>
+  <% table.column :data => t('destroy'), link_method: :delete, link_confirm: "Are you sure?" %>
+<% end %>
 
 <br>
 
