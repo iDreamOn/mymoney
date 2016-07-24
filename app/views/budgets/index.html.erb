@@ -14,12 +14,11 @@
 <p>
   <% if current_user.admin? %>
     Expected Income<sup><a href="#fn3" id="ref3"> 3</a></sup>: <%= number_to_currency(potential_income(@curr_budget)) %><br>
+    Estimated CC Payments Budget<sup><a href="#fn2" id="ref2"> 2</a></sup>: <%= number_to_currency(credit_payment_budget(@curr_budget)) %><br>
+    Left to budget: <%= number_to_currency(potential_income(@curr_budget) - credit_payment_budget(@curr_budget)) %><br>
   <% end %>
   <%= t('total_html', item: plural(Budget)) %>: <%= number_to_currency(overall_budget(@curr_budget)) %><br>
   <%= t('total_html', item: plural(Spending)) %>: <%= number_to_currency(overall_spending(@curr_budget)) %><br>
-  <% if current_user.admin? %>
-    Estimated CC Payments Budget<sup><a href="#fn2" id="ref2"> 2</a></sup>: <%= number_to_currency(credit_payment_budget(@curr_budget)) %><br>
-  <% end %>
 </p>
 
 <%= form_tag budgets_path, :method => 'get', :id => "budgets_search" do %>

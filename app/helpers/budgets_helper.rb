@@ -13,23 +13,16 @@ module BudgetsHelper
     current_user.real_spendings.where("DATE_FORMAT(spending_date,'%Y-%m-01') = '#{start_date}'").sum(:amount)
   end
 
-  def credit_payment_budget(date = nil)
+  def credit_payment_budget(date = Date.today)
+    start_date = date.beginning_of_month - 1.month
+    end_date = start_date.end_of_month
     result = 0
-    current_user.get_all('debt_balances').where("debt_balances.payment_start_date<='#{date}' AND due_date>='#{date}'").each do |saving|
-      if saving.debt.category.cc_payment?
-        result += saving.payment_due(date, false) * paychecks(saving.debt.account.name, date)
-      end
-    end
+    result = current_user.cc_spendings.where("spending_date >= '#{start_date}' and spending_date <= '#{end_date}'").sum(:amount)
     result
   end
 
   def credit_payment_budget_notes(date = nil)
-    result = 'Estimated payments needed to payoff all credit card balances: '
-    current_user.get_all('debt_balances').where("debt_balances.payment_start_date<='#{date}' AND due_date>='#{date}'").each do |saving|
-      if saving.debt.category.cc_payment?
-        result += "#{saving.debt.name} => #{number_to_currency(saving.payment_due(date, false))} x #{paychecks(saving.debt.account.name, date)}; "
-      end
-    end
+    result = 'Estimated payments needed to payoff all credit card balances based on credit spendings from last month'
     result
   end
 
