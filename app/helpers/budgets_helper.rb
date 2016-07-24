@@ -16,12 +16,11 @@ module BudgetsHelper
   def credit_payment_budget(date = Date.today)
     start_date = date.beginning_of_month - 1.month
     end_date = start_date.end_of_month
-    result = 0
     result = current_user.cc_spendings.where("spending_date >= '#{start_date}' and spending_date <= '#{end_date}'").sum(:amount)
     result
   end
 
-  def credit_payment_budget_notes(date = nil)
+  def credit_payment_budget_notes(_date = nil)
     result = 'Estimated payments needed to payoff all credit card balances based on credit spendings from last month'
     result
   end
