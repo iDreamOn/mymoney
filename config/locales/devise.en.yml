@@ -64,7 +64,9 @@ en:
       debt:
         one: Debt
         other: Debt
-      income_source: Income Source
+      income_source: 
+        one: Income Source
+        other: Income Sources
       payment_method:
         one: Payment Method
         other: Payment Methods

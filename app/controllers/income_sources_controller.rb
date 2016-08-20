@@ -1,6 +1,5 @@
 class IncomeSourcesController < ApplicationController
   before_action :set_income_source, only: [:show, :edit, :update, :destroy]
-  before_action :admin_only
 
   # GET /income_sources
   # GET /income_sources.json

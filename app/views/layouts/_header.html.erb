@@ -29,6 +29,7 @@
             <li><%= link_to plural(PaymentMethod), payment_methods_path %></li>
             <li><%= link_to plural(Account), accounts_path %></li>
             <li><%= link_to plural(Category), categories_path %></li>
+            <li><%= link_to "Income Sources", income_sources_path %></li>
             <li><%= link_to plural(Budget), budgets_path %></li>
             <li><%= link_to plural(Spending), spendings_path %></li>
             <% if current_user.admin? %>

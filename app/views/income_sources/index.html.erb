@@ -4,7 +4,7 @@
 <h1>Listing Income Sources</h1>
 
 <p>
-  <strong>After taxes and deductions income:</strong>
+  <strong>Take home income:</strong>
 </p>
 <p style="text-indent: 2em;">
   <strong>Expected through <%= current_user.get_all("income_sources").max_end_date %>:</strong> <%= number_to_currency(current_user.get_all("income_sources").total_income(nil, Date.new(2007,1,1),Date.new(2020,1,1))) %>
