@@ -51,7 +51,7 @@ class DebtBalance < ActiveRecord::Base
       paychecks_todate = debt.account.user.get_all('income_sources').total_paychecks(debt_account, first_day, payment_date)
       paychecks_all = debt.account.user.get_all('income_sources').total_paychecks(debt_account, first_day, last_day)
       result = (debt.fix_amount * paychecks_todate) / paychecks_all unless paychecks_all == 0
-      # result = 2016
+      result = debt.fix_amount if first_day - 1.day == payment_date # #previous occurence returns payment_date if payment date is the due date
     else
       payment_date = last_payment_date + 1 if after_last_payment
       paychecks_all = debt.account.user.get_all('income_sources').total_paychecks(debt.account, payment_date || payment_start_date, due_date)
