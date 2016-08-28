@@ -13,6 +13,13 @@ module BudgetsHelper
     current_user.real_spendings.where("DATE_FORMAT(spending_date,'%Y-%m-01') = '#{start_date}'").sum(:amount)
   end
 
+  def ytd_spending(date = nil)
+    start_date = date.nil? ? Date.today : date
+    end_date = start_date.end_of_month
+    start_date = start_date.beginning_of_year
+    current_user.real_spendings.where("spending_date>='#{start_date}' and spending_date<='#{end_date}'").sum(:amount)
+  end
+
   def credit_payment_budget(date = Date.today)
     start_date = date.beginning_of_month - 1.month
     end_date = start_date.end_of_month
