@@ -19,7 +19,8 @@
   <% end %>
   <%= t('total_html', item: plural(Budget)) %>: <%= number_to_currency(overall_budget(@curr_budget)) %><br>
   <%= t('total_html', item: plural(Spending)) %>: <%= number_to_currency(overall_spending(@curr_budget)) %><br>
-  YTD Spendings: <%= number_to_currency(ytd_spending(@curr_budget)) %><br>
+  YTD Spendings: <%= number_to_currency(ytd_spending(@curr_budget)-ytd_assets_savings(@curr_budget)) %><br>
+  YTD Savings: <%= number_to_currency(ytd_assets_savings(@curr_budget)) %><br>
 </p>
 
 <%= form_tag budgets_path, :method => 'get', :id => "budgets_search" do %>

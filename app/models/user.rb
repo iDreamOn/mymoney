@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     get_all('spendings').joins(budget: :category).where('categories.cc_payment = ?', false)
   end
 
+  def asset_spendings
+    real_spendings.joins(debt_balance: :debt).where('debts.is_asset = ?', true)
+  end
+
   def cc_spendings
     get_all('spendings').joins(:payment_method).where("payment_methods.method_type = 'Credit'")
   end
