@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   resources :budgets do
     collection do
       get :budgets_by_month
+      get :spendings_by_category
     end
   end
 

@@ -11,6 +11,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-xs-12">
+    <%= pie_chart spendings_by_category_budgets_path(search: @curr_budget), discrete: true, library: {title: "#{t('graph.title.one', item: plural(Spending))} #{t('graph.group_by.other', category: singular(Category))}", vAxis: { format: t('graph.vAxis')}} %>
+  </div>
+</div>
+
 <p>
   <% if current_user.admin? %>
     Expected Income<sup><a href="#fn3" id="ref3"> 3</a></sup>: <%= number_to_currency(potential_income(@curr_budget)) %><br>
