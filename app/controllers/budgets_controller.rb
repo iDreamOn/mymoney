@@ -17,6 +17,14 @@ class BudgetsController < ApplicationController
     @curr_budget = (params[:search] || Time.now.to_date.change(day: 1)).to_date
   end
 
+  def spendings_by_category
+    render json: current_user.real_budgets
+      .search(params[:search])
+      .includes(:spendings)
+      .group('categories.name')
+      .sum('spendings.amount')
+  end
+
   # GET /budgets/1
   # GET /budgets/1.json
   def show
