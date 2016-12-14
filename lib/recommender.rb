@@ -38,7 +38,7 @@ module Recommender
     result
   end
 
-  def recommendations(check_main_account = true)
+  def recommendations(check_main = true)
     result = {}
     left_over = account.name # default to checking
     left_over = debt_balance.debt.name if debt_balance # focus
@@ -49,7 +49,7 @@ module Recommender
 
     debts.select { |db| db.debt.account == account || db == debt_balance }.map do |d|
       max_amount = [d.max_payment(balance_date, true), 0].max
-      if d.debt.account != account && check_main_account
+      if d.debt.account != account && check_main
         max_amount -= main_account_payment
       end
       recommendation = [d.payment_due(balance_date, true), 0].max
@@ -70,9 +70,9 @@ module Recommender
     end
 
     if result[account.name][1] > buffer
-      result["Leftover"] = [0, 0, 0]
-      result["Leftover"][1] = result[account.name][1] - buffer
-      result[account.name][1] -= result["Leftover"][1]
+      result['Leftover'] = [0, 0, 0]
+      result['Leftover'][1] = result[account.name][1] - buffer
+      result[account.name][1] -= result['Leftover'][1]
     end
 
     total = 0

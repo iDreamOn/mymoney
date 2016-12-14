@@ -17,7 +17,7 @@ module BudgetsHelper
     start_date = date.nil? ? Date.today : date
     end_date = start_date.end_of_month
     start_date = start_date.beginning_of_year
-    current_user.real_spendings.where("spending_date>='#{start_date}' and spending_date<='#{end_date}'").sum(:amount) 
+    current_user.real_spendings.where("spending_date>='#{start_date}' and spending_date<='#{end_date}'").sum(:amount)
   end
 
   def ytd_assets_savings(date = nil)
