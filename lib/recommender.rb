@@ -69,6 +69,12 @@ module Recommender
       end
     end
 
+    if result[account.name][1] > buffer
+      result["Leftover"] = [0, 0, 0]
+      result["Leftover"][1] = result[account.name][1] - buffer
+      result[account.name][1] -= result["Leftover"][1]
+    end
+
     total = 0
     result.map { |_k, v| total += v[1].abs }
     self.total_distribution = total

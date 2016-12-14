@@ -29,3 +29,5 @@ passenger*
 coverage
 
 Gemfile.lock
+
+.idea

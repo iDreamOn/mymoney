@@ -15,10 +15,11 @@
     Run `mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql`
 3. Add rails user for mysql (Not necessary if using VirtualBox above)
         mysql -uroot <<SQL
-        GRANT ALL PRIVILEGES ON *.* to 'rails'@'localhost';
+        CREATE USER 'rails'@'localhost' IDENTIFIED BY 'Rails123!';
+        CREATE USER 'travis'@'localhost' IDENTIFIED BY 'Travis123!';
+        GRANT ALL PRIVILEGES ON mymoney_development.* to 'rails'@'localhost';
         GRANT ALL PRIVILEGES ON mymoney_test.* to 'travis'@'localhost';
         USE mysql;
-        UPDATE user SET PASSWORD=PASSWORD("rails") WHERE User='rails';
         flush privileges;
         quit
         SQL
