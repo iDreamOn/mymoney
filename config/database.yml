@@ -23,7 +23,7 @@ test:
   <<: *default
   database: mymoney_test
   username: travis
-  password: Travis123!
+#  password: Travis123!
 
 production:
   <<: *default
