@@ -15,21 +15,6 @@
   </div>
 </div>
 
-<p style="color:<%= good_neg_cell_color(@debts.to_a.sum(&:max_payment), nil, true)%>;">
-  <strong>Current Estimated Total Debts:</strong>
-  <%= number_to_currency(@debts.to_a.sum(&:max_payment)) %>
-</p>
-
-<p style="color:<%= good_neg_cell_color(@last_3_months[2][1]-@last_3_months[0][1], nil, true)%>;">
-  <strong><%= "Average Debt #{(@last_3_months[2][1]-@last_3_months[0][1])/2<0?"Payment":"Addition"} between #{@last_3_months[0][0]} to #{@last_3_months[2][0]}: "%></strong>
-  <%= number_to_currency(((@last_3_months[2][1]-@last_3_months[0][1])/2).abs) %><br>
-  <% if (@last_3_months[2][1]-@last_3_months[0][1])/2<0 %>
-    At this rate you should be debt free in about <%= (@debts.to_a.sum(&:max_payment)/((@last_3_months[2][1]-@last_3_months[0][1])/-2)).ceil %> months, around <%= (@debts.to_a.sum(&:max_payment)/((@last_3_months[2][1]-@last_3_months[0][1])/-2)).ceil.months.from_now.beginning_of_month.strftime("%B %Y") %>.
-  <% else %>
-    At this rate you will NEVER get out of debt. Stop adding to your debt and start paying off.
-  <% end %>
-</p>
-
 <%= form_tag debt_balances_path, :method => 'get', :id => "debt_balances_search" do %>
   <table class="filters">
     <tr>
