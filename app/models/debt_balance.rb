@@ -34,7 +34,7 @@ class DebtBalance < ActiveRecord::Base
   def new_spendings(up_to_date = nil, inclusive = false)
     comparison = inclusive ? '<=' : '<'
     threshold = "AND spending_date#{comparison}'#{up_to_date}'" unless up_to_date.nil?
-    current_user.real_spendings
+    owner.real_spendings
         .includes(:payment_method)
         .where("spending_date>='#{payment_start_date}' AND spending_date<='#{due_date}' #{threshold} AND payment_methods.name='#{debt_name}'")
   end
