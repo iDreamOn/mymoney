@@ -67,7 +67,7 @@ module DateModule
   end
 
   def days_of_week
-    end_date = Date.new(2015, 01, 04)
+    end_date = Date.new(2015, 0o1, 0o4)
     start_date = 6.days.ago end_date
     (start_date..end_date).map { |k| k.strftime('%A').titleize }.compact
   end

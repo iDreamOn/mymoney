@@ -17,7 +17,7 @@ module BudgetsHelper
     start_date = date.nil? ? Date.today : date
     end_date = start_date.end_of_month
     start_date = start_date.beginning_of_year
-    current_user.get_all("income_sources").total_income(nil, start_date, end_date)
+    current_user.get_all('income_sources').total_income(nil, start_date, end_date)
   end
 
   def ytd_spending(date = nil)

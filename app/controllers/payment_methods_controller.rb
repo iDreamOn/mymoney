@@ -12,8 +12,7 @@ class PaymentMethodsController < ApplicationController
 
   # GET /payment_methods/1
   # GET /payment_methods/1.json
-  def show
-  end
+  def show; end
 
   # GET /payment_methods/new
   def new

@@ -54,8 +54,7 @@ class SpendingsController < ApplicationController
 
   # GET /spendings/1
   # GET /spendings/1.json
-  def show
-  end
+  def show; end
 
   # GET /spendings/new
   def new
@@ -136,9 +135,9 @@ class SpendingsController < ApplicationController
   end
 
   def set_grouped_items
-    budgets = current_user.get_all('budgets').search(@spending.spending_date||Date.today).sort_by(&:category_name)
+    budgets = current_user.get_all('budgets').search(@spending.spending_date || Date.today).sort_by(&:category_name)
     @grouped_budgets = get_grouped(budgets)
-    goals = current_user.get_all('debt_balances').search_by_date(@spending.spending_date||Date.today).sort_by(&:debt_name)
+    goals = current_user.get_all('debt_balances').search_by_date(@spending.spending_date || Date.today).sort_by(&:debt_name)
     @grouped_goals = get_grouped(goals)
     payment_methods = current_user.get_all('payment_methods')
     @grouped_payment_methods = get_grouped(payment_methods)

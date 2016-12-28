@@ -10,8 +10,7 @@ class DebtsController < ApplicationController
 
   # GET /debts/1
   # GET /debts/1.json
-  def show
-  end
+  def show; end
 
   # GET /debts/new
   def new

@@ -16,13 +16,24 @@ FactoryGirl.define do
       end
     end
 
+    factory :category_with_debts_and_budgets do
+      transient do
+        debts_count 1
+      end
+
+      after(:create) do |category, evaluator|
+        create_list(:debt, evaluator.debts_count, category: category)
+        create_list(:budget, evaluator.debts_count, category: category)
+      end
+    end
+
     factory :category_with_budgets do
       transient do
         budgets_count 1
       end
 
-      after(:create) do |param1, evaluator|
-        create_list(:budget, evaluator.budgets_count, category: param1)
+      after(:create) do |category, evaluator|
+        create_list(:budget, evaluator.budgets_count, category: category)
       end
     end
   end

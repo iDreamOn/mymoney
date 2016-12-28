@@ -35,8 +35,8 @@ class DebtBalance < ActiveRecord::Base
     comparison = inclusive ? '<=' : '<'
     threshold = "AND spending_date#{comparison}'#{up_to_date}'" unless up_to_date.nil?
     owner.real_spendings
-        .includes(:payment_method)
-        .where("spending_date>='#{payment_start_date}' AND spending_date<='#{due_date}' #{threshold} AND payment_methods.name='#{debt_name}'")
+         .includes(:payment_method)
+         .where("spending_date>='#{payment_start_date}' AND spending_date<='#{due_date}' #{threshold} AND payment_methods.name='#{debt_name}'")
   end
 
   def new_balance=(amount)
@@ -109,17 +109,17 @@ class DebtBalance < ActiveRecord::Base
 
   def start_pay_date
     if DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' <= due_date AND '#{due_date}' > due_date").exists?
-      previous = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' <= due_date AND '#{due_date}' > due_date").order(due_date:  'desc').first
+      previous = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' <= due_date AND '#{due_date}' > due_date").order(due_date: 'desc').first
       errors.add(:payment_start_date, "must be after #{previous.due_date}.")
     end
 
     if DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' >= payment_start_date AND '#{payment_start_date}' <= due_date").exists?
-      goal = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' >= payment_start_date AND '#{payment_start_date}' <= due_date").order(due_date:  'desc').first
+      goal = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{payment_start_date}' >= payment_start_date AND '#{payment_start_date}' <= due_date").order(due_date: 'desc').first
       errors.add(:goal, "already set between #{goal.payment_start_date} and #{goal.due_date}")
     end
 
     if DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{due_date}' >= payment_start_date AND '#{due_date}' <= due_date").exists?
-      goal = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{due_date}' >= payment_start_date AND '#{due_date}' <= due_date").order(due_date:  'desc').first
+      goal = DebtBalance.where("id != #{id || 0} AND debt_id = #{debt_id} AND '#{due_date}' >= payment_start_date AND '#{due_date}' <= due_date").order(due_date: 'desc').first
       errors.add(:goal, "already set between #{goal.payment_start_date} and #{goal.due_date}")
     end
 

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :income_sources
 
   root	'static_pages#home'
-  get	'home'		=>	'static_pages#home'
+  get	'home'	=>	'static_pages#home'
 
   resources :categories
 

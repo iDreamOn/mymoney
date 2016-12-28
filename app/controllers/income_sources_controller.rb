@@ -9,8 +9,7 @@ class IncomeSourcesController < ApplicationController
 
   # GET /income_sources/1
   # GET /income_sources/1.json
-  def show
-  end
+  def show; end
 
   # GET /income_sources/new
   def new

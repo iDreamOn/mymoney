@@ -12,8 +12,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
-  def show
-  end
+  def show; end
 
   def update
     if @user.update_attributes(secure_params)

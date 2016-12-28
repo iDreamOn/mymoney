@@ -66,7 +66,7 @@ module ApplicationHelper
     debt = Debt.find_by_name(debt_name)
 
     if !debt.nil?
-      (amount > 0 && VALID.include?(debt.name)) ? ERROR : NEUTRAL
+      amount > 0 && VALID.include?(debt.name) ? ERROR : NEUTRAL
     elsif success
       amount > 0 ? ERROR : SUCCESS
     else

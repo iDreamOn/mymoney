@@ -64,7 +64,7 @@
 <%= link_to 'Edit', edit_debt_balance_path(@debt_balance) %> |
 <%= link_to 'Back', debt_balances_path %>
 
-<% if @@spendings.sum(:amount) > 0 %>
+<% if @spendings.sum(:amount) > 0 %>
     <h1>Payments</h1>
     <table>
       <thead>

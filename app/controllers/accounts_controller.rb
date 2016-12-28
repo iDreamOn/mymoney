@@ -12,8 +12,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1
   # GET /accounts/1.json
-  def show
-  end
+  def show; end
 
   # GET /accounts/new
   def new
@@ -21,8 +20,7 @@ class AccountsController < ApplicationController
   end
 
   # GET /accounts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /accounts
   # POST /accounts.json
