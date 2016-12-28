@@ -69,21 +69,23 @@
 
 <%= link_to genderize(Spending,"f"), new_spending_path, remote: true %>
 
-<br>
-<h3>Future <%= plural(Spending) %></h3>
-<%= table_for @future_spendings, :tbody_html => { :id => "future_spendings" },
-                          :data_row_html => { :id => lambda { |spending| "spending_#{spending.id}" }},
-                          :sortable => true do |table| %>
-  <% table.column :description %>
-  <% table.column :budget %>
-  <% if current_user.admin? %>
-    <% table.column :debt_balance %>
-  <% end %>
-  <% table.column :spending_date %>
-  <% table.column :amount, formatter: lambda { |amount| number_to_currency(amount)} %>
-  <% table.column :payment_method %>
-  <% table.column :data => t('edit'), :link_action => :edit, link_html: {remote: true} %>
-  <% table.column :data => t('destroy'), link_method: :delete, link_confirm: "Are you sure?" %>
+<% if @future_spendings.sum(:amount) > 0 %>
+    <br>
+    <h3>Future <%= plural(Spending) %></h3>
+    <%= table_for @future_spendings, :tbody_html => { :id => "future_spendings" },
+                  :data_row_html => { :id => lambda { |spending| "spending_#{spending.id}" }},
+                  :sortable => true do |table| %>
+        <% table.column :description %>
+        <% table.column :budget %>
+        <% if current_user.admin? %>
+            <% table.column :debt_balance %>
+        <% end %>
+        <% table.column :spending_date %>
+        <% table.column :amount, formatter: lambda { |amount| number_to_currency(amount)} %>
+        <% table.column :payment_method %>
+        <% table.column :data => t('edit'), :link_action => :edit, link_html: {remote: true} %>
+        <% table.column :data => t('destroy'), link_method: :delete, link_confirm: "Are you sure?" %>
+    <% end %>
 <% end %>
 
 <br>
