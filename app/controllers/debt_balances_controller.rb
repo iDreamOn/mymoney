@@ -74,7 +74,7 @@ class DebtBalancesController < ApplicationController
                               .order(sort_column + ' ' + sort_direction)
                               .order(updated_at: :desc)
     @new_spendings = current_user.real_spendings
-        .includes(:payment_method)
+        .joins(:payment_method)
         .where("spending_date>='#{@debt_balance.payment_start_date}' AND spending_date<='#{@debt_balance.due_date}' AND payment_methods.name='#{@debt_balance.debt_name}'")
   end
 

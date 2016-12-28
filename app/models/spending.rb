@@ -29,7 +29,7 @@ class Spending < ActiveRecord::Base
   end
 
   def spending_goal
-    return unless budget && budget.category.debts.any?
+    return unless budget && budget.category.debts.where("debts.deleted_at=''").any?
     if !debt_balance
       errors.add(:goal, "can't be empty for this category")
     elsif debt_balance.debt.category_id != budget.category_id
