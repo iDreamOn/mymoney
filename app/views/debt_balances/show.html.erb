@@ -64,14 +64,24 @@
 <%= link_to 'Edit', edit_debt_balance_path(@debt_balance) %> |
 <%= link_to 'Back', debt_balances_path %>
 
-<h2>Spendings</h2>
-
+<h2>Payments</h2>
 <table>
   <thead>
     <%= render "spendings/partials/header" %>
   </thead>
-
   <tbody>
     <%= render partial: "spendings/partials/spending", collection: @spendings %>
   </tbody>
 </table>
+
+<% if @new_spendings.sum(:amount) > 0 %>
+    <h2>New Spendings</h2>
+    <table>
+      <thead>
+      <%= render "spendings/partials/header" %>
+      </thead>
+      <tbody>
+      <%= render partial: "spendings/partials/spending", collection: @new_spendings %>
+      </tbody>
+    </table>
+<% end %>
