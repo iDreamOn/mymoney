@@ -1,64 +1,56 @@
 <%= form_for(@debt) do |f| %>
-  <% if @debt.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@debt.errors.count, "error") %> prohibited this debt from being saved:</h2>
+    <% if @debt.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@debt.errors.count, "error") %> prohibited this debt from being saved:</h2>
 
-      <ul>
-      <% @debt.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+          <ul>
+            <% @debt.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :category_id %><br>
-    <%= f.grouped_collection_select :category_id, @grouped_categories, :items, :name, :id, :name %>
-  </div>
-  <div class="field">
-    <%= f.label :sub_category %><br>
-    <%= f.text_field :sub_category %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :account_id, "Pay From" %><br>
-    <%= f.grouped_collection_select :account_id, @grouped_accounts, :items, :name, :id, :name %>
-  </div>
-  <div class="field">
-    <%= f.label :fix_amount %><br>
-    <%= f.number_field :fix_amount, :class => 'text_field', :step => 0.01 %>
-  </div>
-  <% @debt.build_schedule unless @debt.schedule %>
-  <%= f.fields_for :schedule do |u| %>
     <div class="field">
-      <%= u.label :rule, "Schedule" %><br/>
-      <%= u.select_recurring :rule, [
-        IceCube::Rule.weekly(2).day(:friday)
-      ] %>
+      <%= f.label :category_id %><br>
+      <%= f.grouped_collection_select :category_id, @grouped_categories, :items, :name, :id, :name %>
     </div>
-  <% end %>
-<!--
-  <div class="field">
-    <%= f.label :schedule %><br>
-    <%= f.select :schedule , options_for_select([['Bi-Weekly', 'Bi-Weekly'], ['Monthly', 'Monthly']], @debt.schedule) %>
-  </div>
-!-->
-  <div class="field">
-    <%= f.label :start_date %><br>
-    <%= f.calendar_field :start_date %>
-  </div>
-  <div class="field">
-    <%= f.label :autopay %>
-    <%= f.check_box :autopay %>
-  </div>
-  <div class="field">
-    <%= f.label :is_asset %>
-    <%= f.check_box :is_asset %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :sub_category %><br>
+      <%= f.text_field :sub_category %>
+    </div>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :account_id, "Pay From" %><br>
+      <%= f.grouped_collection_select :account_id, @grouped_accounts, :items, :name, :id, :name %>
+    </div>
+    <div class="field">
+      <%= f.label :fix_amount %><br>
+      <%= f.number_field :fix_amount, :class => 'text_field', :step => 0.01 %>
+    </div>
+    <div class="field">
+      <% @debt.build_schedule unless @debt.schedule %>
+      <%= f.fields_for :schedule do |u| %>
+          <%= u.label :rule, "Schedule" %><br/>
+          <%= u.select_recurring :rule %>
+      <% end %>
+    </div>
+    <div class="field">
+      <%= f.label :start_date %><br>
+      <%= f.calendar_field :start_date %>
+    </div>
+    <div class="field">
+      <%= f.label :autopay %>
+      <%= f.check_box :autopay %>
+    </div>
+    <div class="field">
+      <%= f.label :is_asset %>
+      <%= f.check_box :is_asset %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

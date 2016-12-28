@@ -31,6 +31,14 @@ class DebtBalance < ActiveRecord::Base
     spendings.where("spending_date>='#{payment_start_date}' AND spending_date<='#{due_date}' #{threshold}")
   end
 
+  def new_spendings(up_to_date = nil, inclusive = false)
+    comparison = inclusive ? '<=' : '<'
+    threshold = "AND spending_date#{comparison}'#{up_to_date}'" unless up_to_date.nil?
+    current_user.real_spendings
+        .includes(:payment_method)
+        .where("spending_date>='#{payment_start_date}' AND spending_date<='#{due_date}' #{threshold} AND payment_methods.name='#{debt_name}'")
+  end
+
   def new_balance=(amount)
     unless amount.blank?
       self.balance = balance + amount.to_f - max_payment
@@ -68,7 +76,7 @@ class DebtBalance < ActiveRecord::Base
     if debt.is_asset?
       balance + payments(up_to_date, inclusive).sum(:amount)
     else
-      balance - payments(up_to_date, inclusive).sum(:amount)
+      (balance + new_spendings(up_to_date, inclusive).sum(:amount)) - payments(up_to_date, inclusive).sum(:amount)
     end
   end
 
