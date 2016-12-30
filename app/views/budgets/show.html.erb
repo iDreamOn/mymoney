@@ -19,6 +19,11 @@
 <p>
   <strong>Spendings:</strong>
   <%= number_to_currency(@budget.spendings.sum(:amount)) %>
+  <% if @budget.category.name == 'Savings' %>
+      <% @budget.spendings.group(:description).sum(:amount).each do |budget| %>
+          <br>&emsp;&emsp;<%= "#{budget[0]}: #{number_to_currency(budget[1])}" %>
+      <% end %>
+  <% end %>
 </p>
 
 <p>
