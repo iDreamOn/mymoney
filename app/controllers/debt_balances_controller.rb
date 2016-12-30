@@ -93,6 +93,7 @@ class DebtBalancesController < ApplicationController
   # POST /debt_balances.json
   def create
     @debt_balance = DebtBalance.new(debt_balance_params)
+    set_grouped_items
 
     respond_to do |format|
       if @debt_balance.save

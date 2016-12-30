@@ -69,7 +69,7 @@ class DebtBalance < ActiveRecord::Base
   end
 
   def last_payment_date
-    payments.maximum(:spending_date) || Time.now.to_date - 1
+    payments.maximum(:spending_date) || [Time.now.to_date, payment_start_date].max - 1
   end
 
   def after_pay_balance(up_to_date = nil, inclusive = false)
