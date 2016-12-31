@@ -34,6 +34,13 @@ module BudgetsHelper
     current_user.asset_spendings.where("spending_date>='#{start_date}' and spending_date<='#{end_date}'").sum(:amount)
   end
 
+  def ytd_assets_savings_breakdown(date = nil)
+    start_date = date.nil? ? Date.today : date
+    end_date = start_date.end_of_month
+    start_date = start_date.beginning_of_year
+    current_user.asset_spendings.where("spending_date>='#{start_date}' and spending_date<='#{end_date}'").group("spendings.description").sum(:amount)
+  end
+
   def credit_payment_budget(date = Date.today)
     start_date = date.beginning_of_month - 1.month
     end_date = start_date.end_of_month
