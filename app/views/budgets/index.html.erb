@@ -26,7 +26,7 @@
   YTD Income: <%= number_to_currency(ytd_income(@curr_budget)) %><br>
   YTD Spendings: <%= number_to_currency(ytd_spending(@curr_budget)-ytd_assets_savings(@curr_budget)) %><br>
   YTD Savings: <%= number_to_currency(ytd_assets_savings(@curr_budget)) %><br>
-  <% ytd_assets_savings_breakdown.each do |saving| %>
+  <% ytd_assets_savings_breakdown(@curr_budget).each do |saving| %>
       &emsp;&emsp;<%= "#{saving[0]}: #{number_to_currency(saving[1])}" %><br>
   <% end %>
 </p>
