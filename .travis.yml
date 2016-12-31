@@ -31,4 +31,4 @@ after_success:
 - export GIT_TAG=v0.1.$TRAVIS_BUILD_NUMBER
 - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
 - git remote add travis https://$IDREAMON_GITHUB_USER:$IDREAMON_GITHUB_PWD@github.com/iDreamOn/mymoney.git
-- git push travis --tags
+- git push -q travis --tags
