@@ -26,3 +26,10 @@ bundler_args: "--binstubs=./bundler_stubs"
 notifications:
   slack:
     secure: zyTKb587WReJRdyuU47Agc+kCYlBqDJOM1Y/3GjD8iN66ZbJbhJdL2Rn6XW+vFmmIR6vXx1ecD0eTXKeaZdjlDBYhnnK5syMJtPAtBiPC5RHpNFSf3Fq1rTDYsSndATlkibKTF57L4AuC9McbsAqhvOpocQfwbI18CiZKH9F25QL6WplhT1rpMURUNXQBPebqbOIuy5peVGNc8ejSIVfElZ+rTysjBL9WQKeTSUtLhj/msqnlCIUtLyZGj6KN9Hfqge8Eh/bxgnQIaWTZmayZm7d2ywKH3QvmG/PsapVfLts3BfRIC5Xbg/otbdXtzIIkze9OH27l686IzTxBPb2M+QxGdlBgyaUF6/4QTjz7t7+gC3QBhRGO/iYDz3WJ9KEGxTiQeU4AhPUnUWHQRrr8Td8kL6aSWu3Kt7b0z2hVUZz59skr3xxzDC/zKFEB2ecDDC4SbjggAlKi/VztoAOo3BxMSBJiYoMBuWKLhFICakbyuiz/ywn7uFQgAo+PMpnjrQCEgeNSJ5FwJyx7ibjyM3EontKWHOtePkZQPrMi6shztQtkpBoBuM9d5YnIddWiuq+bEZVIC5EFWrWb6hUsJDtJJkyFuJH4dXLSSNuohKwb1vjLD70scsPWnvAQxyOS3hHNjTkZMsZ92xOAHG1nZoA/OGU38aPXqGEY+FdWcU=
+after_success:
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=v0.1.$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push origin --tags
+  - ls -R
