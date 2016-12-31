@@ -1,35 +1,34 @@
 language: ruby
 rvm:
-  - 2.2.1
+- 2.2.1
 services:
-  - mysql
+- mysql
 branches:
   only:
-    - master
+  - master
 env:
-  - DB=mysql
+- DB=mysql
 script:
-  - RAILS_ENV=test bundle exec rake db:create --trace
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
-#  - bundle exec rubocop --auto-correct
-  - bundle exec rspec spec/models
-  - bundle exec rspec spec/controllers
-  - bundle exec rspec spec/routing
-  - bundle exec rspec spec/requests
+- RAILS_ENV=test bundle exec rake db:create --trace
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rspec spec/models
+- bundle exec rspec spec/controllers
+- bundle exec rspec spec/routing
+- bundle exec rspec spec/requests
 before_install:
-  - mysql -e "create database IF NOT EXISTS test;" -uroot
-  - mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql
+- mysql -e "create database IF NOT EXISTS test;" -uroot
+- mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql
 before_script:
-  - mysql -e 'create database myapp_test'
+- mysql -e 'create database myapp_test'
 bundler_args: "--binstubs=./bundler_stubs"
 notifications:
   slack:
     secure: zyTKb587WReJRdyuU47Agc+kCYlBqDJOM1Y/3GjD8iN66ZbJbhJdL2Rn6XW+vFmmIR6vXx1ecD0eTXKeaZdjlDBYhnnK5syMJtPAtBiPC5RHpNFSf3Fq1rTDYsSndATlkibKTF57L4AuC9McbsAqhvOpocQfwbI18CiZKH9F25QL6WplhT1rpMURUNXQBPebqbOIuy5peVGNc8ejSIVfElZ+rTysjBL9WQKeTSUtLhj/msqnlCIUtLyZGj6KN9Hfqge8Eh/bxgnQIaWTZmayZm7d2ywKH3QvmG/PsapVfLts3BfRIC5Xbg/otbdXtzIIkze9OH27l686IzTxBPb2M+QxGdlBgyaUF6/4QTjz7t7+gC3QBhRGO/iYDz3WJ9KEGxTiQeU4AhPUnUWHQRrr8Td8kL6aSWu3Kt7b0z2hVUZz59skr3xxzDC/zKFEB2ecDDC4SbjggAlKi/VztoAOo3BxMSBJiYoMBuWKLhFICakbyuiz/ywn7uFQgAo+PMpnjrQCEgeNSJ5FwJyx7ibjyM3EontKWHOtePkZQPrMi6shztQtkpBoBuM9d5YnIddWiuq+bEZVIC5EFWrWb6hUsJDtJJkyFuJH4dXLSSNuohKwb1vjLD70scsPWnvAQxyOS3hHNjTkZMsZ92xOAHG1nZoA/OGU38aPXqGEY+FdWcU=
 after_success:
-  - git config --global user.email "builds@travis-ci.com"
-  - git config --global user.name "Travis CI"
-  - export GIT_TAG=v0.1.$TRAVIS_BUILD_NUMBER
-  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  - git push origin --tags
-  - ls -R
+- git config --global user.email "idreamonteam@gmail.com"
+- git config --global user.name "Travis CI"
+- export GIT_TAG=v0.1.$TRAVIS_BUILD_NUMBER
+- git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+- git remote add travis https://$IDREAMON_GITHUB_USER:$IDREAMON_GITHUB_PWD@github.com/iDreamOn/mymoney.git
+- git push travis --tags
