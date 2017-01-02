@@ -26,3 +26,7 @@ $.fn.recurring_select.options = {
     show_week: [true, true, true, true, true, true]
   }
 };
+
+$(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+});

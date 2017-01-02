@@ -32,4 +32,11 @@ RSpec.describe Budget, type: :model do
     budget2 = FactoryGirl.build(:budget, category: budget1.category, budget_month: budget1.budget_month)
     expect(budget2).to_not be_valid
   end
+
+  it 'adds the right amount' do
+    budget = FactoryGirl.create(:budget)
+    amount = budget.amount
+    budget.add(50)
+    expect(budget.amount).to eq(amount+50)
+  end
 end

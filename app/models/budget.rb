@@ -40,4 +40,9 @@ class Budget < ActiveRecord::Base
   def total_budget
     owner.get_all('budgets').includes(:category).where('categories.cc_payment = ?', false).where(budget_month: budget_month).sum(:amount)
   end
+
+  def add(amount)
+    self.amount += amount
+    self.save
+  end
 end
