@@ -37,6 +37,7 @@ class DebtBalance < ActiveRecord::Base
     owner.real_spendings
          .includes(:payment_method)
          .where("spending_date>='#{payment_start_date}' AND spending_date<='#{due_date}' #{threshold} AND payment_methods.name='#{debt_name}'")
+        .where('pending = ?', false)
   end
 
   def new_balance=(amount)

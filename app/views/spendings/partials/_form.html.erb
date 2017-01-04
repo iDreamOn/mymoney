@@ -1,45 +1,49 @@
 <div class="modal-body">
   <%= form_for(@spending, remote: true, html: { style: "display:inline;" }) do |f| %>
-    <% if @spending.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@spending.errors.count, "error") %> prohibited this spending from being saved:</h2>
-  
-        <ul>
-        <% @spending.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
+      <% if @spending.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@spending.errors.count, "error") %> prohibited this spending from being saved:</h2>
 
-    <div class="field">
-      <%= f.label :budget %><br>
-      <%= f.grouped_collection_select :budget_id, @grouped_budgets, :items, :name, :id, :category_name, {prompt: 'Please Select'} %>
-    </div>
-    <div class="field">
-      <%= f.label :spending_date %>
-      <%= f.calendar_field :spending_date, 'language' => @language %>
-    </div>
-    <div class="field">
-      <%= f.label :description %><br>
-      <%= f.text_field :description %>
-    </div>
-    <% if current_user.admin? %>
+            <ul>
+              <% @spending.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
       <div class="field">
-        <%= f.label :debt_balance, "Goal" %><br>
-        <%= f.grouped_collection_select :debt_balance_id, @grouped_goals, :items, :name, :id, :debt_name, include_blank: 'None' %>
+        <%= f.label :budget %><br>
+        <%= f.grouped_collection_select :budget_id, @grouped_budgets, :items, :name, :id, :category_name, {prompt: 'Please Select'} %>
       </div>
-    <% end %>
-    <div class="field">
-      <%= f.label :amount %><br>
-      <%= f.number_field :amount, :class => 'text_field', :step => 0.01 %>
-    </div>
-    <div class="field">
-      <%= f.label :payment_method %><br>
-      <%= f.grouped_collection_select :payment_method_id, @grouped_payment_methods, :items, :name, :id, :name, {prompt: 'Please Select'} %>
-    </div>
-    <div class="modal-footer actions">
-      <%= f.submit %>
-    </div>
+      <div class="field">
+        <%= f.label :spending_date %>
+        <%= f.calendar_field :spending_date, 'language' => @language %>
+      </div>
+      <div class="field">
+        <%= f.label :description %><br>
+        <%= f.text_field :description %>
+      </div>
+      <% if current_user.admin? %>
+          <div class="field">
+            <%= f.label :debt_balance, "Goal" %><br>
+            <%= f.grouped_collection_select :debt_balance_id, @grouped_goals, :items, :name, :id, :debt_name, include_blank: 'None' %>
+          </div>
+      <% end %>
+      <div class="field">
+        <%= f.label :amount %><br>
+        <%= f.number_field :amount, :class => 'text_field', :step => 0.01 %>
+      </div>
+      <div class="field">
+        <%= f.label :payment_method %><br>
+        <%= f.grouped_collection_select :payment_method_id, @grouped_payment_methods, :items, :name, :id, :name, {prompt: 'Please Select'} %>
+      </div>
+      <div class="field">
+        <%= f.label :pending %>
+        <%= f.check_box :pending %>
+      </div>
+      <div class="modal-footer actions">
+        <%= f.submit %>
+      </div>
   <% end %>
 </div>

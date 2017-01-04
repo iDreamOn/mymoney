@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714011345) do
+ActiveRecord::Schema.define(version: 20170103232445) do
 
   create_table "account_balances", force: :cascade do |t|
     t.date     "balance_date",                                      null: false
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 20160714011345) do
     t.integer  "budget_id",         limit: 4
     t.integer  "payment_method_id", limit: 4
     t.integer  "debt_balance_id",   limit: 4
+    t.boolean  "pending"
   end
 
   add_index "spendings", ["budget_id"], name: "index_spendings_on_budget_id", using: :btree
