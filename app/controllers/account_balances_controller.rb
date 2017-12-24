@@ -1,4 +1,4 @@
-class AccountBalancesController < ApplicationController
+cccclass AccountBalancesController < ApplicationController
   before_action :set_account_balance, only: [:show, :edit, :update, :destroy, :make_payments, :undo_payments]
   before_action :admin_only
 
@@ -16,7 +16,7 @@ class AccountBalancesController < ApplicationController
   # GET /account_balances/1
   # GET /account_balances/1.json
   def show
-    @account_balances = AccountBalance.where(balance_date: @account_balance.balance_date)
+    @account_balances = current_user.get_all('account_balances').where(balance_date: @account_balance.balance_date)
   end
 
   # GET /account_balances/new
