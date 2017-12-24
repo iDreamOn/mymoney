@@ -57,7 +57,7 @@ RSpec.describe AccountBalancesController, type: :controller do
       account_balance_2 = create(:account_balance, balance_date: account_balance.balance_date)
       login(account_balance.owner)
       get :show, { id: account_balance.to_param }, valid_session
-      expect(assigns(:account_balances)).to eq([account_balance, account_balance_2])
+      expect(assigns(:account_balances)).to eq([account_balance])
     end
   end
 
