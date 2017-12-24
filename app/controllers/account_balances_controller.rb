@@ -1,4 +1,4 @@
-cccclass AccountBalancesController < ApplicationController
+class AccountBalancesController < ApplicationController
   before_action :set_account_balance, only: [:show, :edit, :update, :destroy, :make_payments, :undo_payments]
   before_action :admin_only
 
